@@ -1,0 +1,80 @@
+.stacks {
+  display: grid;
+  gap: 18px;
+}
+
+/* Category name followed by a rule running to the panel edge */
+.stack__title {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 10px;
+  font-family: var(--font-mono);
+  font-size: 0.625rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text-soft);
+}
+
+.stack__title::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--panel-line);
+}
+
+.stack__list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.stack__chip {
+  transition:
+    border-color 160ms ease,
+    color 160ms ease;
+}
+
+.stack__chip:hover {
+  border-color: var(--accent);
+}
+
+/* Main technologies: larger, with brand icons that light up on hover */
+.stack--primary .stack__chip {
+  min-height: 34px;
+  padding: 0 12px 0 10px;
+  font-size: 0.8125rem;
+}
+
+.stack--primary .tech-icon {
+  color: var(--text-soft);
+  transition: color 160ms ease;
+}
+
+.stack--primary .stack__chip:hover .tech-icon {
+  color: var(--brand);
+}
+
+/* Supporting skills: quieter */
+.stack--tertiary .stack__chip {
+  border-color: var(--soft-line);
+  background: transparent;
+  color: var(--text-soft);
+  font-weight: 500;
+}
+
+.tech-icon {
+  flex: none;
+}
+
+.tech-icon--mono {
+  display: inline-grid;
+  place-items: center;
+  border: 1px solid var(--line-strong);
+  border-radius: 3px;
+  font-family: var(--font-mono);
+  font-size: 0.5rem;
+  font-weight: 700;
+  line-height: 1;
+}

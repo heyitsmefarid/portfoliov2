@@ -1,0 +1,41 @@
+.theme-toggle {
+  position: relative;
+  flex: none;
+  width: 46px;
+  height: 26px;
+  border-radius: 999px;
+  background: var(--kbd-bg);
+  box-shadow: inset 0 0 0 1px var(--hairline-strong);
+  transition: background-color 200ms ease;
+}
+
+.theme-toggle:hover {
+  box-shadow: inset 0 0 0 1px var(--accent);
+}
+
+.theme-toggle__knob {
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  display: grid;
+  place-items: center;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: var(--text);
+  color: var(--bg);
+  transition: transform 260ms var(--ease-out);
+}
+
+.theme-toggle[aria-checked='true'] .theme-toggle__knob {
+  transform: translateX(20px);
+  background: var(--amber);
+  color: var(--amber-ink);
+}
+
+/* A 44px tap target without changing how the switch looks */
+.theme-toggle::after {
+  content: '';
+  position: absolute;
+  inset: -9px -2px;
+}

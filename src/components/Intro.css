@@ -1,0 +1,182 @@
+/* While the intro plays, the hero's own entrance waits underneath. */
+html.intro-playing .hero *,
+html.intro-playing .hero *::before,
+html.intro-playing .hero *::after {
+  animation-play-state: paused !important;
+}
+
+html.intro-playing body {
+  overflow: hidden;
+}
+
+.intro {
+  --blade-ease: cubic-bezier(0.77, 0, 0.18, 1);
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  pointer-events: none;
+}
+
+.intro--boot {
+  pointer-events: auto;
+  cursor: pointer;
+}
+
+/* Both layers are clipped to the area left of a slanted edge. Exiting moves
+   that edge from the right side across to the left: the dark screen goes
+   first, then the amber blade underneath it. */
+.intro__screen,
+.intro__blade {
+  position: absolute;
+  inset: 0;
+  clip-path: polygon(0 0, 135% 0, 100% 100%, 0 100%);
+  transition: clip-path var(--exit, 800ms) var(--blade-ease);
+}
+
+.intro--exit .intro__screen,
+.intro--exit .intro__blade {
+  clip-path: polygon(0 0, 0 0, -35% 100%, 0 100%);
+}
+
+.intro__blade {
+  background: var(--amber);
+}
+
+.intro--exit .intro__blade {
+  transition-delay: 130ms;
+}
+
+.intro__screen {
+  display: grid;
+  place-items: center;
+  background: var(--bg);
+  color: var(--text);
+}
+
+/* Faint grid behind the boot screen */
+.intro__screen::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(var(--hairline) 1px, transparent 1px),
+    linear-gradient(90deg, var(--hairline) 1px, transparent 1px);
+  background-size: 48px 48px;
+  mask-image: radial-gradient(ellipse at center, #000 20%, transparent 70%);
+  -webkit-mask-image: radial-gradient(ellipse at center, #000 20%, transparent 70%);
+}
+
+.intro__center {
+  position: relative;
+  width: min(560px, calc(100vw - 48px));
+}
+
+.intro__kicker {
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--accent);
+  animation: intro-fade 400ms ease both;
+}
+
+.intro__name {
+  margin-top: 14px;
+  font-family: var(--font-mono);
+  font-size: clamp(1.75rem, 1rem + 3.4vw, 3rem);
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  line-height: 1.05;
+}
+
+.intro__name span {
+  display: inline-block;
+  animation: intro-char 520ms var(--ease-out) both;
+  animation-delay: calc(80ms + var(--i) * 22ms);
+}
+
+.intro__lines {
+  display: grid;
+  gap: 6px;
+  margin-top: 28px;
+  font-family: var(--font-mono);
+  font-size: 0.8125rem;
+  color: var(--text-soft);
+}
+
+.intro__lines li {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  animation: intro-fade 300ms ease both;
+  animation-delay: calc(450ms + var(--i) * 190ms);
+}
+
+.intro__prompt {
+  color: var(--accent);
+}
+
+.intro__dots {
+  flex: 1;
+  border-bottom: 1px dotted var(--line-strong);
+  transform: translateY(-3px);
+}
+
+.intro__value {
+  color: var(--accent);
+  font-weight: 700;
+}
+
+.intro__footer {
+  position: absolute;
+  left: 24px;
+  right: 24px;
+  bottom: 24px;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.intro__skip {
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  color: var(--muted);
+}
+
+.intro__counter {
+  font-family: var(--font-mono);
+  font-size: clamp(3rem, 2rem + 6vw, 7rem);
+  font-weight: 800;
+  line-height: 0.8;
+  letter-spacing: -0.06em;
+  color: var(--accent);
+  font-variant-numeric: tabular-nums;
+}
+
+.intro__bar {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 3px;
+  background: var(--amber);
+  box-shadow: 0 0 14px rgba(255, 176, 0, 0.7);
+  transform-origin: left;
+  transform: scaleX(0);
+}
+
+@keyframes intro-char {
+  from {
+    opacity: 0;
+    transform: translateY(0.6em) rotateX(-80deg);
+    filter: blur(4px);
+  }
+}
+
+@keyframes intro-fade {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+}

@@ -1,0 +1,131 @@
+/* Vertical timeline used by the Experience and Education panels */
+.timeline {
+  position: relative;
+  display: grid;
+  gap: 26px;
+  padding-left: 26px;
+}
+
+/* Education spreads its entries over the panel's full height */
+.timeline--spread {
+  flex: 1;
+  align-content: space-between;
+}
+
+.timeline::before {
+  content: '';
+  position: absolute;
+  left: 5px;
+  top: 8px;
+  bottom: 8px;
+  width: 1px;
+  background: var(--rail);
+  transform-origin: top;
+}
+
+.timeline__item {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: start;
+  gap: 12px;
+}
+
+.timeline__node {
+  position: absolute;
+  left: -26px;
+  top: 3px;
+  width: 11px;
+  height: 11px;
+  border: 1.5px solid var(--node);
+  border-radius: 50%;
+  background: var(--panel);
+}
+
+.timeline__item--current:first-child .timeline__node {
+  border-color: var(--accent);
+  background: var(--amber);
+  box-shadow: 0 0 10px rgba(255, 176, 0, 0.55);
+}
+
+/* Open slot where the internship will go */
+.timeline__item--seeking .timeline__node {
+  border: 1.5px dashed var(--amber);
+}
+
+.timeline__title {
+  font-family: var(--font-mono);
+  font-size: 0.8125rem;
+  font-weight: 800;
+  line-height: 1.4;
+}
+
+.timeline__title abbr {
+  text-decoration: underline dotted var(--muted);
+  text-underline-offset: 3px;
+  cursor: help;
+}
+
+.timeline__org {
+  margin-top: 3px;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  line-height: 1.5;
+  color: var(--muted);
+}
+
+.timeline__link {
+  display: inline-flex;
+  margin-top: 6px;
+  min-height: 28px;
+  align-items: center;
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  font-weight: 600;
+  color: var(--accent);
+}
+
+.timeline__link:hover {
+  color: var(--accent-hover);
+}
+
+.timeline__period {
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  color: var(--muted);
+  white-space: nowrap;
+}
+
+.timeline__period--chip {
+  padding: 3px 8px;
+  border-radius: 3px;
+  background: rgba(255, 176, 0, 0.12);
+  color: var(--accent);
+  font-weight: 700;
+}
+
+/* Reveal: the rail draws down, then entries arrive in order */
+@media (prefers-reduced-motion: no-preference) {
+  .reveal-ready .panel[data-reveal] .timeline::before {
+    transform: scaleY(0);
+    transition: transform 900ms var(--ease-out) 150ms;
+  }
+
+  .reveal-ready .panel[data-reveal] .timeline__item {
+    opacity: 0;
+    transform: translateY(8px);
+    transition:
+      opacity 500ms var(--ease-out),
+      transform 500ms var(--ease-out);
+    transition-delay: calc(250ms + var(--i) * 130ms);
+  }
+
+  .reveal-ready .panel.is-revealed .timeline::before {
+    transform: none;
+  }
+
+  .reveal-ready .panel.is-revealed .timeline__item {
+    opacity: 1;
+    transform: none;
+  }
+}

@@ -1,0 +1,417 @@
+/* ── Design tokens ─────────────────────────────────────────────────────────
+   Dark by default: a near-black workspace, thin warm borders and one amber
+   accent. Light mode (html[data-theme='light']) redefines the same tokens
+   below, so components only ever use var(--…).
+
+   --amber   bright amber for fills: buttons, dots, bars, glows
+   --accent  amber for text and icons; darker in light mode so it stays
+             readable on white */
+:root {
+  color-scheme: dark;
+
+  --bg: #080808;
+  --panel: #101010;
+  --panel-raised: #151515;
+  --line: #252525;
+  --line-strong: #3a3a3a;
+  --panel-line: rgba(255, 176, 0, 0.14);
+  --chip-bg: #15110b;
+  --chip-line: rgba(255, 176, 0, 0.26);
+  --soft-line: #2a2218;
+  --text: #f2f2f2;
+  --text-soft: #c9c9c9;
+  --muted: #888888;
+  --placeholder: #6b6b6b;
+  --amber: #ffb000;
+  --amber-ink: #1a1200;
+  --amber-glow: rgba(255, 176, 0, 0.14);
+  --accent: #ffb000;
+  --accent-hover: #ffc94d;
+  --danger: #ff8a7a;
+
+  /* Surfaces */
+  --surface-sunken: #0c0c0c;
+  --media-bg: #080808;
+  --elevated: #0f0f0f;
+  --elevated-2: #131313;
+  --option-active: #1a1a1a;
+  --kbd-bg: #1c1c1c;
+  --kbd-edge: #2e2e2e;
+  --glass: rgba(12, 12, 12, 0.94);
+  --glass-fab: rgba(20, 20, 20, 0.88);
+  --overlay: rgba(4, 4, 4, 0.72);
+  --hairline: rgba(255, 255, 255, 0.06);
+  --hairline-strong: rgba(255, 255, 255, 0.09);
+  --shadow-float: 0 12px 32px -12px rgba(0, 0, 0, 0.8);
+  --shadow-pop: 0 40px 100px -30px rgba(0, 0, 0, 0.95);
+
+  /* Details */
+  --track: #242424;
+  --rail: #3a2a14;
+  --node: #6b5a44;
+  --scrollbar: #4a3a22;
+  --scrollbar-neutral: #2a2a2a;
+  --dots: rgba(255, 255, 255, 0.11);
+  --glow: rgba(255, 176, 0, 0.07);
+
+  /* GitHub graph, least to most active */
+  --gh-0: #1a1a1a;
+  --gh-1: #4c380c;
+  --gh-2: #7c5809;
+  --gh-3: #b98106;
+  --gh-4: #ffb000;
+
+  /* Laptop frame (stays dark in both themes) */
+  --laptop-bezel: #1d1d1d;
+  --laptop-edge: #2c2c2c;
+  --laptop-base: linear-gradient(#3a3a3a, #1c1c1c);
+  --laptop-notch: #151515;
+
+  /* Project cover art */
+  --cover-bg: #0b0b0b;
+  --cover-board: #0c0c0c;
+  --cover-cell: #161616;
+  --cover-stroke: #2c2c2c;
+  --cover-fill: #121212;
+  --cover-fill-2: #0e0e0e;
+  --cover-grid: #1a1a1a;
+  --cover-mid: #333333;
+  --cover-ring: #2a2a2a;
+  --cover-piece-dark: #262626;
+  --cover-piece-dark-edge: #3a3a3a;
+  --cover-piece-light: #cfcfcf;
+  --cover-piece-light-edge: transparent;
+  --cover-paw: #2c2c2c;
+  --cover-paw-hover: #454545;
+  --cover-dot: #3a3a3a;
+  --cover-accent: #ffb000;
+
+  --font-sans: 'Geist Variable', 'Geist', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --font-mono: 'JetBrains Mono Variable', 'JetBrains Mono', ui-monospace, 'Cascadia Code', Consolas, monospace;
+
+  /* Type scale (1.25 minor third, fluid at the top end) */
+  --step--1: 0.8125rem;
+  --step-0: 1rem;
+  --step-1: 1.125rem;
+  --step-2: clamp(1.375rem, 1.1rem + 1vw, 1.75rem);
+  --step-3: clamp(1.75rem, 1.3rem + 1.8vw, 2.5rem);
+  --step-hero: clamp(2.35rem, 1.2rem + 4.6vw, 4.6rem);
+
+  --radius-s: 6px;
+  --radius-m: 10px;
+  --radius-l: 14px;
+
+  --container: 1200px;
+  --gutter: clamp(16px, 4vw, 40px);
+
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* ── Light mode ─────────────────────────────────────────────────────────── */
+:root[data-theme='light'] {
+  color-scheme: light;
+
+  --bg: #f5f4f1;
+  --panel: #ffffff;
+  --panel-raised: #f2efe9;
+  --line: #e4e1da;
+  --line-strong: #cdc8be;
+  --panel-line: rgba(150, 95, 0, 0.2);
+  --chip-bg: #fbf7ef;
+  --chip-line: rgba(150, 95, 0, 0.32);
+  --soft-line: #e3d9c6;
+  --text: #151515;
+  --text-soft: #3b3b3b;
+  --muted: #666666;
+  --placeholder: #8c8c8c;
+  --amber-glow: rgba(214, 137, 0, 0.22);
+  --accent: #9a5a00;
+  --accent-hover: #744300;
+  --danger: #b3261e;
+
+  --surface-sunken: #faf9f6;
+  --media-bg: #efece5;
+  --elevated: #ffffff;
+  --elevated-2: #f8f6f2;
+  --option-active: #f4efe4;
+  --kbd-bg: #eeebe5;
+  --kbd-edge: #d6d1c7;
+  --glass: rgba(255, 255, 255, 0.94);
+  --glass-fab: rgba(255, 255, 255, 0.9);
+  --overlay: rgba(40, 32, 20, 0.32);
+  --hairline: rgba(0, 0, 0, 0.07);
+  --hairline-strong: rgba(0, 0, 0, 0.1);
+  --shadow-float: 0 12px 30px -14px rgba(60, 45, 20, 0.35);
+  --shadow-pop: 0 30px 80px -30px rgba(60, 45, 20, 0.35);
+
+  --track: #dcd7ce;
+  --rail: #e6d7b9;
+  --node: #b3a184;
+  --scrollbar: #d4c4a2;
+  --scrollbar-neutral: #d0ccc4;
+  --dots: rgba(0, 0, 0, 0.14);
+  --glow: rgba(255, 176, 0, 0.14);
+
+  --gh-0: #ebe8e1;
+  --gh-1: #fde2a3;
+  --gh-2: #f8c14f;
+  --gh-3: #e39400;
+  --gh-4: #9a5a00;
+
+  --cover-bg: #f3f0ea;
+  --cover-board: #faf8f4;
+  --cover-cell: #e5e0d6;
+  --cover-stroke: #cfc7b8;
+  --cover-fill: #ece7de;
+  --cover-fill-2: #f7f4ee;
+  --cover-grid: #e6e1d8;
+  --cover-mid: #b9b1a2;
+  --cover-ring: #d9d2c4;
+  --cover-piece-dark: #3b3b3b;
+  --cover-piece-dark-edge: #2a2a2a;
+  --cover-piece-light: #ffffff;
+  --cover-piece-light-edge: #bdb4a4;
+  --cover-paw: #d6cdbd;
+  --cover-paw-hover: #bfb4a1;
+  --cover-dot: #cfc6b5;
+  --cover-accent: #e39400;
+}
+
+/* Theme switch: the new theme is revealed in a growing circle (the animation
+   itself is started from ThemeToggle). Browsers without view transitions, and
+   visitors who prefer reduced motion, switch instantly. */
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation: none;
+  mix-blend-mode: normal;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  scroll-padding-top: 24px;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-sans);
+  font-size: var(--step-0);
+  line-height: 1.6;
+  font-feature-settings: 'ss01', 'cv11';
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  overflow-x: clip;
+}
+
+img,
+svg {
+  display: block;
+  max-width: 100%;
+}
+
+h1,
+h2,
+h3,
+h4,
+p,
+ul,
+ol,
+dl,
+dd,
+figure {
+  margin: 0;
+}
+
+ul,
+ol {
+  padding: 0;
+  list-style: none;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button,
+input,
+textarea {
+  font: inherit;
+  color: inherit;
+}
+
+button {
+  cursor: pointer;
+  background: none;
+  border: 0;
+  padding: 0;
+}
+
+::selection {
+  background: var(--amber);
+  color: var(--amber-ink);
+}
+
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+.visually-hidden {
+  position: absolute !important;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.skip-link {
+  position: fixed;
+  top: 12px;
+  left: 12px;
+  z-index: 100;
+  padding: 10px 14px;
+  background: var(--amber);
+  color: var(--amber-ink);
+  font-weight: 600;
+  border-radius: var(--radius-s);
+  transform: translateY(-160%);
+}
+
+.skip-link:focus-visible {
+  transform: none;
+}
+
+/* ── Layout ─────────────────────────────────────────────────────────────── */
+.container {
+  width: 100%;
+  max-width: calc(var(--container) + var(--gutter) * 2);
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+}
+
+/* Page content sits above the cursor spotlight (components/Backdrop). */
+.page {
+  position: relative;
+  z-index: 1;
+}
+
+/* ── Shared text styles ─────────────────────────────────────────────────── */
+.mono {
+  font-family: var(--font-mono);
+}
+
+.muted {
+  color: var(--muted);
+}
+
+/* ── Buttons: mono, uppercase, square ─────────────────────────────────── */
+.hero-btn {
+  display: inline-grid;
+  place-items: center;
+  min-width: 150px;
+  min-height: 46px;
+  padding: 0 24px;
+  border: 1px solid var(--text-soft);
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--text);
+  transition:
+    background-color 160ms ease,
+    border-color 160ms ease,
+    color 160ms ease;
+}
+
+.hero-btn:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+.hero-btn--solid {
+  border-color: var(--text);
+  background: var(--text);
+  color: var(--bg);
+}
+
+.hero-btn--solid:hover {
+  border-color: var(--accent);
+  background: var(--amber);
+  color: var(--amber-ink);
+}
+
+[data-magnetic] {
+  transition-property: translate, background-color, border-color, color, box-shadow, transform;
+  transition-duration: 300ms;
+  transition-timing-function: var(--ease-out);
+}
+
+.hero-btn:disabled {
+  pointer-events: none;
+}
+
+/* Inline "View project →" style links */
+.text-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 44px;
+  font-family: var(--font-mono);
+  font-size: var(--step--1);
+  color: var(--text);
+  transition: color 160ms ease;
+}
+
+.text-link span[aria-hidden] {
+  transition: transform 160ms var(--ease-out);
+}
+
+.text-link:hover {
+  color: var(--accent);
+}
+
+.text-link:hover span[aria-hidden] {
+  transform: translateX(3px);
+}
+
+/* ── Scroll reveal ──────────────────────────────────────────────────────── */
+/* Content is visible by default; the hidden starting state only applies once
+   JS has confirmed motion is allowed (html.reveal-ready). */
+@media (prefers-reduced-motion: no-preference) {
+  .reveal-ready [data-reveal] {
+    opacity: 0;
+    /* Tilted away (bottom edge further back) so it's never wider than its box */
+    transform: perspective(1200px) translateY(40px) rotateX(-12deg);
+    transform-origin: 50% 0;
+    transition:
+      opacity 520ms var(--ease-out),
+      transform 520ms var(--ease-out);
+    transition-delay: var(--reveal-delay, 0ms);
+  }
+
+  .reveal-ready [data-reveal].is-revealed {
+    opacity: 1;
+    transform: none;
+  }
+}

@@ -1,0 +1,74 @@
+.cursor {
+  position: fixed;
+  left: 0;
+  top: 0;
+  z-index: 95;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 200ms ease;
+}
+
+.cursor[data-visible='true'] {
+  opacity: 1;
+}
+
+.cursor[data-mode='text'] {
+  opacity: 0;
+}
+
+.cursor__ring {
+  position: absolute;
+  left: 0;
+  top: 0;
+  display: grid;
+  place-items: center;
+  min-width: 34px;
+  height: 34px;
+  padding: 0;
+  border: 1.5px solid var(--amber);
+  border-radius: 999px;
+  transform: translate(-50%, -50%);
+  transition:
+    min-width 260ms var(--ease-out),
+    height 260ms var(--ease-out),
+    padding 260ms var(--ease-out),
+    background-color 200ms ease,
+    border-color 200ms ease,
+    scale 200ms var(--ease-out);
+}
+
+.cursor[data-mode='hover'] .cursor__ring {
+  min-width: 54px;
+  height: 54px;
+  background: rgba(255, 176, 0, 0.12);
+}
+
+.cursor[data-mode='label'] .cursor__ring {
+  min-width: 64px;
+  height: 64px;
+  padding: 0 12px;
+  border-color: var(--amber);
+  background: var(--amber);
+  box-shadow: 0 10px 30px -8px rgba(255, 176, 0, 0.55);
+}
+
+.cursor[data-pressed='true'] .cursor__ring {
+  scale: 0.85;
+}
+
+.cursor__label {
+  font-family: var(--font-mono);
+  font-size: 0.625rem;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--amber-ink);
+  white-space: nowrap;
+  opacity: 0;
+  transition: opacity 150ms ease;
+}
+
+.cursor[data-mode='label'] .cursor__label {
+  opacity: 1;
+  transition-delay: 80ms;
+}

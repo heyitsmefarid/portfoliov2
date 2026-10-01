@@ -1,0 +1,66 @@
+/* Page structure below the hero: a two-column grid of panels, full-width
+   projects and GitHub panels, then a closing pair. */
+.page-body {
+  display: grid;
+  gap: 18px;
+  max-width: calc(1140px + var(--gutter) * 2);
+  padding-bottom: 64px;
+}
+
+.page-body > .divider {
+  margin-block: 26px 8px;
+}
+
+.bento {
+  display: grid;
+  grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+  grid-template-areas:
+    'experience about'
+    'education stack';
+  gap: 14px;
+  margin-top: 8px;
+}
+
+#experience {
+  grid-area: experience;
+}
+
+#about {
+  grid-area: about;
+}
+
+#education {
+  grid-area: education;
+}
+
+#stack {
+  grid-area: stack;
+}
+
+/* Lean slightly with scroll speed (--skew from useMotionFx) */
+.bento,
+.duo {
+  transform: skewY(var(--skew, 0deg));
+  transform-origin: 50% 50%;
+}
+
+.duo {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+}
+
+@media (max-width: 900px) {
+  .bento {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-areas:
+      'about'
+      'experience'
+      'education'
+      'stack';
+  }
+
+  .duo {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}

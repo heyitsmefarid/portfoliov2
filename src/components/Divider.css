@@ -1,0 +1,40 @@
+.divider {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  width: min(760px, 100%);
+  margin-inline: auto;
+}
+
+.divider::before,
+.divider::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+}
+
+.divider::before {
+  background: linear-gradient(to right, transparent, rgba(255, 176, 0, 0.55));
+}
+
+.divider::after {
+  background: linear-gradient(to left, transparent, rgba(255, 176, 0, 0.55));
+}
+
+.divider__label {
+  flex: none;
+  max-width: 70%;
+  font-family: var(--font-mono);
+  font-size: 0.625rem;
+  font-weight: 600;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+  text-align: center;
+  color: var(--accent);
+}
+
+@media (max-width: 480px) {
+  .divider__label {
+    letter-spacing: 0.2em;
+  }
+}

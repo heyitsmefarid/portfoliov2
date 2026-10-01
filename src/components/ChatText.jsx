@@ -1,0 +1,54 @@
+// Renders assistant replies safely (no HTML injection): paragraphs, "- " bullet
+// lists, **bold**, and plain URLs turned into links.
+
+const TOKEN = /(\*\*[^*]+\*\*|https?:\/\/[^\s)]+)/g
+
+function Inline({ text }) {
+  return text.split(TOKEN).map((part, index) => {
+    if (part.startsWith('**') && part.endsWith('**') && part.length > 4) {
+      return <strong key={index}>{part.slice(2, -2)}</strong>
+    }
+    if (/^https?:\/\//.test(part)) {
+      const trailing = part.match(/[.,;:!?]+$/)?.[0] ?? ''
+      const url = trailing ? part.slice(0, -trailing.length) : part
+      return (
+        <span key={index}>
+          <a href={url} target="_blank" rel="noopener noreferrer">
+            {url.replace(/^https?:\/\//, '')}
+          </a>
+          {trailing}
+        </span>
+      )
+    }
+    return part
+  })
+}
+
+export default function ChatText({ text }) {
+  const blocks = text.trim().split(/\n{2,}/)
+
+  return blocks.map((block, index) => {
+    const lines = block.split('\n')
+    if (lines.every((line) => /^\s*[-•*]\s+/.test(line))) {
+      return (
+        <ul key={index}>
+          {lines.map((line, i) => (
+            <li key={i}>
+              <Inline text={line.replace(/^\s*[-•*]\s+/, '')} />
+            </li>
+          ))}
+        </ul>
+      )
+    }
+    return (
+      <p key={index}>
+        {lines.map((line, i) => (
+          <span key={i}>
+            {i > 0 && <br />}
+            <Inline text={line} />
+          </span>
+        ))}
+      </p>
+    )
+  })
+}
