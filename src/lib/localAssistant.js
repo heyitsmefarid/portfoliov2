@@ -116,7 +116,7 @@ function describeExperience() {
 
 function describeCertifications() {
   const lines = certifications.map((cert) => {
-    const extra = [cert.issuer, cert.year].filter(Boolean).join(', ')
+    const extra = [cert.kind, cert.issuer, cert.year].filter(Boolean).join(', ')
     return `- ${cert.name}${extra ? ` (${extra})` : ''}`
   })
   return `Fred's certifications:\n\n${lines.join('\n')}`

@@ -65,7 +65,7 @@ export function buildPortfolioContext() {
   lines.push('')
   lines.push('Certifications:')
   certifications.forEach((cert) => {
-    const extra = [cert.issuer, cert.year].filter(Boolean).join(', ')
+    const extra = [cert.kind, cert.issuer, cert.year].filter(Boolean).join(', ')
     lines.push(`- ${cert.name}${extra ? ` (${extra})` : ''}`)
   })
   lines.push('- Certificate IDs, dates and scores are not listed unless shown above.')
