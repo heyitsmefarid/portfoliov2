@@ -169,7 +169,7 @@ export default function Chatbot({ ref }) {
             </h2>
             <p className="chat__mode">
               <span className={`chat__mode-dot chat__mode-dot--${mode}`} aria-hidden="true" />
-              {mode === 'local' ? 'Offline mode: answers from portfolio data' : 'Answers only from portfolio info'}
+              {mode === 'local' ? 'Offline mode: answers from portfolio data' : 'AI answers · English or Tagalog'}
             </p>
           </div>
           <div className="chat__actions">

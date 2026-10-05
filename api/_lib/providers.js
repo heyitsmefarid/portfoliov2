@@ -14,7 +14,7 @@ export class ProviderError extends Error {
 }
 
 const REFUSAL_REPLY =
-  "I can only help with questions about Fred's portfolio — his projects, skills, education, experience, and how to contact him."
+  "Sorry, I can't help with that one. Feel free to ask about Fred's projects, skills, education, or experience."
 
 // Models that accept the server-side refusal fallback / the effort setting.
 const SUPPORTS_FALLBACKS = /^claude-(opus-5|fable-5)/
