@@ -54,7 +54,7 @@ function ClockIcon() {
 }
 
 export default function Hero({ onContact }) {
-  const { contact, photo } = profile
+  const { photo } = profile
   const words = profile.name.split(' ')
 
   return (
@@ -115,15 +115,10 @@ export default function Hero({ onContact }) {
                 View projects
               </a>
             )}
-            {contact.email ? (
-              <a className="hero-btn" href={`mailto:${contact.email}`} data-magnetic>
-                Email me
-              </a>
-            ) : (
-              <button type="button" className="hero-btn" onClick={onContact} data-magnetic>
-                Contact me
-              </button>
-            )}
+            {/* The form sends from any device; email links need a desktop mail app. */}
+            <button type="button" className="hero-btn" onClick={onContact} data-magnetic>
+              Contact me
+            </button>
           </div>
 
           <div className="hero__theme">

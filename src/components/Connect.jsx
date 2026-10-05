@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import { profile } from '../data/profile.js'
 import { useAskAssistant } from '../lib/assistantContext.js'
 import Panel from './Panel.jsx'
@@ -11,6 +12,8 @@ const ICONS = {
   phone: 'M8 3.5h8A1.5 1.5 0 0 1 17.5 5v14a1.5 1.5 0 0 1-1.5 1.5H8A1.5 1.5 0 0 1 6.5 19V5A1.5 1.5 0 0 1 8 3.5zM10.5 17.5h3',
   message: 'M4 5.5A1.5 1.5 0 0 1 5.5 4h13A1.5 1.5 0 0 1 20 5.5v9a1.5 1.5 0 0 1-1.5 1.5H10l-4.5 4v-4A1.5 1.5 0 0 1 4 14.5z',
   spark: 'M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8zM18.5 15.5l.8 2.2 2.2.8-2.2.8-.8 2.2-.8-2.2-2.2-.8 2.2-.8z',
+  copy: 'M9 9h10.5v10.5H9zM15 9V4.5H4.5V15H9',
+  check: 'M5 12.5l4.5 4.5L19 7.5',
 }
 
 function Icon({ name, filled = false }) {
@@ -28,7 +31,7 @@ function Icon({ name, filled = false }) {
   )
 }
 
-function Tile({ icon, filled, label, detail, href, onClick, external }) {
+function Tile({ icon, filled, label, detail, href, onClick, external, trailing }) {
   const content = (
     <>
       <span className="tile__icon">
@@ -39,7 +42,7 @@ function Tile({ icon, filled, label, detail, href, onClick, external }) {
         {detail && <span className="tile__detail">{detail}</span>}
       </span>
       <span className="tile__arrow" aria-hidden="true">
-        ↗
+        {trailing ?? '↗'}
       </span>
     </>
   )
@@ -60,6 +63,32 @@ function Tile({ icon, filled, label, detail, href, onClick, external }) {
 }
 
 const strip = (url) => url.replace(/^https?:\/\/(www\.)?/, '').replace(/\/$/, '')
+
+// Copies the address instead of opening a mailto: link, which does nothing on
+// devices without a mail app set up (most people use webmail).
+function EmailTile({ email }) {
+  const [copied, setCopied] = useState(false)
+
+  const copy = async () => {
+    try {
+      await navigator.clipboard.writeText(email)
+      setCopied(true)
+      setTimeout(() => setCopied(false), 2500)
+    } catch {
+      window.location.href = `mailto:${email}`
+    }
+  }
+
+  return (
+    <Tile
+      icon="mail"
+      label={copied ? 'Copied to clipboard' : 'Email · click to copy'}
+      detail={email}
+      onClick={copy}
+      trailing={<Icon name={copied ? 'check' : 'copy'} />}
+    />
+  )
+}
 
 export default function Connect({ onContact }) {
   const ask = useAskAssistant()
@@ -94,7 +123,7 @@ export default function Connect({ onContact }) {
           <ul className="connect__list">
             {contact.email && (
               <li className="stagger" style={{ '--i': 3 }}>
-                <Tile icon="mail" label="Email" detail={contact.email} href={`mailto:${contact.email}`} />
+                <EmailTile email={contact.email} />
               </li>
             )}
             {contact.phone && (
