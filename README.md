@@ -34,6 +34,7 @@ Written as Vercel functions (`export function GET/POST(request)`), deployed auto
 | Route | Needs | Without it |
 | --- | --- | --- |
 | `/api/chat` | `AI_API_KEY` and `AI_PROVIDER` (`anthropic` or `gemini`). Optional: `AI_MODEL` (default `claude-opus-5` / `gemini-3.5-flash-lite`), `AI_EFFORT` (Anthropic only, default `low`) | chat answers offline from `src/data` |
+| `/api/views` | `UPSTASH_REDIS_REST_URL`, `UPSTASH_REDIS_REST_TOKEN` (added by Vercel → Storage → Upstash for Redis) | the hero leaves out the visit count |
 | `/api/github` | optional `GITHUB_TOKEN` for GitHub's official API | uses a public no-key contributions API |
 | `/api/contact` | `RESEND_API_KEY`, `CONTACT_TO_EMAIL`, `CONTACT_FROM_EMAIL` | opens the visitor's email app if `profile.contact.email` is set, otherwise shows a notice |
 

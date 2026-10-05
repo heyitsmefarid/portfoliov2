@@ -6,6 +6,7 @@ import Divider from './Divider.jsx'
 import ThemeToggle from './ThemeToggle.jsx'
 import Portrait from './Portrait.jsx'
 import LocalTime from './LocalTime.jsx'
+import ViewCount from './ViewCount.jsx'
 import './Hero.css'
 
 const WIPE = [
@@ -99,6 +100,7 @@ export default function Hero({ onContact }) {
                 {profile.availability.label} — {profile.availability.detail}
               </li>
             )}
+            <ViewCount />
           </ul>
 
           <p className="hero__headline">{profile.headline}</p>

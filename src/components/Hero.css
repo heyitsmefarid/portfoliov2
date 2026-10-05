@@ -176,6 +176,11 @@
     animation-delay: 950ms;
   }
 
+  /* The visit count arrives after the page loads, so it fades in on its own */
+  .view-count {
+    animation: fade-up 500ms var(--ease-out) both;
+  }
+
   .status-dot::after {
     content: '';
     position: absolute;
