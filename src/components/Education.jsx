@@ -5,7 +5,7 @@ import './Timeline.css'
 export default function Education() {
   return (
     <Panel id="education" title="Education">
-      <ol className="timeline timeline--spread">
+      <ol className="timeline">
         {education.map((item, index) => (
           <li
             key={item.id}

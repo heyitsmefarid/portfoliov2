@@ -6,12 +6,6 @@
   padding-left: 26px;
 }
 
-/* Education spreads its entries over the panel's full height */
-.timeline--spread {
-  flex: 1;
-  align-content: space-between;
-}
-
 .timeline::before {
   content: '';
   position: absolute;
