@@ -64,7 +64,7 @@ export const projects = [
       height: 509,
     },
     cover: 'gear',
-    liveUrl: '',
+    liveUrl: 'https://meugearup.vercel.app',
     codeUrl: 'https://github.com/heyitsmefarid/meu_gearup',
     note: '',
   },
