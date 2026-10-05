@@ -2,12 +2,12 @@ import { useEffect, useMemo, useRef, useState } from 'react'
 import { profile } from '../data/profile.js'
 import { fetchContributions, formatDay, monthLabels, toWeeks } from '../lib/github.js'
 import Panel from './Panel.jsx'
-import ContributionSkyline from './ContributionSkyline.jsx'
 import './GithubActivity.css'
 
 const DAY_LABELS = ['', 'Mon', '', 'Wed', '', 'Fri', '']
 
-function Calendar({ data, weeks }) {
+function Calendar({ data }) {
+  const weeks = useMemo(() => toWeeks(data.days), [data.days])
   const months = useMemo(() => monthLabels(weeks), [weeks])
   const scrollRef = useRef(null)
 
@@ -51,28 +51,6 @@ function Calendar({ data, weeks }) {
         </div>
       </div>
     </div>
-  )
-}
-
-// Grid (like GitHub) or a 3D skyline of the same data.
-function ContributionViews({ data }) {
-  const weeks = useMemo(() => toWeeks(data.days), [data.days])
-  const [view, setView] = useState(() => (window.matchMedia('(min-width: 720px)').matches ? '3d' : 'grid'))
-
-  return (
-    <>
-      <div className="gh__views" role="group" aria-label="Graph style">
-        {[
-          ['grid', 'Grid'],
-          ['3d', '3D skyline'],
-        ].map(([key, label]) => (
-          <button key={key} type="button" className="gh__view" aria-pressed={view === key} onClick={() => setView(key)}>
-            {label}
-          </button>
-        ))}
-      </div>
-      {view === '3d' ? <ContributionSkyline weeks={weeks} total={data.total} /> : <Calendar data={data} weeks={weeks} />}
-    </>
   )
 }
 
@@ -141,7 +119,7 @@ export default function GithubActivity() {
     >
       <div className="gh" ref={bodyRef}>
         {state.status === 'ready' ? (
-          <ContributionViews data={state.data} />
+          <Calendar data={state.data} />
         ) : state.status === 'error' ? (
           <p className="gh__empty">
             Contribution data couldn't be loaded right now — the graph is on{' '}

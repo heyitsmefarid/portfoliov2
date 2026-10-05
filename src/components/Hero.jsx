@@ -5,8 +5,6 @@ import { prefersReducedMotion } from '../hooks/useReducedMotion.js'
 import Divider from './Divider.jsx'
 import ThemeToggle from './ThemeToggle.jsx'
 import Portrait from './Portrait.jsx'
-import HeroField from './HeroField.jsx'
-import TechOrbit from './TechOrbit.jsx'
 import LocalTime from './LocalTime.jsx'
 import './Hero.css'
 
@@ -60,14 +58,12 @@ export default function Hero({ onContact }) {
 
   return (
     <section id="top" className="hero" aria-labelledby="hero-title">
-      <HeroField />
       <Divider label={dividers.top} />
 
       <div className="container hero__inner">
         {photo && (
           <div className="hero__visual">
             <Portrait photo={photo} video={photo.video} />
-            <TechOrbit />
           </div>
         )}
 

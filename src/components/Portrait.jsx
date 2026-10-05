@@ -61,7 +61,6 @@ export default function Portrait({ photo, video }) {
       type="button"
       className="portrait"
       data-open={open}
-      data-cursor={open ? 'Playing' : 'Play'}
       aria-pressed={open}
       aria-label={`${photo.alt}. ${open ? 'Hide the video' : 'Play a short video'}`}
       onPointerDown={(event) => {

@@ -2,9 +2,9 @@
 //
 // Environment (server-side only, never exposed to the browser):
 //   AI_API_KEY   required — your provider API key
-//   AI_PROVIDER  optional — "anthropic" (default)
+//   AI_PROVIDER  optional — "anthropic" (default) | "gemini"
 //   AI_MODEL     optional — defaults to the provider's model in DEFAULT_MODELS
-//   AI_EFFORT    optional — "low" (default) | "medium" | "high"
+//   AI_EFFORT    optional — "low" (default) | "medium" | "high" (Anthropic only)
 //
 // With no AI_API_KEY the route answers 503 { error: "not_configured" } and the
 // chat widget switches to its offline answers.

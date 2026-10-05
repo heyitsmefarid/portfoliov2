@@ -5,13 +5,13 @@
 export const profile = {
   name: 'Fred Anthony Gallano',
   firstName: 'Fred',
-  role: 'Full-Stack Developer',
+  role: 'Aspiring Full-Stack Developer',
   focus: ['Full-Stack Developer', 'Web Developer', 'Mobile App Developer'],
   status: '4th Year BS Information Systems Student',
   // From the location on your public GitHub profile. Set to '' to hide it.
   location: 'Calapan City, Oriental Mindoro, Philippines',
   // Used for the live local-time line in the hero. Set to '' to hide it.
-  timeZone: 'Asia/Manila',
+  timeZone: '',
 
   // Portrait in the hero (currently your GitHub avatar). Replace the file in
   // /public/profile or set photo to null to hide it.
@@ -22,10 +22,7 @@ export const profile = {
     height: 460,
     // Plays behind the photo when it's hovered (the "curtain"). Set to null
     // to turn the effect off. Keep it short, muted-friendly and small (< 2 MB).
-    video: {
-      src: '/profile/hover.mp4',
-      poster: '/profile/hover-poster.webp',
-    },
+    video: null,
   },
 
   availability: {

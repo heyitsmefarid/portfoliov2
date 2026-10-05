@@ -4,9 +4,9 @@ import './CursorCompanion.css'
 
 // An amber ring that trails the mouse (the normal cursor stays visible). It
 // grows over anything clickable, and over elements with data-cursor="…" it
-// becomes a small label — "Play" on the portrait, "Drag" on the skyline.
+// becomes a small label.
 // Mouse only; off for touch and reduced motion.
-const INTERACTIVE = 'a, button, [role="switch"], summary, label, .gh__skyline'
+const INTERACTIVE = 'a, button, [role="switch"], summary, label'
 const TEXT_FIELDS = 'input, textarea, [contenteditable="true"]'
 
 export default function CursorCompanion() {
