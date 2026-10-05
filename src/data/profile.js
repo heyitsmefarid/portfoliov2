@@ -48,13 +48,15 @@ export const profile = {
   ],
 
   contact: {
-    // TODO: add the email you want visitors to use, e.g. 'name@example.com'.
-    email: '',
+    email: 'gallanofredanthony15@gmail.com',
+    // Shown as written; the call link uses the international form.
+    phone: '0997 503 5153',
+    phoneIntl: '+639975035153',
     githubUsername: 'heyitsmefarid',
     github: 'https://github.com/heyitsmefarid',
-    // TODO: paste full profile URLs to show these links.
+    // TODO: paste your full LinkedIn profile URL to show it.
     linkedin: '',
-    facebook: '',
+    facebook: 'https://www.facebook.com/gallanofredanthony.27/',
   },
 
   // TODO: link a PDF résumé (e.g. '/resume.pdf' placed in /public) to show a download link.

@@ -60,7 +60,7 @@ function findSkill(text) {
 
 // Personal topics the portfolio deliberately doesn't cover.
 const UNKNOWN_PERSONAL = [
-  'age', 'old', 'birthday', 'born', 'phone', 'number', 'address', 'hobby', 'hobbies',
+  'age', 'old', 'birthday', 'born', 'address', 'hobby', 'hobbies',
   'girlfriend', 'boyfriend', 'married', 'family', 'religion', 'salary', 'rate', 'gpa',
   'grades', 'favorite', 'favourite',
 ]
@@ -126,6 +126,7 @@ function describeContact() {
   const { contact } = profile
   const lines = []
   if (contact.email) lines.push(`- Email: ${contact.email}`)
+  if (contact.phone) lines.push(`- Phone: ${contact.phone}`)
   lines.push(`- GitHub: ${contact.github}`)
   if (contact.linkedin) lines.push(`- LinkedIn: ${contact.linkedin}`)
   if (contact.facebook) lines.push(`- Facebook: ${contact.facebook}`)
@@ -150,7 +151,8 @@ export function answerLocally(question) {
     return `The portfolio does not currently provide that information. ${FALLBACK_HINT}`
   }
 
-  if (hasAny(text, ['contact', 'email', 'reach', 'hire', 'linkedin', 'facebook', 'get in touch'])) {
+  const CONTACT_WORDS = ['contact', 'email', 'reach', 'hire', 'linkedin', 'facebook', 'get in touch', 'phone', 'cellphone', 'mobile number', 'his number', 'call him', 'text him']
+  if (hasAny(text, CONTACT_WORDS)) {
     return describeContact()
   }
 

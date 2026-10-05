@@ -73,6 +73,7 @@ export function buildPortfolioContext() {
   lines.push('')
   lines.push('Contact:')
   lines.push(`- Email: ${orNotListed(contact.email)}`)
+  lines.push(`- Phone: ${orNotListed(contact.phone)}`)
   lines.push(`- GitHub: ${contact.github} (username ${contact.githubUsername})`)
   lines.push(`- LinkedIn: ${orNotListed(contact.linkedin)}`)
   lines.push(`- Facebook: ${orNotListed(contact.facebook)}`)
