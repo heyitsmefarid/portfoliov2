@@ -27,8 +27,8 @@ export const projects = [
     },
     cover: 'grid',
     liveUrl: 'https://iskonnect-scholar.web.app',
-    codeUrl: 'https://github.com/heyitsmefarid/capfinal',
-    note: '',
+    codeUrl: '',
+    note: 'Private repository',
   },
   {
     id: 'tailfinder',
