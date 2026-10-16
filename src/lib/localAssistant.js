@@ -36,6 +36,7 @@ function hasWord(text, words) {
 
 const PROJECT_ALIASES = {
   iskonnect: ['iskonnect', 'iskonek', 'scholarship', 'capstone'],
+  studyspace: ['studyspace', 'study space', 'flashcards', 'nova'],
   tailfinder: ['tailfinder', 'tail finder', 'pet', 'pets', 'adoption'],
   'meu-gear-up': ['meu', 'gear up', 'gearup', 'motorcycle'],
   checkers: ['checkers', 'checker'],

@@ -31,6 +31,25 @@ export const projects = [
     note: 'Private repository',
   },
   {
+    id: 'studyspace',
+    name: 'StudySpace',
+    subtitle: 'Shared study space for two',
+    kind: 'Web app',
+    description:
+      'A private study app for two people: rich-text notes, spaced-repetition flashcards, quizzes, a planner, a focus timer, and Nova, an AI tutor that runs server-side on Gemini with Groq as the fallback. Every study session adds a star to a shared sky. Data is protected by Postgres row-level security.',
+    tech: ['React', 'TypeScript', 'Tailwind CSS', 'Supabase', 'PostgreSQL', 'Gemini API'],
+    image: {
+      src: '/projects/studyspace-login.webp',
+      alt: 'StudySpace login page at night: a constellation linking "you" to "your person" above the headline "A study sky for two.", beside a "Welcome back to your sky" log-in card.',
+      width: 1280,
+      height: 800,
+    },
+    cover: 'grid',
+    liveUrl: 'https://studyspace-murex.vercel.app',
+    codeUrl: 'https://github.com/heyitsmefarid/studyspace',
+    note: '',
+  },
+  {
     id: 'tailfinder',
     name: 'TailFinder',
     subtitle: 'Pet Adoption Management System',
