@@ -46,8 +46,8 @@ export const projects = [
     },
     cover: 'grid',
     liveUrl: '',
-    codeUrl: 'https://github.com/heyitsmefarid/baha-advisory',
-    note: 'Not hosted yet',
+    codeUrl: '',
+    note: 'Private repository',
   },
   {
     id: 'studyspace',
