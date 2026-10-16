@@ -39,6 +39,7 @@ const PROJECT_ALIASES = {
   studyspace: ['studyspace', 'study space', 'flashcards', 'nova'],
   tailfinder: ['tailfinder', 'tail finder', 'pet', 'pets', 'adoption'],
   'meu-gear-up': ['meu', 'gear up', 'gearup', 'motorcycle'],
+  'library-management': ['library management', 'library system', 'library attendance', 'librarian', 'borrowing'],
   checkers: ['checkers', 'checker'],
   'guhit-arts': ['guhit', 'arts center', 'printing'],
 }

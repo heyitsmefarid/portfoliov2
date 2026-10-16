@@ -88,6 +88,25 @@ export const projects = [
     note: '',
   },
   {
+    id: 'library-management',
+    name: 'Library Management System',
+    subtitle: 'Library attendance and borrowing system',
+    kind: 'Web app',
+    description:
+      'A librarian’s desk system for attendance time-in and time-out, book lending and returns, overdue notifications, penalties with receipts, and printable reports. Borrowing rules are enforced (overdue books, loan limits, duplicate titles), and every form is CSRF-protected with throttled sign-ins.',
+    tech: ['PHP', 'MySQL', 'PDO', 'Chart.js'],
+    image: {
+      src: '/projects/library-dashboard.webp',
+      alt: 'School Library dashboard greeting "Good morning, Librarian." with Record attendance, Lend a book and Return a book buttons, counts of users, book titles and copies on the shelf, a Due back soon table, and a Needs attention checklist.',
+      width: 1280,
+      height: 800,
+    },
+    cover: 'grid',
+    liveUrl: 'http://library-management.gamer.free/login.php',
+    codeUrl: 'https://github.com/heyitsmefarid/library-management-system',
+    note: '',
+  },
+  {
     id: 'checkers',
     name: 'Checkers Game',
     subtitle: 'Windows desktop game',
