@@ -31,6 +31,25 @@ export const projects = [
     note: 'Private repository',
   },
   {
+    id: 'bahadvisory',
+    name: 'Bahadvisory',
+    subtitle: 'Flood safety platform for Oriental Mindoro',
+    kind: 'Team project',
+    description:
+      'Extended an existing flood map into a full flood-safety platform. My additions: safe-route navigation on real roads that avoids verified floods by vehicle type, a Baha AI assistant and AI-checked community reports (Gemini with Groq as the fallback), and paid subscription plans for LGUs and businesses with PayMongo and Xendit checkout. Covered by unit, Firestore-rules and browser tests.',
+    tech: ['React', 'TypeScript', 'Firebase', 'Leaflet', 'Gemini API', 'Groq'],
+    image: {
+      src: '/projects/bahadvisory-map.webp',
+      alt: 'Bahadvisory flood map of Calapan and Naujan on simulated demo data: counts of 5 active flood zones, 2 closed roads, 4 open centers and 1 alert, flood zones listed by town, and Report flooding, Safe route and Ask Baha AI buttons.',
+      width: 1280,
+      height: 800,
+    },
+    cover: 'grid',
+    liveUrl: '',
+    codeUrl: 'https://github.com/heyitsmefarid/baha-advisory',
+    note: 'Not hosted yet',
+  },
+  {
     id: 'studyspace',
     name: 'StudySpace',
     subtitle: 'Shared study space for two',
