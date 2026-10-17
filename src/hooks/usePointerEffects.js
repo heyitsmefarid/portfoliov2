@@ -1,7 +1,7 @@
 import { useEffect } from 'react'
 import { prefersReducedMotion } from './useReducedMotion.js'
 
-const GLOW_TARGETS = '.panel, .project, .tile, .cert'
+const GLOW_TARGETS = '.panel, .deck__card, .tile, .cert, .gallery__item, .project-row'
 const MAGNET_RADIUS = 90
 
 // Two small pointer effects, mouse only:

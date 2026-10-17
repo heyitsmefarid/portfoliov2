@@ -15,11 +15,11 @@
 }
 
 .badge::before {
-  content: '❮';
+  content: '‹';
   opacity: 0.7;
 }
 
 .badge::after {
-  content: '❯';
+  content: '›';
   opacity: 0.7;
 }
