@@ -28,8 +28,13 @@ export async function clip(page, outDir, name, steps, { fps = 8 } = {}) {
     while (running) {
       const at = Date.now()
       const file = `${String(frames.length).padStart(4, '0')}.jpg`
-      await page.screenshot({ path: join(dir, file), type: 'jpeg', quality: 85 })
-      frames.push({ file, ms: at - started })
+      try {
+        // Mid-navigation a frame can stall (e.g. waiting for web fonts); skip it.
+        await page.screenshot({ path: join(dir, file), type: 'jpeg', quality: 85, timeout: 2500 })
+        frames.push({ file, ms: at - started })
+      } catch {
+        // Keep going with the next frame.
+      }
       const wait = 1000 / fps - (Date.now() - at)
       if (wait > 0) await new Promise((resolve) => setTimeout(resolve, wait))
     }
