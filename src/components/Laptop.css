@@ -1,0 +1,38 @@
+/* Laptop frame for real screenshots */
+.laptop__screen {
+  padding: 5px;
+  border-radius: 7px 7px 2px 2px;
+  background: var(--laptop-bezel);
+  box-shadow: inset 0 0 0 1px var(--laptop-edge);
+}
+
+.laptop__screen img {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 16 / 10;
+  object-fit: cover;
+  object-position: left top;
+  border-radius: 2px;
+  background: #000;
+}
+
+.laptop__base {
+  position: relative;
+  height: 9px;
+  margin: 0 -9%;
+  border-radius: 1px 1px 7px 7px;
+  background: var(--laptop-base);
+}
+
+.laptop__base::before {
+  content: '';
+  position: absolute;
+  left: 50%;
+  top: 0;
+  width: 18%;
+  height: 3px;
+  transform: translateX(-50%);
+  border-radius: 0 0 4px 4px;
+  background: var(--laptop-notch);
+}
