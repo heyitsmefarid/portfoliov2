@@ -3,7 +3,7 @@ import { sections, sectionNumber } from '../data/sections.js'
 import { projects } from '../data/projects.js'
 import { profile } from '../data/profile.js'
 import { useAskAssistant } from '../lib/assistantContext.js'
-import { scrollToId } from '../lib/scroll.js'
+import { navigate } from '../lib/router.js'
 import { getTheme, toggleTheme } from '../lib/theme.js'
 import './CommandPalette.css'
 
@@ -16,14 +16,21 @@ const STATIC_ITEMS = [
     group: 'Go to',
     label: section.label,
     hint: sectionNumber(section.id),
-    run: () => scrollToId(section.id),
+    run: () => navigate(`/#${section.id}`),
   })),
+  {
+    id: 'all-projects',
+    group: 'Projects',
+    label: 'All projects',
+    hint: '/projects',
+    run: () => navigate('/projects'),
+  },
   ...projects.map((project) => ({
     id: `project-${project.id}`,
     group: 'Projects',
     label: project.name,
     hint: project.subtitle,
-    run: () => scrollToId(`project-${project.id}`),
+    run: () => navigate(`/projects/${project.id}`),
   })),
   {
     id: 'github',
@@ -37,7 +44,7 @@ const STATIC_ITEMS = [
     group: 'Links',
     label: 'Back to top',
     hint: '↑',
-    run: () => scrollToId('top'),
+    run: () => window.scrollTo({ top: 0 }),
   },
   {
     id: 'theme',

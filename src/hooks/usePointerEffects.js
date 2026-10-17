@@ -9,7 +9,7 @@ const MAGNET_RADIUS = 90
 //    border can light up where the cursor is (see Panel.css).
 //  - Magnet: elements with [data-magnetic] lean towards a nearby cursor.
 //    Uses the `translate` property so it never fights their own transforms.
-export function usePointerEffects() {
+export function usePointerEffects(key) {
   useEffect(() => {
     const finePointer = window.matchMedia('(hover: hover) and (pointer: fine)').matches
     if (!finePointer) return
@@ -62,5 +62,5 @@ export function usePointerEffects() {
         magnet.style.translate = ''
       })
     }
-  }, [])
+  }, [key])
 }

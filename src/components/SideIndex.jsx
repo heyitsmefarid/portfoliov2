@@ -1,6 +1,8 @@
 import { useEffect, useRef } from 'react'
 import { sections, sectionNumber } from '../data/sections.js'
 import { useScrollSpy } from '../hooks/useScrollSpy.js'
+import { usePathname } from '../lib/router.js'
+import Link from './Link.jsx'
 import './SideIndex.css'
 
 const SECTION_IDS = sections.map((section) => section.id)
@@ -11,7 +13,8 @@ const SHORTCUT = IS_MAC ? '⌘K' : 'Ctrl K'
 // left edge with a scroll-progress line (names appear on hover/focus).
 // Smaller screens: a Menu button in the bottom-left that opens the command menu.
 export default function SideIndex({ onOpenMenu }) {
-  const active = useScrollSpy(SECTION_IDS)
+  const spied = useScrollSpy(SECTION_IDS)
+  const active = usePathname() === '/' ? spied : null
   const progressRef = useRef(null)
 
   useEffect(() => {
@@ -38,23 +41,23 @@ export default function SideIndex({ onOpenMenu }) {
   return (
     <>
       <nav className="side-index" aria-label="Sections">
-        <a className="side-index__logo" href="#top" aria-label="Fred Anthony Gallano, back to top">
+        <Link className="side-index__logo" href="/#top" aria-label="Fred Anthony Gallano, back to top">
           F<span aria-hidden="true" />
-        </a>
+        </Link>
 
         <div className="side-index__rail">
           <span className="side-index__progress" ref={progressRef} aria-hidden="true" />
           <ol>
             {sections.map((section, index) => (
               <li key={section.id} style={{ '--i': index }}>
-                <a
+                <Link
                   className="side-index__link"
-                  href={`#${section.id}`}
+                  href={`/#${section.id}`}
                   aria-current={active === section.id ? 'location' : undefined}
                 >
                   <span className="side-index__num">{sectionNumber(section.id)}</span>
                   <span className="side-index__label">{section.label}</span>
-                </a>
+                </Link>
               </li>
             ))}
           </ol>

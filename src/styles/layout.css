@@ -64,3 +64,26 @@
     grid-template-columns: minmax(0, 1fr);
   }
 }
+
+/* ── Not found ──────────────────────────────────────────────────────────── */
+.not-found {
+  padding-block: 120px;
+  text-align: center;
+}
+
+.not-found__title {
+  font-family: var(--font-mono);
+  font-size: 4rem;
+  color: var(--accent);
+}
+
+.not-found__text {
+  margin-block: 8px 20px;
+  color: var(--muted);
+}
+
+.not-found__links {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+}

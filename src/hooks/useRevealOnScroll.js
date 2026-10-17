@@ -4,7 +4,7 @@ import { prefersReducedMotion } from './useReducedMotion.js'
 // Fades [data-reveal] elements in the first time they scroll into view.
 // Skipped entirely for visitors who prefer reduced motion — content is visible
 // by default and only hidden once this has run.
-export function useRevealOnScroll() {
+export function useRevealOnScroll(key) {
   useEffect(() => {
     if (prefersReducedMotion() || !('IntersectionObserver' in window)) return
 
@@ -27,5 +27,5 @@ export function useRevealOnScroll() {
     root.classList.add('reveal-ready')
 
     return () => observer.disconnect()
-  }, [])
+  }, [key])
 }

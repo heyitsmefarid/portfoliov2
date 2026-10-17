@@ -6,7 +6,7 @@ import { prefersReducedMotion } from './useReducedMotion.js'
 //    drift at different depths as the mouse moves (mouse only).
 //  - Scroll lean: sets --skew on <html> from scroll speed; the panel grid
 //    leans a little while you scroll fast and settles when you stop.
-export function useMotionFx() {
+export function useMotionFx(key) {
   useEffect(() => {
     if (prefersReducedMotion()) return
 
@@ -67,5 +67,5 @@ export function useMotionFx() {
       window.removeEventListener('scroll', wake)
       root.style.removeProperty('--skew')
     }
-  }, [])
+  }, [key])
 }
