@@ -21,3 +21,20 @@
 .demo__toggle:hover {
   border-color: var(--accent);
 }
+
+/* The clip sits on top of the poster and fades in once it has loaded */
+.demo__screen {
+  position: relative;
+  display: block;
+}
+
+.demo__clip {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transition: opacity 300ms ease;
+}
+
+.demo__clip[data-loaded='true'] {
+  opacity: 1;
+}

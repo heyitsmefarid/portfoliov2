@@ -41,6 +41,8 @@ export function navigate(href) {
   // Let React render the new page first, then scroll.
   requestAnimationFrame(() => {
     if (url.hash) scrollToId(decodeURIComponent(url.hash.slice(1)))
-    else if (!samePath) window.scrollTo(0, 0)
+    // 'instant': the page sets scroll-behavior: smooth, which would otherwise
+    // animate up from wherever the previous page was scrolled.
+    else if (!samePath) window.scrollTo({ top: 0, left: 0, behavior: 'instant' })
   })
 }

@@ -3,25 +3,27 @@ import { prefersReducedMotion } from '../hooks/useReducedMotion.js'
 import LaptopShot from './LaptopShot.jsx'
 import './DemoPlayer.css'
 
-// An animated WebP clip in the laptop frame. Paused = the poster still.
-// Plays while on screen (never on its own with reduced motion). Without a
-// clip, or if it fails to load, shows the project's screenshot instead.
+// An animated WebP clip in the laptop frame. The poster still is always there
+// underneath; the clip fades in over it once it has loaded and plays while on
+// screen (never on its own with reduced motion). If the clip can't load, the
+// poster stays. Without a clip at all, shows the project's screenshot.
 export default function DemoPlayer({ demo, fallback, label }) {
   const ref = useRef(null)
   const [playing, setPlaying] = useState(false)
   const [userPaused, setUserPaused] = useState(false)
+  const [loaded, setLoaded] = useState(false)
   const [failed, setFailed] = useState(false)
 
   useEffect(() => {
-    if (!demo || prefersReducedMotion() || !('IntersectionObserver' in window)) return
+    if (!demo || failed || prefersReducedMotion() || !('IntersectionObserver' in window)) return
     const observer = new IntersectionObserver(([entry]) => setPlaying(entry.isIntersecting && !userPaused), {
       threshold: 0.4,
     })
     observer.observe(ref.current)
     return () => observer.disconnect()
-  }, [demo, userPaused])
+  }, [demo, failed, userPaused])
 
-  if (!demo || failed) {
+  if (!demo) {
     return fallback ? <LaptopShot {...fallback} eager /> : null
   }
 
@@ -33,18 +35,30 @@ export default function DemoPlayer({ demo, fallback, label }) {
   return (
     <figure className="demo" ref={ref}>
       <LaptopShot>
-        <img
-          key={playing ? 'clip' : 'poster'}
-          src={playing ? demo.src : demo.poster}
-          alt={`${label} demo${playing ? '' : ' (paused)'}`}
-          width={demo.width}
-          height={demo.height}
-          onError={() => setFailed(true)}
-        />
+        <span className="demo__screen">
+          <img src={demo.poster} alt={`${label} demo`} width={demo.width} height={demo.height} />
+          {playing && !failed && (
+            <img
+              className="demo__clip"
+              data-loaded={loaded}
+              src={demo.src}
+              alt=""
+              width={demo.width}
+              height={demo.height}
+              onLoad={() => setLoaded(true)}
+              onError={() => {
+                setFailed(true)
+                setPlaying(false)
+              }}
+            />
+          )}
+        </span>
       </LaptopShot>
-      <button type="button" className="demo__toggle" onClick={toggle} aria-pressed={playing}>
-        {playing ? 'Pause demo' : 'Play demo'}
-      </button>
+      {!failed && (
+        <button type="button" className="demo__toggle" onClick={toggle}>
+          {playing ? 'Pause demo' : 'Play demo'}
+        </button>
+      )}
     </figure>
   )
 }

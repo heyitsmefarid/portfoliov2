@@ -103,6 +103,12 @@ export default function Chatbot({ ref }) {
     launcherRef.current?.focus()
   }
 
+  // On phones the panel covers the whole page, so close it when a link in an
+  // answer opens a portfolio page; on wider screens the page shows beside it.
+  const onLinkClick = () => {
+    if (window.matchMedia('(max-width: 640px)').matches) setOpen(false)
+  }
+
   const reset = () => {
     commit([GREETING])
     inputRef.current?.focus()
@@ -192,7 +198,7 @@ export default function Chatbot({ ref }) {
           {messages.map((message) => (
             <div key={message.id} className={`chat__msg chat__msg--${message.role}`}>
               <span className="visually-hidden">{message.role === 'user' ? 'You said:' : 'Assistant:'}</span>
-              <ChatText text={message.content} />
+              <ChatText text={message.content} onLinkClick={onLinkClick} />
             </div>
           ))}
 

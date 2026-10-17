@@ -7,19 +7,19 @@ import Link from './Link.jsx'
 
 const TOKEN = /(\*\*[^*]+\*\*|https?:\/\/[^\s)]+)/g
 
-function Plain({ text }) {
+function Plain({ text, onLinkClick }) {
   return splitInternalLinks(text).map((part, index) =>
     typeof part === 'string' ? (
       part
     ) : (
-      <Link key={index} href={part.path}>
+      <Link key={index} href={part.path} onClick={onLinkClick}>
         {part.path}
       </Link>
     ),
   )
 }
 
-function Inline({ text }) {
+function Inline({ text, onLinkClick }) {
   return text.split(TOKEN).map((part, index) => {
     if (part.startsWith('**') && part.endsWith('**') && part.length > 4) {
       return <strong key={index}>{part.slice(2, -2)}</strong>
@@ -36,11 +36,12 @@ function Inline({ text }) {
         </span>
       )
     }
-    return <Plain key={index} text={part} />
+    return <Plain key={index} text={part} onLinkClick={onLinkClick} />
   })
 }
 
-export default function ChatText({ text }) {
+// onLinkClick runs when a portfolio link is followed (the chat closes itself on phones).
+export default function ChatText({ text, onLinkClick }) {
   const blocks = text.trim().split(/\n{2,}/)
 
   return blocks.map((block, index) => {
@@ -50,7 +51,7 @@ export default function ChatText({ text }) {
         <ul key={index}>
           {lines.map((line, i) => (
             <li key={i}>
-              <Inline text={line.replace(/^\s*[-•*]\s+/, '')} />
+              <Inline text={line.replace(/^\s*[-•*]\s+/, '')} onLinkClick={onLinkClick} />
             </li>
           ))}
         </ul>
@@ -61,7 +62,7 @@ export default function ChatText({ text }) {
         {lines.map((line, i) => (
           <span key={i}>
             {i > 0 && <br />}
-            <Inline text={line} />
+            <Inline text={line} onLinkClick={onLinkClick} />
           </span>
         ))}
       </p>
