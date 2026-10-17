@@ -71,6 +71,7 @@ const UNKNOWN_PERSONAL = [
 function describeProject(project) {
   const lines = [`**${project.name}** — ${project.subtitle}.`, project.description]
   lines.push(`Built with: ${project.tech.join(', ')}.`)
+  lines.push(`Features, screenshots and a demo: /projects/${project.id}`)
   const links = []
   if (project.liveUrl) links.push(`Live: ${project.liveUrl}`)
   if (project.codeUrl) links.push(`Code: ${project.codeUrl}`)

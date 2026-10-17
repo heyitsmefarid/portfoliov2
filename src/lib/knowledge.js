@@ -58,6 +58,7 @@ export function buildPortfolioContext() {
     lines.push(`${index + 1}. ${project.name} — ${project.subtitle} (${project.kind})`)
     lines.push(`   ${project.description}`)
     lines.push(`   Technologies: ${project.tech.join(', ')}`)
+    lines.push(`   Page in this portfolio: /projects/${project.id}`)
     lines.push(`   Live demo: ${orNotListed(project.liveUrl)}`)
     lines.push(`   Source code: ${project.codeUrl || project.note || NOT_LISTED}`)
   })

@@ -1,7 +1,23 @@
+import { splitInternalLinks } from '../lib/chatLinks.js'
+import Link from './Link.jsx'
+
 // Renders assistant replies safely (no HTML injection): paragraphs, "- " bullet
-// lists, **bold**, and plain URLs turned into links.
+// lists, **bold**, plain URLs turned into links, and portfolio paths such as
+// /projects/studyspace turned into in-app links.
 
 const TOKEN = /(\*\*[^*]+\*\*|https?:\/\/[^\s)]+)/g
+
+function Plain({ text }) {
+  return splitInternalLinks(text).map((part, index) =>
+    typeof part === 'string' ? (
+      part
+    ) : (
+      <Link key={index} href={part.path}>
+        {part.path}
+      </Link>
+    ),
+  )
+}
 
 function Inline({ text }) {
   return text.split(TOKEN).map((part, index) => {
@@ -20,7 +36,7 @@ function Inline({ text }) {
         </span>
       )
     }
-    return part
+    return <Plain key={index} text={part} />
   })
 }
 
