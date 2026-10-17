@@ -16,3 +16,6 @@ npm-debug.log*
 # Local agent workspaces
 .claude/worktrees/
 .superpowers/
+
+# Capture scratch output
+scripts/capture/out/
