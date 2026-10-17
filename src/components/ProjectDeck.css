@@ -10,6 +10,8 @@
   display: grid;
   place-items: center;
   min-height: 470px;
+  /* Side cards lean out past narrow screens; never let them scroll the page */
+  overflow-x: clip;
 }
 
 .deck__card {
