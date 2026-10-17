@@ -57,12 +57,26 @@ try {
     await page.waitForURL('**/projects')
     await page.locator(`.project-row__name a[href="/projects/${projects[0].id}"]`).click()
     await page.waitForURL(`**/projects/${projects[0].id}`)
+    // Sections fade in as they enter the viewport. After jumping to the bottom,
+    // what's on screen must be visible, and scrolling back up must reveal the
+    // sections the jump skipped.
+    const hiddenOnScreen = () =>
+      page.evaluate(() =>
+        [...document.querySelectorAll('[data-reveal]')].some((el) => {
+          const r = el.getBoundingClientRect()
+          const onScreen = r.bottom > 0 && r.top < window.innerHeight
+          return onScreen && Number(getComputedStyle(el).opacity) < 0.9
+        }),
+      )
     await page.locator('.project-page__section').last().scrollIntoViewIfNeeded()
     await page.waitForTimeout(900)
-    const hidden = await page.evaluate(() =>
-      [...document.querySelectorAll('[data-reveal]')].some((el) => Number(getComputedStyle(el).opacity) < 0.9),
-    )
-    if (hidden) failures.push(`${label}: content still hidden after client navigation`)
+    let hidden = await hiddenOnScreen()
+    for (const section of await page.locator('.project-page__section').all()) {
+      await section.scrollIntoViewIfNeeded()
+      await page.waitForTimeout(900)
+      hidden ||= await hiddenOnScreen()
+    }
+    if (hidden) failures.push(`${label}: on-screen content still hidden after client navigation`)
     await page.goBack()
     await page.waitForTimeout(300)
     if (!page.url().endsWith('/projects')) failures.push(`${label}: back went to ${page.url()}`)
