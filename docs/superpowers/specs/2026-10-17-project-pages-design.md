@@ -64,12 +64,12 @@ Existing fields stay. New fields per project:
 | `platform` | string[] | Used by filters: `web`, `mobile`, `desktop`, `ai`. |
 | `features` | `{ icon, title, text }[]` | 4–6 items. `icon` is a name from a small inline icon set. |
 | `gallery` | `{ src, alt, caption, width, height }[]` | 3–6 screenshots. |
-| `demo` | `{ src, poster, width, height } \| null` | Muted looping clip. |
+| `demo` | `{ src, poster, width, height } \| null` | Animated WebP clip plus a still poster. |
 | `build` | string[] | 2–4 "how it's built" bullets. |
 
 The existing `image` stays as the card thumbnail. Media lives in
-`public/projects/<id>/` (WebP stills, WebM clips with an MP4 fallback when the
-size allows). Target ≤ 2 MB per clip, ≤ 150 KB per still.
+`public/projects/<id>/` (WebP stills, animated WebP clips). Target ≤ 2 MB per
+clip, ≤ 150 KB per still.
 
 ## Components
 
@@ -78,7 +78,7 @@ size allows). Target ≤ 2 MB per clip, ≤ 150 KB per still.
 | `components/ProjectDeck.jsx` + `.css` | Home deck: three fanned cards; front card shows badges, icon, name, pitch, links. Click / ← → / swipe brings a card to the front; clicking the front card opens its page. Hovering the front card plays its demo muted. Reduced motion: static row, no autoplay. |
 | `pages/ProjectsPage.jsx` + `.css` | Header, filter chips (All · Web · Mobile · Desktop · AI), one row per project, each linking to its page. |
 | `pages/ProjectPage.jsx` + `.css` | Hero, demo, features, gallery, build notes, previous/next. |
-| `components/DemoPlayer.jsx` | Laptop-framed `<video muted loop playsinline>` that plays only while visible, with a play/pause button and a poster; never autoplays under reduced motion. |
+| `components/DemoPlayer.jsx` | Laptop-framed animated WebP that plays only while visible (paused = poster still), with a play/pause button; never autoplays under reduced motion. |
 | `components/Gallery.jsx` | Screenshot grid opening a lightbox; reuses the certificate viewer's dialog pattern (focus trap, Esc, arrow keys). |
 | `components/Badge.jsx` | Pill used by the deck, list and page. |
 | `lib/router.js` | As above. |
@@ -91,9 +91,10 @@ pages.
 
 ## Media capture
 
-All capture is scripted with Playwright (already installed in StudySpace) and
-runs on the local machine. Clips are recorded with Playwright's video
-recording and trimmed and converted with the ffmpeg that ships with Playwright.
+All capture is scripted with Playwright and runs on the local machine. Clips
+are captured as timed screenshot frames and encoded to animated WebP with
+Python's PIL (Playwright's bundled ffmpeg can only record, not trim or convert,
+and no new tools are installed).
 Temporary accounts are removed and every server started for capture is stopped
 afterwards.
 
@@ -105,14 +106,14 @@ afterwards.
 | MEU Gear Up | Its static demo build (`dist/`, `demo.js`) |
 | TailFinder | Its static demo build (`static-build/`, `demo_seed.sql`) |
 | Checkers | The web version in `checkers/public` |
-| StudySpace | Local dev server against a fresh throwaway backend, never the real Supabase project. If that isn't practical: public pages only, after asking. |
+| StudySpace | Local dev server with every Supabase request answered by Playwright network mocks serving fake data (Docker, needed for a local Supabase, isn't installed). Never the real Supabase project. If mocking can't reach the main screens: public pages only, after asking. |
 | ISKONNECT | Its admin UI against the emulator if it runs locally; otherwise a selection from the existing `Screenshots/` folder containing no real student data, shown to Fred before use. |
 
 ## Error handling
 
 - A missing `demo` hides the demo block; a missing `gallery` hides the gallery;
   a project with neither still renders hero, features and build notes.
-- A video that fails to load falls back to its poster.
+- A clip that fails to load falls back to its poster.
 - Unknown routes render the not-found page instead of a blank screen.
 
 ## Testing
