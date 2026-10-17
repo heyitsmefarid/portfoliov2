@@ -1,14 +1,25 @@
-// Projects shown in the Projects section, in display order. The first project
-// is featured (shown larger).
+// Projects, in display order. They appear on the home page (featured ones, as a
+// fanned deck), on /projects, and each on its own page at /projects/<id>.
 //
 // To add a project, copy one object and edit it:
-//   image    – a screenshot in /public/projects (use .webp, ~1400px wide), or null
-//              to show a generated cover. Always write a real `alt`.
-//   cover    – cover art used when there is no image: 'board' | 'gear' | 'paw' |
-//              'halftone' | 'grid'
-//   liveUrl  – a public demo link, or '' to hide "View project"
-//   codeUrl  – a repository link, or '' to hide "View code"
-//   note     – short text shown instead of missing links (optional)
+//   image     – the main screenshot in /public/projects (.webp, ~1280px wide), or
+//               null to show a generated cover. Always write a real `alt`.
+//   cover     – cover art used when there is no image: 'board' | 'gear' | 'paw' |
+//               'halftone' | 'grid'
+//   liveUrl   – a public demo link, or '' to hide "View project"
+//   codeUrl   – a repository link, or '' to hide "View code"
+//   note      – short text shown instead of missing links (optional)
+//   featured  – true for the three projects in the home deck
+//   badges    – 1–3 short, TRUE labels in capitals (no invented awards)
+//   pitch     – one line (≤ 110 characters) for cards and the list
+//   role      – your part, when it isn't the whole project (optional)
+//   platform  – any of 'web' | 'mobile' | 'desktop' | 'ai' (used by filters)
+//   features  – 4–6 { icon, title, text }; icons are listed in FeatureIcon.jsx
+//   gallery   – screenshots { src, alt, caption, width, height } (can be empty)
+//   demo      – { src, poster, width, height } animated WebP clip, or null
+//   build     – 2–4 "how it's built" lines
+//
+// `npm test` checks every project against these rules.
 
 export const projects = [
   {
@@ -29,6 +40,25 @@ export const projects = [
     liveUrl: 'https://iskonnect-scholar.web.app',
     codeUrl: '',
     note: 'Private repository',
+    featured: true,
+    badges: ['CAPSTONE', 'MOBILE + WEB'],
+    pitch: 'Scholarship management for applicants, scholars and the office that runs them.',
+    platform: ['mobile', 'web'],
+    features: [
+      { icon: 'users', title: 'Applicants & scholars', text: 'Applications, scholar records and statuses in one place.' },
+      { icon: 'list', title: 'Requirements', text: 'Track submitted and missing requirements per scholar.' },
+      { icon: 'book', title: 'Academic records', text: 'Grades and academic standing kept with each scholar.' },
+      { icon: 'calendar', title: 'Attendance', text: 'Attendance for scholar activities, recorded and reviewed.' },
+      { icon: 'bell', title: 'Announcements', text: 'Post updates that reach scholars on their phones.' },
+      { icon: 'chart', title: 'Monitoring', text: 'Reports that show how the program is doing.' },
+    ],
+    gallery: [],
+    demo: null,
+    build: [
+      'Flutter mobile app for scholars.',
+      'React admin panel for the scholarship office.',
+      'NestJS API with PostgreSQL through Prisma.',
+    ],
   },
   {
     id: 'bahadvisory',
@@ -48,6 +78,26 @@ export const projects = [
     liveUrl: '',
     codeUrl: '',
     note: 'Private repository',
+    featured: true,
+    badges: ['TEAM PROJECT', 'AI-POWERED'],
+    pitch: 'Flood safety for Oriental Mindoro: live flood map, safe routes and an AI assistant.',
+    role: 'Extended an existing flood map',
+    platform: ['web', 'ai'],
+    features: [
+      { icon: 'map', title: 'Live flood map', text: 'DRRM-verified flood zones, road passability, water levels and evacuation centers.' },
+      { icon: 'route', title: 'Safe route', text: 'Turn-by-turn routes on real roads that avoid verified floods for your vehicle.' },
+      { icon: 'ai', title: 'Ask Baha AI', text: 'An assistant that answers from verified records, with Gemini and Groq as fallback.' },
+      { icon: 'camera', title: 'Community reports', text: 'Photo reports with AI-suggested severity, verified by DRRM staff first.' },
+      { icon: 'card', title: 'Subscriptions', text: 'LGU and business plans with PayMongo and Xendit checkout.' },
+      { icon: 'offline', title: 'Offline kit', text: 'Works without signal and syncs reports when you\'re back online.' },
+    ],
+    gallery: [],
+    demo: null,
+    build: [
+      'React + TypeScript PWA on Firebase Auth and Firestore.',
+      'Serverless API with role-based access and tenant isolation.',
+      '93 unit, 57 Firestore-rules/API and 13 browser tests passing.',
+    ],
   },
   {
     id: 'studyspace',
@@ -67,6 +117,25 @@ export const projects = [
     liveUrl: 'https://studyspace-murex.vercel.app',
     codeUrl: 'https://github.com/heyitsmefarid/studyspace',
     note: '',
+    featured: true,
+    badges: ['AI-POWERED', 'TYPESCRIPT'],
+    pitch: 'A private study space for two, with an AI tutor and a sky that fills with stars.',
+    platform: ['web', 'ai'],
+    features: [
+      { icon: 'book', title: 'Notes', text: 'Rich-text notes with images and highlights.' },
+      { icon: 'list', title: 'Flashcards', text: 'Spaced-repetition cards that come back when you\'re about to forget.' },
+      { icon: 'star', title: 'Quizzes', text: 'Quick quizzes made from your own material.' },
+      { icon: 'calendar', title: 'Planner', text: 'Plan study sessions and deadlines together.' },
+      { icon: 'clock', title: 'Focus timer', text: 'A timer that turns every session into a star in your shared sky.' },
+      { icon: 'ai', title: 'Nova', text: 'An AI tutor that runs server-side on Gemini, with Groq as fallback.' },
+    ],
+    gallery: [],
+    demo: null,
+    build: [
+      'React + TypeScript + Tailwind on Vite.',
+      'Supabase Auth, Postgres with row-level security, Storage and an Edge Function.',
+      'AI keys stay server-side; a bundle check fails the build if one leaks.',
+    ],
   },
   {
     id: 'tailfinder',
@@ -86,6 +155,25 @@ export const projects = [
     liveUrl: 'https://tailfinder-mu.vercel.app',
     codeUrl: 'https://github.com/heyitsmefarid/tailfinder',
     note: '',
+    featured: false,
+    badges: ['WEB APP'],
+    pitch: 'Pet adoption that connects adopters with pets and gives admins the tools to manage it.',
+    platform: ['web'],
+    features: [
+      { icon: 'paw', title: 'Browse pets', text: 'Available pets with photos, breeds and details.' },
+      { icon: 'list', title: 'Adoption requests', text: 'Request a pet and follow it from pending to approved.' },
+      { icon: 'users', title: 'Accounts', text: 'Register, sign in and manage your profile.' },
+      { icon: 'bell', title: 'Inquiries', text: 'Message the shelter admin for questions.' },
+      { icon: 'shield', title: 'Admin tools', text: 'Manage pets, users and adoption requests.' },
+      { icon: 'chart', title: 'Reports', text: 'Reports on pets, users, adoptions and inquiries.' },
+    ],
+    gallery: [],
+    demo: null,
+    build: [
+      'PHP with CodeIgniter and MySQL.',
+      'Email verification with PHPMailer.',
+      'Static portfolio build rendered from a demo database.',
+    ],
   },
   {
     id: 'meu-gear-up',
@@ -105,6 +193,25 @@ export const projects = [
     liveUrl: 'https://meugearup.vercel.app',
     codeUrl: 'https://github.com/heyitsmefarid/meu_gearup',
     note: '',
+    featured: false,
+    badges: ['MULTI-BRANCH', 'MULTI-ROLE'],
+    pitch: 'Motorcycle shop system with portals for customers, mechanics, suppliers and admins.',
+    platform: ['web'],
+    features: [
+      { icon: 'calendar', title: 'Service booking', text: 'Customers book repairs at any branch.' },
+      { icon: 'wrench', title: 'Roadside assistance', text: 'Request help and get a mechanic assigned.' },
+      { icon: 'store', title: 'Point of sale', text: 'Sell parts and record payments.' },
+      { icon: 'route', title: 'Stock transfers', text: 'Move inventory between the three branches.' },
+      { icon: 'users', title: 'Job assignment', text: 'Assign mechanics and track their work.' },
+      { icon: 'chart', title: 'Sales reports', text: 'Sales and performance reports per branch.' },
+    ],
+    gallery: [],
+    demo: null,
+    build: [
+      'PHP and MySQL with Bootstrap.',
+      'Charts with Chart.js, email with PHPMailer.',
+      'Separate portals per role.',
+    ],
   },
   {
     id: 'library-management',
@@ -124,6 +231,25 @@ export const projects = [
     liveUrl: 'http://library-management.gamer.free/login.php',
     codeUrl: 'https://github.com/heyitsmefarid/library-management-system',
     note: '',
+    featured: false,
+    badges: ['SCHOOL LIBRARY'],
+    pitch: 'Attendance, lending, returns and penalties for a school library, in one desk app.',
+    platform: ['web'],
+    features: [
+      { icon: 'clock', title: 'Attendance', text: 'Time users in and out by ID number.' },
+      { icon: 'book', title: 'Lending', text: 'Lend books with automatic transaction numbers and printable slips.' },
+      { icon: 'list', title: 'Returns', text: 'Returns calculate overdue days and penalties.' },
+      { icon: 'bell', title: 'Notifications', text: 'Due today, due soon and overdue, generated from loans.' },
+      { icon: 'card', title: 'Penalties', text: 'Record payments with receipt numbers.' },
+      { icon: 'chart', title: 'Reports', text: 'Printable attendance, inventory and penalty reports.' },
+    ],
+    gallery: [],
+    demo: null,
+    build: [
+      'Plain PHP + MySQL with PDO prepared statements.',
+      'CSRF protection on every form, throttled sign-ins.',
+      'Borrowing rules enforced in transactions and by the database.',
+    ],
   },
   {
     id: 'checkers',
@@ -143,6 +269,25 @@ export const projects = [
     liveUrl: 'https://checkers-theta-lemon.vercel.app',
     codeUrl: 'https://github.com/heyitsmefarid/checkers',
     note: '',
+    featured: false,
+    badges: ['GAME AI', 'DESKTOP + WEB'],
+    pitch: 'Checkers with a computer opponent that searches five moves ahead.',
+    platform: ['desktop', 'web', 'ai'],
+    features: [
+      { icon: 'game', title: 'Two modes', text: 'Play a friend or the computer.' },
+      { icon: 'ai', title: 'Three AI levels', text: 'Hard uses minimax with alpha-beta pruning, five moves deep.' },
+      { icon: 'users', title: 'Accounts', text: 'Sign up and keep your own record.' },
+      { icon: 'star', title: 'Best-of series', text: 'Play a series, not just one game.' },
+      { icon: 'chart', title: 'Leaderboard', text: 'Results stored in MySQL and ranked.' },
+      { icon: 'wrench', title: 'Web version', text: 'A browser version with the AI in a Web Worker.' },
+    ],
+    gallery: [],
+    demo: null,
+    build: [
+      'C# .NET 8 WinForms desktop app.',
+      'MySQL for accounts, matches and the leaderboard.',
+      'Web port with the search running off the main thread.',
+    ],
   },
   {
     id: 'guhit-arts',
@@ -162,5 +307,24 @@ export const projects = [
     liveUrl: 'https://guhit-arts.vercel.app',
     codeUrl: 'https://github.com/heyitsmefarid/guhit-arts',
     note: '',
+    featured: false,
+    badges: ['ACADEMIC PROTOTYPE'],
+    pitch: 'Arts and printing shop prototype: design studio, online shop and admin panel.',
+    platform: ['web'],
+    features: [
+      { icon: 'camera', title: 'Design studio', text: 'Preview your own text on a mug or shirt.' },
+      { icon: 'store', title: 'Online shop', text: 'Browse products, add to cart and check out.' },
+      { icon: 'route', title: 'Order tracking', text: 'Track an order by its reference.' },
+      { icon: 'shield', title: 'Admin roles', text: 'Role-based access for the shop team.' },
+      { icon: 'chart', title: 'Sales reports', text: 'Reports for the admin.' },
+      { icon: 'list', title: 'Service requests', text: 'Request printing and art services.' },
+    ],
+    gallery: [],
+    demo: null,
+    build: [
+      'React + Vite with React Router.',
+      'All data simulated in the browser — no backend.',
+      'Built for an academic business proposal.',
+    ],
   },
 ]
