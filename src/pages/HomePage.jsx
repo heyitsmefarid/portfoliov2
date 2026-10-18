@@ -2,6 +2,7 @@ import { dividers } from '../data/sections.js'
 import { usePageTitle } from '../lib/pageTitle.js'
 import Hero from '../components/Hero.jsx'
 import StackMarquee from '../components/StackMarquee.jsx'
+import PortfolioReel from '../components/PortfolioReel.jsx'
 import Divider from '../components/Divider.jsx'
 import Experience from '../components/Experience.jsx'
 import About from '../components/About.jsx'
@@ -21,12 +22,17 @@ export default function HomePage({ onContact }) {
       <StackMarquee />
 
       <div className="container page-body">
-        {/* Experience | About on top, Education | Tech stack below */}
+        {/* Independent columns keep shorter panels from inheriting a neighboring panel's height. */}
         <div className="bento">
-          <Experience />
-          <About />
-          <Education />
-          <TechStack />
+          <div className="bento__column bento__column--primary">
+            <PortfolioReel />
+            <Experience />
+            <Education />
+          </div>
+          <div className="bento__column bento__column--secondary">
+            <About />
+            <TechStack />
+          </div>
         </div>
 
         <Divider label={dividers.beforeProjects} />
