@@ -178,8 +178,18 @@
   text-align: right;
 }
 
-@media (max-width: 860px) {
+@media (max-width: 1024px) {
   .project-page__hero {
     grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 560px) {
+  .project-page__pager {
+    grid-template-columns: 1fr;
+  }
+
+  .pager__link--next {
+    text-align: left;
   }
 }

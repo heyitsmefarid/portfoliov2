@@ -239,7 +239,7 @@
 }
 
 /* ── Small screens: stack and centre ───────────────────────────────────── */
-@media (max-width: 720px) {
+@media (max-width: 820px) {
   .hero {
     gap: 32px;
   }

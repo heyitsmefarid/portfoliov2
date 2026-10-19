@@ -102,13 +102,70 @@ try {
     throw new Error(`Education and Tech Stack must share a bottom edge (${boxes.education.bottom} vs ${boxes.stack.bottom})`)
   }
 
-  await page.setViewportSize({ width: 375, height: 812 })
-  if (await page.evaluate(() => document.documentElement.scrollWidth > window.innerWidth + 1)) {
-    throw new Error('Home page overflows horizontally on mobile')
+  const responsiveViewports = [
+    { label: 'small phone', width: 320, height: 568, stackedHero: true, stackedPanels: true },
+    { label: 'phone', width: 375, height: 812, stackedHero: true, stackedPanels: true },
+    { label: 'tablet portrait', width: 768, height: 1024, stackedHero: true, stackedPanels: true },
+    { label: 'hero breakpoint', width: 820, height: 1180, stackedHero: true, stackedPanels: true },
+    { label: 'above hero breakpoint', width: 821, height: 1180, stackedHero: false, stackedPanels: true },
+    { label: 'large tablet portrait', width: 960, height: 1280, stackedHero: false, stackedPanels: true },
+    { label: 'panel breakpoint', width: 1024, height: 1366, stackedHero: false, stackedPanels: true },
+    { label: 'above panel breakpoint', width: 1025, height: 900, stackedHero: false, stackedPanels: false },
+    { label: 'small laptop', width: 1280, height: 800, stackedHero: false, stackedPanels: false },
+    { label: 'wide desktop', width: 1920, height: 1080, stackedHero: false, stackedPanels: false },
+    { label: 'ultrawide desktop', width: 3440, height: 1440, stackedHero: false, stackedPanels: false },
+  ]
+
+  for (const viewport of responsiveViewports) {
+    await page.setViewportSize({ width: viewport.width, height: viewport.height })
+
+    const layout = await page.evaluate(() => {
+      const rect = (selector) => {
+        const box = document.querySelector(selector)?.getBoundingClientRect()
+        return box ? { top: box.top, right: box.right, bottom: box.bottom, left: box.left, width: box.width } : null
+      }
+      const checkedSelectors = ['.hero__inner', '.page-body', '.bento', '#projects', '#github', '.duo', '.footer__inner']
+      const outsideViewport = checkedSelectors.flatMap((selector) => {
+        const box = rect(selector)
+        return box && (box.left < -1 || box.right > window.innerWidth + 1) ? [`${selector} (${box.left}, ${box.right})`] : []
+      })
+
+      return {
+        scrollWidth: document.documentElement.scrollWidth,
+        viewportWidth: window.innerWidth,
+        outsideViewport,
+        heroDirection: getComputedStyle(document.querySelector('.hero__inner')).flexDirection,
+        reel: rect('.portfolio-reel'),
+        about: rect('#about'),
+        certs: rect('.duo > :first-child'),
+        connect: rect('.duo > :last-child'),
+      }
+    })
+
+    if (layout.scrollWidth > layout.viewportWidth + 1) {
+      throw new Error(`${viewport.label}: home page overflows horizontally (${layout.scrollWidth}px > ${layout.viewportWidth}px)`)
+    }
+    if (layout.outsideViewport.length) {
+      throw new Error(`${viewport.label}: content is clipped outside the viewport: ${layout.outsideViewport.join(', ')}`)
+    }
+
+    const heroIsStacked = layout.heroDirection === 'column'
+    if (heroIsStacked !== viewport.stackedHero) {
+      throw new Error(`${viewport.label}: expected hero flex-direction ${viewport.stackedHero ? 'column' : 'row'}, got ${layout.heroDirection}`)
+    }
+
+    const bentoIsStacked = layout.about.top > layout.reel.bottom + 10
+    const duoIsStacked = layout.connect.top > layout.certs.top + 20
+    if (bentoIsStacked !== viewport.stackedPanels || duoIsStacked !== viewport.stackedPanels) {
+      throw new Error(
+        `${viewport.label}: expected ${viewport.stackedPanels ? 'stacked' : 'two-column'} content panels ` +
+          `(bento stacked: ${bentoIsStacked}, closing pair stacked: ${duoIsStacked})`,
+      )
+    }
   }
 
   await browser.close()
-  console.log('home layout: standalone reel and equal packed columns ok')
+  console.log('home layout: media, packed columns, and responsive breakpoints ok')
 } finally {
   server.kill()
 }
