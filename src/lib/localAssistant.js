@@ -38,6 +38,7 @@ const PROJECT_ALIASES = {
   iskonnect: ['iskonnect', 'iskonek', 'scholarship', 'capstone'],
   bahadvisory: ['bahadvisory', 'baha advisory', 'baha', 'flood'],
   studyspace: ['studyspace', 'study space', 'flashcards', 'nova'],
+  applypilot: ['applypilot', 'apply pilot', 'job search', 'job application', 'job applications'],
   tailfinder: ['tailfinder', 'tail finder', 'pet', 'pets', 'adoption'],
   'meu-gear-up': ['meu', 'gear up', 'gearup', 'motorcycle'],
   'library-management': ['library management', 'library system', 'library attendance', 'librarian', 'borrowing'],
