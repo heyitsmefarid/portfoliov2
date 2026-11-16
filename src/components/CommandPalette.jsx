@@ -2,7 +2,6 @@ import { useEffect, useMemo, useRef, useState } from 'react'
 import { sections } from '../data/sections.js'
 import { projects } from '../data/projects.js'
 import { profile } from '../data/profile.js'
-import { useAskAssistant } from '../lib/assistantContext.js'
 import { navigate } from '../lib/router.js'
 import { getTheme, toggleTheme } from '../lib/theme.js'
 import './CommandPalette.css'
@@ -71,7 +70,6 @@ function isTypingTarget(target) {
 }
 
 export default function CommandPalette({ open, onOpenChange }) {
-  const ask = useAskAssistant()
   const [query, setQuery] = useState('')
   const [activeIndex, setActiveIndex] = useState(0)
   const inputRef = useRef(null)
@@ -81,15 +79,8 @@ export default function CommandPalette({ open, onOpenChange }) {
   const items = useMemo(() => {
     const trimmed = query.trim()
     const found = trimmed ? STATIC_ITEMS.filter((item) => matches(item, trimmed)) : STATIC_ITEMS
-    const askItem = {
-      id: 'ask',
-      group: 'Assistant',
-      label: trimmed ? `Ask: “${trimmed}”` : 'Ask the portfolio assistant',
-      hint: 'Enter',
-      run: () => ask(trimmed || undefined),
-    }
-    return [...found, askItem]
-  }, [query, ask])
+    return found
+  }, [query])
 
   // Global shortcuts: ⌘K / Ctrl+K toggles, "/" opens (unless typing somewhere).
   useEffect(() => {
@@ -164,7 +155,6 @@ export default function CommandPalette({ open, onOpenChange }) {
   }
 
   const active = items[activeIndex]
-  let previousGroup = null
 
   return (
     <div className="palette" onMouseDown={(event) => event.target === event.currentTarget && close()}>
@@ -181,8 +171,8 @@ export default function CommandPalette({ open, onOpenChange }) {
             aria-controls="palette-list"
             aria-activedescendant={active ? `palette-${active.id}` : undefined}
             aria-autocomplete="list"
-            aria-label="Search sections and projects, or type a question"
-            placeholder="Go to a section, or ask…"
+            aria-label="Search sections and projects"
+            placeholder="Go to a section or project…"
             value={query}
             onChange={(event) => {
               setQuery(event.target.value)
@@ -199,8 +189,8 @@ export default function CommandPalette({ open, onOpenChange }) {
 
         <ul id="palette-list" className="palette__list" role="listbox" ref={listRef} aria-label="Results">
           {items.map((item, index) => {
-            const header = item.group !== previousGroup ? item.group : null
-            previousGroup = item.group
+            // A group heading before the first item of each group
+            const header = item.group !== items[index - 1]?.group ? item.group : null
             return [
               header && (
                 <li key={`group-${header}`} className="palette__group" role="presentation">

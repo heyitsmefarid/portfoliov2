@@ -26,7 +26,7 @@ the objects on the form. This skill is the working method.
    stamps.
 4. **Red is the stamp ink.** `--pen` is for the stamp, the control number,
    hover and focus. Not for decoration.
-5. **Overlays are slips.** Dialogs, menus, toasts and the chat use `.slip`.
+5. **Overlays are slips.** Dialogs, menus and toasts use `.slip`.
 6. **One authored sequence**: the name is typed, then the stamp lands. Add motion only as a response to the
    visitor (hover, tick, open). No scroll reveals.
 7. **Playful means physical.** New fun details must be things a paper form

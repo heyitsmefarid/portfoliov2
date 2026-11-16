@@ -1,7 +1,6 @@
 // Checks for the final-review fixes. Usage: node scripts/fix-checks.mjs [base]
 //  1. a new page starts at the top immediately (no smooth scroll from the old position)
-//  2. on a phone, following a project link in the chat closes the chat
-//  3. the demo poster stays visible while the clip loads, and a failed clip falls back to the poster
+//  2. the demo poster stays visible while the clip loads, and a failed clip falls back to the poster
 import { chromium } from 'playwright'
 
 const BASE = process.argv[2] ?? 'http://localhost:5191'
@@ -27,21 +26,6 @@ async function open(path, viewport = { width: 1280, height: 800 }) {
 }
 
 // 2
-{
-  const page = await open('/', { width: 375, height: 812 })
-  await page.getByRole('button', { name: 'Open menu' }).click()
-  await page.keyboard.type('tell me about studyspace')
-  await page.keyboard.press('Enter')
-  const link = page.locator('.chat__log a[href="/projects/studyspace"]').first()
-  await link.waitFor({ timeout: 20000 })
-  await link.click()
-  await page.waitForTimeout(600)
-  const chatVisible = await page.locator('.chat__panel').isVisible().catch(() => false)
-  if (chatVisible) fail.push('2: chat panel still covers the page after following a project link on a phone')
-  await page.close()
-}
-
-// 4
 {
   const page = await browser.newPage({ viewport: { width: 1280, height: 800 } })
   await page.addInitScript(() => sessionStorage.setItem('intro-seen', '1'))

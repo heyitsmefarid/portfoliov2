@@ -9,7 +9,7 @@
    --ink        registrar green: print, borders, title bars
    --ink-soft   secondary print (tinted ink, never grey)
    --pen        stamp red: control number, stamp, focus, hover
-   --card       white slips: menus, dialogs, chat, printouts */
+   --card       white slips: menus, dialogs, printouts */
 :root {
   color-scheme: light;
 
@@ -390,7 +390,7 @@ abbr[title] {
 }
 
 /* ── Slip ────────────────────────────────────────────────────────────────
-   Everything that floats above the form (menus, dialogs, the chat, toasts)
+   Everything that floats above the form (menus, dialogs, toasts)
    is a white slip of paper with a printed head line. */
 .slip {
   --slip-head: 56px;

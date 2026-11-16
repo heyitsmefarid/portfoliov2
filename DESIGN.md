@@ -63,8 +63,8 @@ the rubber stamps.
 - **Ticker**: one ink strip of the stack, like a repeated microprint line.
 - **Projects table**: number, screenshot, name, pitch, type, built with, live.
 - **Tick boxes**: the filters on /projects.
-- **Slips** (`.slip`): every overlay (Ctrl K menu, contact form, chat,
-  certificate viewer, easter-egg note) is a white slip with a printed head line.
+- **Slips** (`.slip`): every overlay (Ctrl K menu, contact form, certificate
+  viewer, easter-egg note) is a white slip with a printed head line.
 - **Data sketch** (`SystemSketch`): crow's-foot entity diagram on project
   pages, from `src/data/systems.js`.
 - **Paperclip**: the ID photo hangs from one, slightly crooked.

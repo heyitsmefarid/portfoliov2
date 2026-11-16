@@ -55,7 +55,7 @@ export default function StickyNote() {
       onPointerCancel={onPointerUp}
     >
       <p>
-        In a hurry? Press <kbd>{IS_MAC ? '⌘K' : 'Ctrl K'}</kbd> to jump anywhere, or ask the assistant about my work.
+        In a hurry? Press <kbd>{IS_MAC ? '⌘K' : 'Ctrl K'}</kbd> to jump to any section or project.
       </p>
       <p className="sticky__sub">(You can drag this note.)</p>
       <button type="button" className="sticky__peel" onClick={peel} aria-label="Remove this note">

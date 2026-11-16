@@ -24,7 +24,6 @@ All text lives in `src/data/`, so you don't need to touch the components:
 | `sections.js` | section order and header labels |
 | `systems.js` | the simplified data sketch drawn on each project page |
 
-The chat assistant reads the same files, so anything you add here is something it can answer about.
 
 **Adding a project:** copy an entry in `projects.js`. For a screenshot, put a `.webp` (about 1400px wide) in `public/projects/` and set `image: { src, alt, width, height }`. Lists show the project's first gallery shot. Empty `liveUrl` / `codeUrl` hide those links. To give it a data sketch (the small entity diagram on its page), add an entry to `src/data/systems.js`.
 
@@ -38,11 +37,10 @@ Written as Vercel functions (`export function GET/POST(request)`), deployed auto
 
 | Route | Needs | Without it |
 | --- | --- | --- |
-| `/api/chat` | `AI_API_KEY` and `AI_PROVIDER` (`anthropic` or `gemini`). Optional: `AI_MODEL` (default `claude-opus-5` / `gemini-3.5-flash-lite`), `AI_EFFORT` (Anthropic only, default `low`) | chat answers offline from `src/data` |
 | `/api/views` | `UPSTASH_REDIS_REST_URL`, `UPSTASH_REDIS_REST_TOKEN` (added by Vercel → Storage → Upstash for Redis) | the hero leaves out the visit count |
 | `/api/github` | optional `GITHUB_TOKEN` for GitHub's official API | uses a public no-key contributions API |
 | `/api/contact` | `RESEND_API_KEY`, `CONTACT_TO_EMAIL`, `CONTACT_FROM_EMAIL` | opens the visitor's email app if `profile.contact.email` is set, otherwise shows a notice |
 
-Local development: copy `.env.example` to `.env.local` and fill it in. On this machine Avast intercepts HTTPS, so Node may reject api.anthropic.com or generativelanguage.googleapis.com. If chat requests fail locally, start dev with `NODE_EXTRA_CA_CERTS=C:/Users/galla/avast-root.pem npm run dev`.
+Local development: copy `.env.example` to `.env.local` and fill it in. On this machine Avast intercepts HTTPS, so Node may reject outside APIs. If the API routes fail locally, start dev with `NODE_EXTRA_CA_CERTS=C:/Users/galla/avast-root.pem npm run dev`.
 
-On static hosting (e.g. GitHub Pages) the API routes don't exist. The site still works: chat runs offline, GitHub loads from the public API, and the contact form uses email.
+On static hosting (e.g. GitHub Pages) the API routes don't exist. The site still works: GitHub loads from the public API and the contact form uses email.

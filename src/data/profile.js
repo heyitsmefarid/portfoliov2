@@ -1,6 +1,6 @@
-// Personal details shown across the site and given to the portfolio assistant.
-// Leave a field as an empty string when you don't want it shown — the UI and the
-// assistant both skip empty values instead of guessing.
+// Personal details shown across the site.
+// Leave a field as an empty string when you don't want it shown; the UI skips
+// empty values instead of guessing.
 
 export const profile = {
   name: 'Fred Anthony Gallano',

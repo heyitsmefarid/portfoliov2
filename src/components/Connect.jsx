@@ -1,6 +1,5 @@
 import { useState } from 'react'
 import { profile } from '../data/profile.js'
-import { useAskAssistant } from '../lib/assistantContext.js'
 import Panel from './Panel.jsx'
 
 // A vCard built from the profile, so the stub can be saved straight to a
@@ -91,7 +90,6 @@ function External({ href }) {
 }
 
 export default function Connect({ onContact }) {
-  const ask = useAskAssistant()
   const { contact } = profile
 
   return (
@@ -127,9 +125,6 @@ export default function Connect({ onContact }) {
       <div className="connect__actions">
         <button type="button" className="btn btn--ink" onClick={onContact}>
           Write me a note
-        </button>
-        <button type="button" className="btn" onClick={() => ask()}>
-          Ask the assistant
         </button>
         <button type="button" className="btn stub__save" onClick={saveContact}>
           Tear off: save me to your contacts
