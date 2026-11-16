@@ -75,8 +75,8 @@ try {
         beside: {
           'photo / details / status': box('.cell--photo').top === box('.cell--info').top && box('.cell--info').top === box('.cell--status').top,
           'projects / about': box('.cell--projects').top === box('.cell--about').top,
-          'experience / education / certifications':
-            new Set(['experience', 'education', 'certifications'].map((name) => Math.round(box(`.cell--${name}`).top))).size === 1,
+          'stack beside projects or about': box('.cell--stack').left > box('.cell--projects').left + 1 || box('.cell--stack').left > box('.cell--about').left + 1,
+          'experience / certifications': Math.round(box('.cell--experience').top) === Math.round(box('.cell--certifications').top),
         },
       }
     })

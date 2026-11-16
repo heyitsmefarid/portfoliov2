@@ -51,11 +51,12 @@ the rubber stamps.
   (`.cell__title`) and a body (`.cell__body`, or `flush` for tables and media).
 - `.blank` is a labelled blank: `.blank__label` over `.blank__value`.
 - `src/styles/layout.css` places the home cells with `grid-template-areas`:
-  photo, details and status across the top; the projects table beside About
-  and Tech stack; Experience, Education and Certifications in three columns;
-  GitHub full width; the Contact stub as the full-width last row.
-- 641–1080px: About and Tech stack pair up; Experience, Education and
-  Certifications sit three across. ≤640px: one cell per row, cells stay
+  photo, details and status across the top; the projects table beside About,
+  Tech stack and Education; Experience and Certifications side by side;
+  GitHub full width; the Contact stub as the full-width last row. Short cells
+  are stacked beside tall ones so no box is left mostly empty.
+- 641–1080px: About and Education stack beside Tech stack; Experience and
+  Certifications pair up. ≤640px: one cell per row, cells stay
   dense inside (two-column blanks, table drops columns via container queries).
 - `npm run check:home` enforces no overflow at 11 widths, the side-by-side
   cells on desktop, and a height budget (2.8 screens at 1440×900).

@@ -10,21 +10,10 @@
   font-variation-settings: inherit;
 }
 
-/* ── Home: desktop placement ──────────────────────────────────────────── */
-@media (min-width: 1081px) {
-  .form--home {
-    grid-template-areas:
-      'mast mast mast mast mast mast mast mast mast mast mast mast'
-      'photo photo info info info info info info info status status status'
-      'ticker ticker ticker ticker ticker ticker ticker ticker ticker ticker ticker ticker'
-      'projects projects projects projects projects projects projects projects about about about about'
-      'projects projects projects projects projects projects projects projects stack stack stack stack'
-      'experience experience experience experience education education education education certs certs certs certs'
-      'github github github github github github github github github github github github'
-      'contact contact contact contact contact contact contact contact contact contact contact contact';
-    grid-template-rows: auto auto auto auto 1fr auto auto auto;
-  }
-
+/* ── Home: placement on desktops and tablets ───────────────────────────── */
+/* Short cells are stacked beside tall ones so no box is left mostly empty:
+   Education sits under Stack, then Experience and Certifications share a row. */
+@media (min-width: 641px) {
   .form--home .cell--mast { grid-area: mast; }
   .form--home .cell--photo { grid-area: photo; }
   .form--home .cell--info { grid-area: info; }
@@ -40,16 +29,38 @@
   .form--home .cell--github { grid-area: github; }
 }
 
+@media (min-width: 1081px) {
+  .form--home {
+    grid-template-areas:
+      'mast mast mast mast mast mast mast mast mast mast mast mast'
+      'photo photo info info info info info info info status status status'
+      'ticker ticker ticker ticker ticker ticker ticker ticker ticker ticker ticker ticker'
+      'projects projects projects projects projects projects projects projects about about about about'
+      'projects projects projects projects projects projects projects projects stack stack stack stack'
+      'projects projects projects projects projects projects projects projects education education education education'
+      'experience experience experience experience experience experience certs certs certs certs certs certs'
+      'github github github github github github github github github github github github'
+      'contact contact contact contact contact contact contact contact contact contact contact contact';
+    grid-template-rows: auto auto auto auto auto 1fr auto auto auto;
+  }
+}
+
 /* ── Home: tablets and small laptops ──────────────────────────────────── */
 @media (min-width: 641px) and (max-width: 1080px) {
-  .form--home .cell--photo { grid-column: span 3; }
-  .form--home .cell--info { grid-column: span 9; }
-  .form--home .cell--status { grid-column: span 12; }
-  .form--home .cell--about,
-  .form--home .cell--stack { grid-column: span 6; }
-  .form--home .cell--experience,
-  .form--home .cell--education,
-  .form--home .cell--certifications { grid-column: span 4; }
+  .form--home {
+    grid-template-areas:
+      'mast mast mast mast mast mast mast mast mast mast mast mast'
+      'photo photo photo info info info info info info info info info'
+      'status status status status status status status status status status status status'
+      'ticker ticker ticker ticker ticker ticker ticker ticker ticker ticker ticker ticker'
+      'projects projects projects projects projects projects projects projects projects projects projects projects'
+      'about about about about about about stack stack stack stack stack stack'
+      'education education education education education education stack stack stack stack stack stack'
+      'experience experience experience experience experience experience certs certs certs certs certs certs'
+      'github github github github github github github github github github github github'
+      'contact contact contact contact contact contact contact contact contact contact contact contact';
+    grid-template-rows: auto auto auto auto auto auto 1fr auto auto auto;
+  }
 
   .form--home .status {
     flex-direction: row;
