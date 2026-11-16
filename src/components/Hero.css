@@ -45,6 +45,8 @@
 /* ── ID photo box ─────────────────────────────────────────────────────── */
 .cell--photo {
   display: grid;
+  /* the photo keeps its shape; the box around it can be taller */
+  align-content: center;
   padding: 10px;
 }
 
@@ -57,7 +59,7 @@
 
 .idphoto img {
   width: 100%;
-  height: 100%;
+  height: auto;
   aspect-ratio: 4 / 5;
   object-fit: cover;
   object-position: 50% 15%;
@@ -275,8 +277,9 @@
 
 .paperclip {
   position: absolute;
-  top: -9px;
-  left: 22px;
+  z-index: 1;
+  top: -16px;
+  left: 12px;
   width: 22px;
   max-width: none;
   overflow: visible;

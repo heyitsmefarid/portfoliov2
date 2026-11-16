@@ -33,44 +33,18 @@ try {
   await page.addInitScript(() => sessionStorage.setItem('intro-seen', '1'))
   await page.goto(BASE, { waitUntil: 'networkidle' })
 
-  // The walkthrough video has its own cell on the form.
-  const reel = page.locator('.portfolio-reel video')
-  if ((await reel.count()) !== 1) throw new Error('The form must contain one portfolio walkthrough video')
-  if (!(await reel.isVisible())) throw new Error('Portfolio walkthrough is not visible')
-
-  const reelContract = await reel.evaluate((video) => ({
-    controls: video.controls,
-    downloadDisabled: video.controlsList.contains('nodownload'),
-    preload: video.preload,
-    src: new URL(video.currentSrc || video.src).pathname,
-    poster: new URL(video.poster, window.location.href).pathname,
-    hasFallbackLink: Boolean(video.querySelector('a[href]')),
-  }))
-  if (!reelContract.controls) throw new Error('Walkthrough must expose playback controls')
-  if (!reelContract.downloadDisabled) throw new Error('Walkthrough must hide the native download control')
-  if (reelContract.hasFallbackLink) throw new Error('Walkthrough must not expose a fallback download link')
-  if (reelContract.preload !== 'metadata') throw new Error('Walkthrough must preload metadata only')
-  if (reelContract.src !== '/profile/portfolio-walkthrough.mp4') throw new Error(`Unexpected video source: ${reelContract.src}`)
-  if (reelContract.poster !== '/profile/portfolio-walkthrough-poster.png') {
-    throw new Error(`Unexpected poster source: ${reelContract.poster}`)
-  }
-
-  const contextMenuBlocked = await reel.evaluate((video) => {
-    const event = new MouseEvent('contextmenu', { bubbles: true, cancelable: true })
-    video.dispatchEvent(event)
-    return event.defaultPrevented
-  })
-  if (!contextMenuBlocked) throw new Error('Walkthrough must block its context menu')
-
-  const mediaResponses = await Promise.all([
-    page.request.get(`${BASE}${reelContract.src}`),
-    page.request.get(`${BASE}${reelContract.poster}`),
-  ])
-  if (mediaResponses.some((response) => !response.ok())) throw new Error('Walkthrough media is missing')
+  // The ID photo keeps its 4:5 shape at every width instead of stretching to
+  // the height of the cells beside it.
+  const photoShape = async () =>
+    page.locator('.idphoto img').evaluate((img) => {
+      const { width, height } = img.getBoundingClientRect()
+      return height / width
+    })
 
   const viewports = [
     { label: 'small phone', width: 320, height: 568 },
     { label: 'phone', width: 375, height: 812 },
+    { label: 'large phone', width: 412, height: 915 },
     { label: 'phone breakpoint', width: 640, height: 900 },
     { label: 'above phone breakpoint', width: 641, height: 900 },
     { label: 'tablet portrait', width: 768, height: 1024 },
@@ -107,6 +81,10 @@ try {
       }
     })
 
+    const shape = await photoShape()
+    if (Math.abs(shape - 1.25) > 0.03) {
+      throw new Error(`${viewport.label}: ID photo is stretched (height/width ${shape.toFixed(2)}, expected 1.25)`)
+    }
     if (layout.scrollWidth > layout.viewportWidth + 1) {
       throw new Error(`${viewport.label}: home page overflows horizontally (${layout.scrollWidth}px > ${layout.viewportWidth}px)`)
     }
@@ -124,7 +102,7 @@ try {
   }
 
   await browser.close()
-  console.log('home layout: walkthrough video, responsive widths, side-by-side cells and compact height ok')
+  console.log('home layout: photo shape, responsive widths, side-by-side cells and compact height ok')
 } finally {
   server.kill()
 }

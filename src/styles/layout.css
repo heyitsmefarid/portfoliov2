@@ -19,11 +19,10 @@
       'ticker ticker ticker ticker ticker ticker ticker ticker ticker ticker ticker ticker'
       'projects projects projects projects projects projects projects projects about about about about'
       'projects projects projects projects projects projects projects projects stack stack stack stack'
-      'projects projects projects projects projects projects projects projects reel reel reel reel'
       'experience experience experience education education education certs certs certs contact contact contact'
       'github github github github github github github github github github github github'
       'sign sign sign sign sign sign sign sign sign sign sign sign';
-    grid-template-rows: auto auto auto auto auto 1fr auto auto auto;
+    grid-template-rows: auto auto auto auto 1fr auto auto auto;
   }
 
   .form--home .cell--mast { grid-area: mast; }
@@ -39,7 +38,6 @@
   .form--home .cell--certifications { grid-area: certs; }
   .form--home .cell--contact { grid-area: contact; }
   .form--home .cell--github { grid-area: github; }
-  .form--home .cell--reel { grid-area: reel; }
   .form--home .cell--sign { grid-area: sign; }
 }
 
@@ -71,20 +69,21 @@
 
 /* Phones: one cell per row, but the cells stay compact inside */
 @media (max-width: 640px) {
-  .form--home .cell--photo {
-    grid-column: span 4;
+  /* The photo box sits in the form's top corner, beside the title */
+  .form--home .cell--mast {
+    order: -3;
+    grid-column: span 8;
+    align-content: center;
   }
 
-  .form--home .cell--status {
-    grid-column: span 8;
+  .form--home .cell--photo {
+    order: -2;
+    grid-column: span 4;
+    padding: 8px;
   }
 
   .form--home .cell--info {
     order: -1;
-  }
-
-  .form--home .cell--mast {
-    order: -2;
   }
 
   .stamp__big {
@@ -279,24 +278,6 @@
   padding-inline: 8px;
 }
 
-/* ── Walkthrough ──────────────────────────────────────────────────────── */
-.portfolio-reel {
-  display: flex;
-  flex-direction: column;
-}
-
-.portfolio-reel .cell__flush {
-  flex: 1;
-  display: grid;
-  background: #08211a;
-}
-
-.portfolio-reel__video {
-  width: 100%;
-  height: 100%;
-  aspect-ratio: 16 / 9;
-  object-fit: contain;
-}
 
 /* ── Signature line ───────────────────────────────────────────────────── */
 .sign {

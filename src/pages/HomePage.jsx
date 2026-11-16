@@ -8,7 +8,6 @@ import Experience from '../components/Experience.jsx'
 import Education from '../components/Education.jsx'
 import TechStack from '../components/TechStack.jsx'
 import GithubActivity from '../components/GithubActivity.jsx'
-import PortfolioReel from '../components/PortfolioReel.jsx'
 import Certifications from '../components/Certifications.jsx'
 import Connect from '../components/Connect.jsx'
 import SignPad from '../components/SignPad.jsx'
@@ -32,7 +31,6 @@ export default function HomePage({ onContact }) {
       <Certifications />
       <Connect onContact={onContact} />
       <GithubActivity />
-      <PortfolioReel />
       <div className="cell cell--sign sign">
         <p className="blank">
           <span className="blank__value sign__name">{profile.name}</span>

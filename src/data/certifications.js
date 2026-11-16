@@ -35,4 +35,12 @@ export const certifications = [
     year: 'Apr 2026',
     url: '/certificates/ms-cybersecurity.webp',
   },
+  {
+    id: 'n8n-quickstart',
+    name: 'n8n Quickstart',
+    kind: 'Certificate of completion',
+    issuer: 'n8n Academy',
+    year: 'Oct 2026',
+    url: '/certificates/n8n-quickstart.webp',
+  },
 ]

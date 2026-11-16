@@ -47,8 +47,8 @@ the rubber stamps.
   (`.cell__title`) and a body (`.cell__body`, or `flush` for tables and media).
 - `.blank` is a labelled blank: `.blank__label` over `.blank__value`.
 - `src/styles/layout.css` places the home cells with `grid-template-areas`:
-  photo, details and status across the top; the projects table beside About,
-  Tech stack and the walkthrough; Experience, Education, Certifications and
+  photo, details and status across the top; the projects table beside About
+  and Tech stack; Experience, Education, Certifications and
   Contact in four columns; GitHub full width; a signature line.
 - 641–1080px: cells pair up two per row. ≤640px: one cell per row, cells stay
   dense inside (two-column blanks, table drops columns via container queries).

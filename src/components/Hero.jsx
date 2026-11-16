@@ -34,9 +34,6 @@ export default function Hero({ onContact }) {
       {photo && (
         <div className="cell cell--photo">
           <Portrait photo={photo} />
-          <svg className="paperclip" viewBox="0 0 30 76" aria-hidden="true">
-            <path d="M9 22v34a6.5 6.5 0 0 0 13 0V14a10 10 0 0 0-20 0v44" />
-          </svg>
         </div>
       )}
 
