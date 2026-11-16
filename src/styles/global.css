@@ -1,185 +1,87 @@
-/* ── Design tokens ─────────────────────────────────────────────────────────
-   Dark by default: a near-black workspace, thin warm borders and one amber
-   accent. Light mode (html[data-theme='light']) redefines the same tokens
-   below, so components only ever use var(--…).
+/* ── Registration form ────────────────────────────────────────────────────
+   The site is the one-page registration form every Filipino college student
+   is handed each semester: mint security paper, registrar-green print, boxed
+   cells, a red control number and a rubber stamp. Dark mode is its carbon
+   copy: a deep green page printed in mint.
 
-   --amber   bright amber for fills: buttons, dots, bars, glows
-   --accent  amber for text and icons; darker in light mode so it stays
-             readable on white */
+   --paper      the security paper
+   --field      the lighter area of a cell that gets filled in
+   --ink        registrar green: print, borders, title bars
+   --ink-soft   secondary print (tinted ink, never grey)
+   --pen        stamp red: control number, stamp, focus, hover
+   --card       white slips: menus, dialogs, chat, printouts */
 :root {
-  color-scheme: dark;
-
-  --bg: #080808;
-  --panel: #101010;
-  --panel-raised: #151515;
-  --line: #252525;
-  --line-strong: #3a3a3a;
-  --panel-line: rgba(255, 176, 0, 0.14);
-  --chip-bg: #15110b;
-  --chip-line: rgba(255, 176, 0, 0.26);
-  --soft-line: #2a2218;
-  --text: #f2f2f2;
-  --text-soft: #c9c9c9;
-  --muted: #888888;
-  --placeholder: #6b6b6b;
-  --amber: #ffb000;
-  --amber-ink: #1a1200;
-  --amber-glow: rgba(255, 176, 0, 0.14);
-  --accent: #ffb000;
-  --accent-hover: #ffc94d;
-  --danger: #ff8a7a;
-
-  /* Surfaces */
-  --surface-sunken: #0c0c0c;
-  --media-bg: #080808;
-  --elevated: #0f0f0f;
-  --elevated-2: #131313;
-  --option-active: #1a1a1a;
-  --kbd-bg: #1c1c1c;
-  --kbd-edge: #2e2e2e;
-  --glass: rgba(12, 12, 12, 0.94);
-  --glass-fab: rgba(20, 20, 20, 0.88);
-  --overlay: rgba(4, 4, 4, 0.72);
-  --hairline: rgba(255, 255, 255, 0.06);
-  --hairline-strong: rgba(255, 255, 255, 0.09);
-  --shadow-float: 0 12px 32px -12px rgba(0, 0, 0, 0.8);
-  --shadow-pop: 0 40px 100px -30px rgba(0, 0, 0, 0.95);
-
-  /* Details */
-  --track: #242424;
-  --rail: #3a2a14;
-  --node: #6b5a44;
-  --scrollbar: #4a3a22;
-  --scrollbar-neutral: #2a2a2a;
-  --dots: rgba(255, 255, 255, 0.11);
-  --glow: rgba(255, 176, 0, 0.07);
-
-  /* GitHub graph, least to most active */
-  --gh-0: #1a1a1a;
-  --gh-1: #4c380c;
-  --gh-2: #7c5809;
-  --gh-3: #b98106;
-  --gh-4: #ffb000;
-
-  /* Laptop frame (stays dark in both themes) */
-  --laptop-bezel: #1d1d1d;
-  --laptop-edge: #2c2c2c;
-  --laptop-base: linear-gradient(#3a3a3a, #1c1c1c);
-  --laptop-notch: #151515;
-
-  /* Project cover art */
-  --cover-bg: #0b0b0b;
-  --cover-board: #0c0c0c;
-  --cover-cell: #161616;
-  --cover-stroke: #2c2c2c;
-  --cover-fill: #121212;
-  --cover-fill-2: #0e0e0e;
-  --cover-grid: #1a1a1a;
-  --cover-mid: #333333;
-  --cover-ring: #2a2a2a;
-  --cover-piece-dark: #262626;
-  --cover-piece-dark-edge: #3a3a3a;
-  --cover-piece-light: #cfcfcf;
-  --cover-piece-light-edge: transparent;
-  --cover-paw: #2c2c2c;
-  --cover-paw-hover: #454545;
-  --cover-dot: #3a3a3a;
-  --cover-accent: #ffb000;
-
-  --font-sans: 'Geist Variable', 'Geist', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
-  --font-mono: 'JetBrains Mono Variable', 'JetBrains Mono', ui-monospace, 'Cascadia Code', Consolas, monospace;
-
-  /* Type scale (1.25 minor third, fluid at the top end) */
-  --step--1: 0.8125rem;
-  --step-0: 1rem;
-  --step-1: 1.125rem;
-  --step-2: clamp(1.375rem, 1.1rem + 1vw, 1.75rem);
-  --step-3: clamp(1.75rem, 1.3rem + 1.8vw, 2.5rem);
-  --step-hero: clamp(2.35rem, 1.2rem + 4.6vw, 4.6rem);
-
-  --radius-s: 6px;
-  --radius-m: 10px;
-  --radius-l: 14px;
-
-  --container: 1200px;
-  --gutter: clamp(16px, 4vw, 40px);
-
-  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
-}
-
-/* ── Light mode ─────────────────────────────────────────────────────────── */
-:root[data-theme='light'] {
   color-scheme: light;
 
-  --bg: #f5f4f1;
-  --panel: #ffffff;
-  --panel-raised: #f2efe9;
-  --line: #e4e1da;
-  --line-strong: #cdc8be;
-  --panel-line: rgba(150, 95, 0, 0.2);
-  --chip-bg: #fbf7ef;
-  --chip-line: rgba(150, 95, 0, 0.32);
-  --soft-line: #e3d9c6;
-  --text: #151515;
-  --text-soft: #3b3b3b;
-  --muted: #666666;
-  --placeholder: #8c8c8c;
-  --amber-glow: rgba(214, 137, 0, 0.22);
-  --accent: #9a5a00;
-  --accent-hover: #744300;
-  --danger: #b3261e;
+  --paper: #d3ead9;
+  --paper-deep: #c3dfcb;
+  --field: #eaf5ec;
+  --ink: #0e3a2d;
+  --ink-soft: #33614f;
+  --ink-faint: rgba(14, 58, 45, 0.5);
+  --pen: #b3221a;
+  --pen-line: rgba(179, 34, 26, 0.55);
+  --marker: #ffe45c;
+  --card: #fbfdf9;
+  --card-line: rgba(14, 58, 45, 0.1);
+  --card-edge: rgba(14, 58, 45, 0.22);
+  --on-ink: #e4f4e8;
+  --wave: rgba(14, 58, 45, 0.07);
+  --shadow-paper: 0 1px 1px rgba(8, 40, 30, 0.14), 0 6px 16px -8px rgba(8, 40, 30, 0.4);
+  --shadow-lift: 0 2px 2px rgba(8, 40, 30, 0.12), 0 22px 50px -18px rgba(8, 40, 30, 0.5);
+  --overlay: rgba(8, 40, 30, 0.34);
 
-  --surface-sunken: #faf9f6;
-  --media-bg: #efece5;
-  --elevated: #ffffff;
-  --elevated-2: #f8f6f2;
-  --option-active: #f4efe4;
-  --kbd-bg: #eeebe5;
-  --kbd-edge: #d6d1c7;
-  --glass: rgba(255, 255, 255, 0.94);
-  --glass-fab: rgba(255, 255, 255, 0.9);
-  --overlay: rgba(40, 32, 20, 0.32);
-  --hairline: rgba(0, 0, 0, 0.07);
-  --hairline-strong: rgba(0, 0, 0, 0.1);
-  --shadow-float: 0 12px 30px -14px rgba(60, 45, 20, 0.35);
-  --shadow-pop: 0 30px 80px -30px rgba(60, 45, 20, 0.35);
+  /* GitHub graph: boxes shaded in, least to most */
+  --gh-0: rgba(14, 58, 45, 0.08);
+  --gh-1: rgba(14, 58, 45, 0.3);
+  --gh-2: rgba(14, 58, 45, 0.52);
+  --gh-3: rgba(14, 58, 45, 0.76);
+  --gh-4: #0e3a2d;
 
-  --track: #dcd7ce;
-  --rail: #e6d7b9;
-  --node: #b3a184;
-  --scrollbar: #d4c4a2;
-  --scrollbar-neutral: #d0ccc4;
-  --dots: rgba(0, 0, 0, 0.14);
-  --glow: rgba(255, 176, 0, 0.14);
+  /* Archivo prints the form; Courier Prime is what gets typed into it */
+  --font: 'Archivo Variable', 'Archivo', ui-sans-serif, system-ui, sans-serif;
+  --typed: 'Courier Prime', 'Courier New', ui-monospace, monospace;
+  --linear: 'wdth' 100;
+  --casual: 'wdth' 112;
+  --narrow: 'wdth' 82;
 
-  --gh-0: #ebe8e1;
-  --gh-1: #fde2a3;
-  --gh-2: #f8c14f;
-  --gh-3: #e39400;
-  --gh-4: #9a5a00;
+  --pad: 14px;
+  --page: 1320px;
+  --gutter: clamp(10px, 2.4vw, 32px);
 
-  --cover-bg: #f3f0ea;
-  --cover-board: #faf8f4;
-  --cover-cell: #e5e0d6;
-  --cover-stroke: #cfc7b8;
-  --cover-fill: #ece7de;
-  --cover-fill-2: #f7f4ee;
-  --cover-grid: #e6e1d8;
-  --cover-mid: #b9b1a2;
-  --cover-ring: #d9d2c4;
-  --cover-piece-dark: #3b3b3b;
-  --cover-piece-dark-edge: #2a2a2a;
-  --cover-piece-light: #ffffff;
-  --cover-piece-light-edge: #bdb4a4;
-  --cover-paw: #d6cdbd;
-  --cover-paw-hover: #bfb4a1;
-  --cover-dot: #cfc6b5;
-  --cover-accent: #e39400;
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-/* Theme switch: the new theme is revealed in a growing circle (the animation
-   itself is started from ThemeToggle). Browsers without view transitions, and
-   visitors who prefer reduced motion, switch instantly. */
+:root[data-theme='dark'] {
+  color-scheme: dark;
+
+  --paper: #0c2b22;
+  --paper-deep: #08211a;
+  --field: #11382c;
+  --ink: #cfeedb;
+  --ink-soft: #9ccab2;
+  --ink-faint: rgba(207, 238, 219, 0.5);
+  --pen: #ff8a7d;
+  --pen-line: rgba(255, 138, 125, 0.5);
+  --marker: rgba(255, 228, 92, 0.3);
+  --card: #133d30;
+  --card-line: rgba(207, 238, 219, 0.1);
+  --card-edge: rgba(207, 238, 219, 0.22);
+  --on-ink: #0c2b22;
+  --wave: rgba(207, 238, 219, 0.05);
+  --shadow-paper: 0 1px 1px rgba(0, 10, 6, 0.3), 0 8px 20px -8px rgba(0, 10, 6, 0.6);
+  --shadow-lift: 0 2px 2px rgba(0, 10, 6, 0.3), 0 24px 56px -18px rgba(0, 10, 6, 0.75);
+  --overlay: rgba(2, 14, 10, 0.62);
+
+  --gh-0: rgba(207, 238, 219, 0.08);
+  --gh-1: rgba(207, 238, 219, 0.3);
+  --gh-2: rgba(207, 238, 219, 0.52);
+  --gh-3: rgba(207, 238, 219, 0.76);
+  --gh-4: #cfeedb;
+}
+
+/* Theme switch: the new page is revealed in a growing circle from the switch
+   (started in lib/theme.js). Reduced motion switches instantly. */
 ::view-transition-old(root),
 ::view-transition-new(root) {
   animation: none;
@@ -194,7 +96,9 @@
 
 html {
   -webkit-text-size-adjust: 100%;
-  scroll-padding-top: 24px;
+  scroll-padding-top: 72px;
+  background: var(--paper-deep);
+  scrollbar-color: var(--ink-faint) var(--paper-deep);
 }
 
 @media (prefers-reduced-motion: no-preference) {
@@ -205,20 +109,23 @@ html {
 
 body {
   margin: 0;
-  background: var(--bg);
-  color: var(--text);
-  font-family: var(--font-sans);
-  font-size: var(--step-0);
-  line-height: 1.6;
-  font-feature-settings: 'ss01', 'cv11';
+  min-height: 100vh;
+  background: var(--paper-deep);
+  color: var(--ink);
+  font-family: var(--font);
+  font-variation-settings: var(--linear);
+  font-size: 0.9375rem;
+  line-height: 1.45;
+  font-kerning: normal;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  text-rendering: optimizeLegibility;
   overflow-x: clip;
+  caret-color: var(--pen);
 }
 
 img,
-svg {
+svg,
+video {
   display: block;
   max-width: 100%;
 }
@@ -249,8 +156,10 @@ a {
 
 button,
 input,
-textarea {
+textarea,
+select {
   font: inherit;
+  font-variation-settings: inherit;
   color: inherit;
 }
 
@@ -261,15 +170,51 @@ button {
   padding: 0;
 }
 
+table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+th {
+  text-align: left;
+  font-weight: inherit;
+}
+
+kbd,
+code {
+  font-family: var(--typed);
+  font-size: 0.9em;
+}
+
+abbr[title] {
+  text-decoration: underline dotted var(--ink-faint);
+  text-underline-offset: 3px;
+}
+
 ::selection {
-  background: var(--amber);
-  color: var(--amber-ink);
+  background: var(--ink);
+  color: var(--on-ink);
 }
 
 :focus-visible {
-  outline: 2px solid var(--accent);
-  outline-offset: 3px;
-  border-radius: 4px;
+  outline: 2px solid var(--pen);
+  outline-offset: 2px;
+  border-radius: 1px;
+}
+
+::-webkit-scrollbar {
+  width: 12px;
+  height: 12px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--paper-deep);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--ink-faint);
+  border: 3px solid var(--paper-deep);
+  border-radius: 8px;
 }
 
 .visually-hidden {
@@ -289,129 +234,180 @@ button {
   top: 12px;
   left: 12px;
   z-index: 100;
-  padding: 10px 14px;
-  background: var(--amber);
-  color: var(--amber-ink);
-  font-weight: 600;
-  border-radius: var(--radius-s);
-  transform: translateY(-160%);
+  padding: 8px 14px;
+  background: var(--ink);
+  color: var(--on-ink);
+  font-weight: 650;
+  transform: translateY(-200%);
 }
 
 .skip-link:focus-visible {
   transform: none;
 }
 
-/* ── Layout ─────────────────────────────────────────────────────────────── */
-.container {
-  width: 100%;
-  max-width: calc(var(--container) + var(--gutter) * 2);
-  margin-inline: auto;
-  padding-inline: var(--gutter);
+/* What's typed into the form */
+.typed {
+  font-family: var(--typed);
 }
 
-/* Page content sits above the cursor spotlight (components/Backdrop). */
-.page {
-  position: relative;
-  z-index: 1;
-}
-
-/* ── Shared text styles ─────────────────────────────────────────────────── */
-.mono {
-  font-family: var(--font-mono);
-}
-
-.muted {
-  color: var(--muted);
-}
-
-/* ── Buttons: mono, uppercase, square ─────────────────────────────────── */
-.hero-btn {
-  display: inline-grid;
-  place-items: center;
-  min-width: 150px;
-  min-height: 46px;
-  padding: 0 24px;
-  border: 1px solid var(--text-soft);
-  font-family: var(--font-mono);
-  font-size: 0.75rem;
+/* ── Buttons: printed boxes ──────────────────────────────────────────── */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 44px;
+  padding: 0 18px;
+  border: 1.5px solid var(--ink);
+  border-radius: 2px;
+  font-variation-settings: var(--casual);
+  font-size: 0.9375rem;
   font-weight: 700;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-  color: var(--text);
+  line-height: 1;
+  color: var(--ink);
   transition:
-    background-color 160ms ease,
-    border-color 160ms ease,
-    color 160ms ease;
+    background-color 160ms var(--ease-out),
+    border-color 160ms var(--ease-out),
+    color 160ms var(--ease-out);
 }
 
-.hero-btn:hover {
-  border-color: var(--accent);
-  color: var(--accent);
+.btn--ink {
+  background: var(--ink);
+  color: var(--on-ink);
 }
 
-.hero-btn--solid {
-  border-color: var(--text);
-  background: var(--text);
-  color: var(--bg);
+.btn:hover {
+  background: var(--pen);
+  border-color: var(--pen);
+  color: #fff;
 }
 
-.hero-btn--solid:hover {
-  border-color: var(--accent);
-  background: var(--amber);
-  color: var(--amber-ink);
+.btn:active {
+  transform: translateY(1px);
 }
 
-[data-magnetic] {
-  transition-property: translate, background-color, border-color, color, box-shadow, transform;
-  transition-duration: 300ms;
-  transition-timing-function: var(--ease-out);
-}
-
-.hero-btn:disabled {
+.btn:disabled {
+  opacity: 0.55;
   pointer-events: none;
 }
 
-/* Inline "View project →" style links */
-.text-link {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  min-height: 44px;
-  font-family: var(--font-mono);
-  font-size: var(--step--1);
-  color: var(--text);
-  transition: color 160ms ease;
+/* Inline links: underlined print that turns stamp-red */
+.link {
+  font-weight: 650;
+  text-decoration: underline;
+  text-decoration-color: var(--ink-faint);
+  text-decoration-thickness: 1.5px;
+  text-underline-offset: 3px;
+  transition:
+    color 150ms ease,
+    text-decoration-color 150ms ease;
 }
 
-.text-link span[aria-hidden] {
-  transition: transform 160ms var(--ease-out);
+.link:hover {
+  color: var(--pen);
+  text-decoration-color: var(--pen);
 }
 
-.text-link:hover {
-  color: var(--accent);
+.link svg {
+  display: inline-block;
+  vertical-align: -2px;
+  margin-left: 4px;
 }
 
-.text-link:hover span[aria-hidden] {
-  transform: translateX(3px);
+/* ── The form ────────────────────────────────────────────────────────────
+   One sheet, ruled into cells. The grid's own background shows through the
+   1px gaps as the printed lines, so every border is drawn exactly once. */
+.page {
+  padding: clamp(10px, 2vw, 24px) var(--gutter) clamp(20px, 3vw, 40px);
 }
 
-/* ── Scroll reveal ──────────────────────────────────────────────────────── */
-/* Content is visible by default; the hidden starting state only applies once
-   JS has confirmed motion is allowed (html.reveal-ready). */
-@media (prefers-reduced-motion: no-preference) {
-  .reveal-ready [data-reveal] {
-    opacity: 0;
-    /* Tilted away (bottom edge further back) so it's never wider than its box */
-    transform: perspective(1200px) translateY(40px) rotateX(-12deg);
-    transform-origin: 50% 0;
-    transition:
-      opacity 520ms var(--ease-out),
-      transform 520ms var(--ease-out);
-    transition-delay: var(--reveal-delay, 0ms);
-  }
+.form {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  gap: 1px;
+  max-width: var(--page);
+  margin-inline: auto;
+  border: 2px solid var(--ink);
+  background: var(--ink);
+  box-shadow: var(--shadow-lift);
+}
 
-  .reveal-ready [data-reveal].is-revealed {
-    opacity: 1;
-    transform: none;
-  }
+.cell {
+  position: relative;
+  min-width: 0;
+  grid-column: span 12;
+  /* security paper: fine wavy lines printed under everything */
+  background-color: var(--paper);
+  background-image: repeating-radial-gradient(circle at 0 120%, transparent 0 9px, var(--wave) 9px 10px);
+}
+
+.cell__title {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 5px var(--pad);
+  background: var(--ink);
+  color: var(--on-ink);
+  font-variation-settings: var(--casual);
+  font-size: 0.8125rem;
+  font-weight: 750;
+  line-height: 1.4;
+}
+
+.cell__title a {
+  font-weight: 600;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.cell__title :focus-visible {
+  outline-color: var(--on-ink);
+}
+
+.cell__body {
+  padding: var(--pad);
+}
+
+/* A labelled blank and what was typed into it */
+.blank {
+  display: grid;
+  gap: 1px;
+  min-width: 0;
+}
+
+.blank__label {
+  font-variation-settings: var(--narrow);
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--ink-soft);
+}
+
+.blank__value {
+  font-family: var(--typed);
+  font-weight: 700;
+  overflow-wrap: anywhere;
+}
+
+/* ── Slip ────────────────────────────────────────────────────────────────
+   Everything that floats above the form (menus, dialogs, the chat, toasts)
+   is a white slip of paper with a printed head line. */
+.slip {
+  --slip-head: 56px;
+  background-color: var(--card);
+  background-image: linear-gradient(
+    to bottom,
+    transparent calc(var(--slip-head) - 1.5px),
+    var(--ink) calc(var(--slip-head) - 1.5px),
+    var(--ink) var(--slip-head),
+    transparent var(--slip-head)
+  );
+  color: var(--ink);
+  border: 1.5px solid var(--ink);
+  border-radius: 2px;
+  box-shadow: var(--shadow-lift);
+}
+
+dialog::backdrop {
+  background: var(--overlay);
 }

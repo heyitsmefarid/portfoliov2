@@ -1,6 +1,6 @@
 import { experience } from '../data/experience.js'
+import Link from './Link.jsx'
 import Panel from './Panel.jsx'
-import './Timeline.css'
 
 const STATUS_TEXT = {
   seeking: 'Open position',
@@ -10,24 +10,22 @@ const STATUS_TEXT = {
 
 export default function Experience() {
   return (
-    <Panel id="experience" title="Experience">
-      <ol className="timeline">
-        {experience.map((item, index) => (
-          <li key={item.id} className={`timeline__item timeline__item--${item.status}`} style={{ '--i': index }}>
-            <span className="timeline__node" aria-hidden="true" />
-            <div className="timeline__body">
-              <h3 className="timeline__title">{item.title}</h3>
-              {item.org && <p className="timeline__org">{item.org}</p>}
-              {item.projectId && (
-                <a className="timeline__link" href={`#project-${item.projectId}`}>
-                  See the project <span aria-hidden="true">→</span>
-                </a>
-              )}
-            </div>
-            <p className={`timeline__period${item.status === 'seeking' ? ' timeline__period--chip' : ''}`}>
+    <Panel id="experience" title="Experience" flush>
+      <ol className="record">
+        {experience.map((item) => (
+          <li key={item.id} className={`record__item record__item--${item.status}`}>
+            <p className="record__when">
               <span className="visually-hidden">{STATUS_TEXT[item.status]}: </span>
               {item.period}
             </p>
+            <h3 className="record__title">{item.title}</h3>
+            {item.org && <p className="record__org">{item.org}</p>}
+            {item.description && <p className="record__desc">{item.description}</p>}
+            {item.projectId && (
+              <Link className="link" href={`/projects/${item.projectId}`}>
+                See the project
+              </Link>
+            )}
           </li>
         ))}
       </ol>

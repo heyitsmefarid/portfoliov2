@@ -76,7 +76,7 @@ export default function ContactDialog({ ref }) {
 
       if (response.ok && data?.ok) {
         setForm(EMPTY)
-        setStatus({ state: 'sent', message: 'Message sent. Thanks — Fred will get back to you by email.' })
+        setStatus({ state: 'sent', message: 'Message sent. Fred will reply to you by email.' })
         return
       }
       if (response.status === 400 || response.status === 429) {
@@ -100,7 +100,7 @@ export default function ContactDialog({ ref }) {
   return (
     <dialog
       ref={dialogRef}
-      className="contact-dialog"
+      className="contact-dialog slip"
       aria-labelledby="contact-dialog-title"
       onClick={(event) => event.target === dialogRef.current && close()}
     >
@@ -150,7 +150,7 @@ export default function ContactDialog({ ref }) {
         </div>
 
         <div className="contact-dialog__submit">
-          <button className="hero-btn hero-btn--solid" type="submit" disabled={status.state === 'sending' || unavailable}>
+          <button className="btn btn--ink" type="submit" disabled={status.state === 'sending' || unavailable}>
             {status.state === 'sending' ? 'Sending…' : delivery === 'mailto' ? 'Send via email app' : 'Send message'}
           </button>
           <p className={`contact-dialog__status contact-dialog__status--${status.state}`} role="status">

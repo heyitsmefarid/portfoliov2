@@ -1,0 +1,184 @@
+.ptable {
+  height: 100%;
+}
+
+.ptable thead th {
+  padding: 4px 10px;
+  border-bottom: 1px solid var(--ink);
+  font-variation-settings: var(--narrow);
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--ink-soft);
+  white-space: nowrap;
+}
+
+.ptable td,
+.ptable tbody th {
+  padding: 8px 10px;
+  border-top: 1px solid var(--card-edge);
+  vertical-align: top;
+}
+
+.ptable tbody tr:first-child > * {
+  border-top: 0;
+}
+
+.ptable td + td,
+.ptable th + td,
+.ptable thead th + th {
+  border-left: 1px solid var(--card-edge);
+}
+
+.ptable tbody tr {
+  transition: background-color 140ms ease;
+}
+
+.ptable tbody tr:hover {
+  background: var(--field);
+}
+
+.ptable__no {
+  width: 1%;
+  font-family: var(--typed);
+  color: var(--ink-soft);
+}
+
+.ptable__project {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+}
+
+.ptable__shot {
+  flex: none;
+  width: 104px;
+  padding: 3px;
+  background: #fbfdf9;
+  border: 1px solid var(--card-edge);
+  transition: transform 220ms var(--ease-out);
+}
+
+.ptable__shot img {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 16 / 10;
+  object-fit: cover;
+  object-position: top;
+}
+
+.ptable tbody tr:hover .ptable__shot {
+  transform: scale(1.06) rotate(-1deg);
+}
+
+.ptable__name {
+  font-family: var(--typed);
+  font-weight: 700;
+  font-size: 1.125rem;
+  line-height: 1.2;
+  text-decoration: underline;
+  text-decoration-color: var(--ink-faint);
+  text-decoration-thickness: 1.5px;
+  text-underline-offset: 3px;
+}
+
+.ptable__name:hover {
+  color: var(--pen);
+  text-decoration-color: var(--pen);
+}
+
+.ptable__pitch {
+  margin-top: 2px;
+  max-width: 52ch;
+  font-size: 0.875rem;
+  line-height: 1.35;
+  font-weight: 400;
+  color: var(--ink-soft);
+}
+
+.ptable__type {
+  width: 15%;
+  font-size: 0.875rem;
+}
+
+.ptable__badge {
+  display: block;
+  font-size: 0.8125rem;
+  color: var(--ink-soft);
+}
+
+.ptable__tech {
+  width: 22%;
+  font-family: var(--typed);
+  font-size: 0.875rem;
+  line-height: 1.35;
+}
+
+.ptable__live {
+  width: 76px;
+  white-space: nowrap;
+  font-size: 0.875rem;
+}
+
+.ptable__none {
+  color: var(--ink-faint);
+  font-family: var(--typed);
+}
+
+/* Narrow cells: drop the type column, then the stack */
+@container (max-width: 760px) {
+  .ptable__type {
+    display: none;
+  }
+}
+
+@container (max-width: 560px) {
+  .ptable__tech,
+  .ptable__no {
+    display: none;
+  }
+
+  .ptable__shot {
+    width: 84px;
+  }
+}
+
+/* Highlighter: a marker swipe under the project name on hover */
+.ptable__name {
+  background-image: linear-gradient(var(--marker), var(--marker));
+  background-repeat: no-repeat;
+  background-position: 0 85%;
+  background-size: 0% 62%;
+  transition:
+    background-size 380ms var(--ease-out),
+    color 150ms ease;
+}
+
+.ptable tbody tr:hover .ptable__name,
+.ptable__name:focus-visible {
+  background-size: 100% 62%;
+}
+
+/* "Seen": stamped on rows this visitor has already opened */
+.ptable__shot {
+  position: relative;
+  display: block;
+}
+
+.ptable__seen {
+  position: absolute;
+  right: -8px;
+  bottom: -6px;
+  padding: 1px 6px;
+  border: 2px solid var(--pen);
+  border-radius: 3px;
+  background: color-mix(in srgb, var(--paper) 82%, transparent);
+  color: var(--pen);
+  font-family: var(--font);
+  font-variation-settings: 'wdth' 118;
+  font-size: 0.625rem;
+  font-weight: 900;
+  line-height: 1.3;
+  text-transform: uppercase;
+  rotate: -9deg;
+}
+

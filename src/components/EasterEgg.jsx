@@ -4,7 +4,7 @@ import { prefersReducedMotion } from '../hooks/useReducedMotion.js'
 import './EasterEgg.css'
 
 // Type "fred" anywhere (outside a text field), or the Konami code, for an
-// amber rain of code glyphs and a small secret message.
+// rain of ink: the stack's names falling down the form, and a small note.
 const KONAMI = ['ArrowUp', 'ArrowUp', 'ArrowDown', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'ArrowLeft', 'ArrowRight', 'b', 'a']
 const WORD = ['f', 'r', 'e', 'd']
 const GLYPHS = '01{}<>/=;[]()#$*+ABCDEFGHIJKLMNOPQRSTUVWXYZ'
@@ -40,14 +40,16 @@ function Rain({ onDone }) {
       word: Math.random() < 0.12 ? WORDS[Math.floor(Math.random() * WORDS.length)] : null,
       index: 0,
     }))
-    const amber = getComputedStyle(document.documentElement).getPropertyValue('--amber').trim() || '#ffb000'
+    const styles = getComputedStyle(document.documentElement)
+    const ink = styles.getPropertyValue('--ink').trim() || '#1d2a86'
+    const pen = styles.getPropertyValue('--pen').trim() || '#b42a22'
     const start = performance.now()
     let frame = 0
 
     const draw = (now) => {
       const elapsed = now - start
       ctx.clearRect(0, 0, width, height)
-      ctx.font = `700 ${size - 2}px 'JetBrains Mono Variable', monospace`
+      ctx.font = `800 ${size - 1}px 'Recursive Variable', sans-serif`
       const fadeOut = Math.max(0, Math.min(1, (RAIN_MS - elapsed) / 900))
 
       drops.forEach((drop, column) => {
@@ -61,7 +63,7 @@ function Rain({ onDone }) {
             ? drop.word[(drop.index + t) % drop.word.length]
             : GLYPHS[(column * 7 + t * 13 + Math.floor(drop.y / size)) % GLYPHS.length]
           ctx.globalAlpha = (t === 0 ? 1 : 0.7 * (1 - t / 12)) * fadeOut
-          ctx.fillStyle = t === 0 ? '#ffffff' : amber
+          ctx.fillStyle = t === 0 ? pen : ink
           ctx.fillText(char, x, y)
         }
         if (drop.y - 12 * size > height && elapsed < RAIN_MS - 1200) {
@@ -111,12 +113,12 @@ export default function EasterEgg({ onContact }) {
     <>
       {raining && <Rain onDone={stopRain} />}
       {toast && (
-        <div className="egg__toast" role="status">
-          <span className="egg__spark" aria-hidden="true">
-            ✦
-          </span>
+        <div className="egg__toast slip" role="status">
+          <svg className="egg__spark" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true">
+            <path d="M12 3l2.7 5.6 6.1.9-4.4 4.3 1 6.1L12 17l-5.4 2.9 1-6.1-4.4-4.3 6.1-.9L12 3Z" fill="currentColor" />
+          </svg>
           <p>
-            <strong>Easter egg found.</strong> You explore the details — Fred does too.
+            <strong>You found the hidden note.</strong> You read the small print. So does Fred.
           </p>
           <button
             type="button"
@@ -129,7 +131,9 @@ export default function EasterEgg({ onContact }) {
             Say hi
           </button>
           <button type="button" className="egg__close" onClick={() => setToast(false)} aria-label="Dismiss">
-            ×
+            <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true">
+              <path d="M6 6l12 12M18 6 6 18" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+            </svg>
           </button>
         </div>
       )}

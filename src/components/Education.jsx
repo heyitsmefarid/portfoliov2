@@ -1,29 +1,22 @@
 import { education } from '../data/education.js'
 import Panel from './Panel.jsx'
-import './Timeline.css'
+import StickyNote from './StickyNote.jsx'
 
 export default function Education() {
   return (
-    <Panel id="education" title="Education">
-      <ol className="timeline">
-        {education.map((item, index) => (
-          <li
-            key={item.id}
-            className={`timeline__item timeline__item--${item.current ? 'current' : 'done'}`}
-            style={{ '--i': index }}
-          >
-            <span className="timeline__node" aria-hidden="true" />
-            <div className="timeline__body">
-              <h3 className="timeline__title">
-                {item.program} —{' '}
-                {item.detailTitle ? <abbr title={item.detailTitle}>{item.detail}</abbr> : item.detail}
-              </h3>
-              <p className="timeline__org">{item.school}</p>
-            </div>
-            <p className="timeline__period">{item.years || (item.current ? 'Current' : '')}</p>
+    <Panel id="education" title="Education" flush>
+      <ol className="record">
+        {education.map((item) => (
+          <li key={item.id} className={`record__item record__item--${item.current ? 'current' : 'done'}`}>
+            {(item.years || item.current) && <p className="record__when">{item.years || 'Current'}</p>}
+            <h3 className="record__title">
+              {item.program}, {item.detailTitle ? <abbr title={item.detailTitle}>{item.detail}</abbr> : item.detail}
+            </h3>
+            <p className="record__org">{item.school}</p>
           </li>
         ))}
       </ol>
+      <StickyNote />
     </Panel>
   )
 }

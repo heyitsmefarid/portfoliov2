@@ -36,7 +36,7 @@ export function buildPortfolioContext() {
     const parts = [item.title, item.org, item.period].filter(Boolean).join(' | ')
     lines.push(`- ${parts}${item.description ? `. ${item.description}` : ''}`)
   })
-  lines.push('- No company internship or job is listed yet.')
+  lines.push('- No company internship, client project or job is listed yet.')
 
   lines.push('')
   lines.push('Education:')

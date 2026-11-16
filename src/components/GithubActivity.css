@@ -1,29 +1,23 @@
-.gh {
-  padding: 18px;
-  border: 1px solid var(--panel-line);
-  border-radius: var(--radius-s);
-  background: var(--surface-sunken);
-}
-
+/* The contribution graph as squares shaded in with ballpen: the more commits,
+   the more ink. */
 .gh__scroll {
   overflow-x: auto;
-  padding-bottom: 6px;
+  padding-bottom: 4px;
   scrollbar-width: thin;
-  scrollbar-color: var(--scrollbar) transparent;
 }
 
-/* Dots grow to fill the panel on wide screens and never get smaller than
-   11px — below that width the graph scrolls sideways instead. */
+/* Squares grow to fill the column on wide screens and never get smaller
+   than 11px; below that width the graph scrolls sideways instead. */
 .gh__calendar {
   --gap: 3px;
   display: grid;
-  grid-template-columns: 28px minmax(0, 1fr);
-  gap: 8px 0;
-  min-width: calc(28px + var(--weeks) * 14px);
-  font-family: var(--font-mono);
-  font-size: 0.6875rem;
-  font-weight: 600;
-  color: var(--text-soft);
+  grid-template-columns: 34px minmax(0, 1fr);
+  gap: 6px 0;
+  min-width: calc(34px + var(--weeks) * 14px);
+  font-variation-settings: var(--casual);
+  font-size: 0.75rem;
+  line-height: 1.4;
+  color: var(--ink-soft);
 }
 
 .gh__months {
@@ -43,8 +37,6 @@
   grid-template-rows: repeat(7, 1fr);
   row-gap: var(--gap);
   align-items: center;
-  font-size: 0.625rem;
-  color: var(--muted);
 }
 
 .gh__grid {
@@ -58,15 +50,14 @@
 
 .gh__cell {
   aspect-ratio: 1;
-  border-radius: 50%;
+  border-radius: 2px;
   background: var(--gh-0);
 }
 
 .gh__cell--legend {
-  width: 14px;
+  width: 13px;
 }
 
-/* Amber intensity steps */
 .gh__cell[data-level='1'] {
   background: var(--gh-1);
 }
@@ -78,7 +69,6 @@
 }
 .gh__cell[data-level='4'] {
   background: var(--gh-4);
-  box-shadow: 0 0 8px var(--amber-glow);
 }
 
 .gh__footer {
@@ -86,31 +76,23 @@
   flex-wrap: wrap;
   align-items: center;
   justify-content: space-between;
-  gap: 10px 24px;
-  margin-top: 14px;
-}
-
-.gh__total {
-  font-family: var(--font-mono);
-  font-size: 0.75rem;
-  color: var(--text-soft);
+  column-gap: 24px;
+  padding-top: 10px;
 }
 
 .gh__total strong {
-  color: var(--text);
-}
-
-.gh__user {
-  color: var(--muted);
+  font-variation-settings: var(--casual);
+  font-weight: 850;
+  font-size: 1.25rem;
 }
 
 .gh__legend {
   display: flex;
   align-items: center;
   gap: 4px;
-  font-family: var(--font-mono);
-  font-size: 0.6875rem;
-  color: var(--text-soft);
+  font-variation-settings: var(--casual);
+  font-size: 0.8125rem;
+  color: var(--ink-soft);
 }
 
 .gh__legend span:first-child {
@@ -123,35 +105,19 @@
 
 .gh__skeleton {
   width: 100%;
-  height: clamp(110px, 16vw, 150px);
-  border-radius: 4px;
-  background-image: radial-gradient(var(--gh-0) 45%, transparent 50%);
-  background-size: 14px 14px;
+  height: clamp(110px, 14vw, 150px);
+  background-image: linear-gradient(var(--gh-0) 0 0);
+  border-radius: 2px;
+  opacity: 0.6;
 }
 
 .gh__empty {
-  padding: 24px 4px;
-  font-size: 0.875rem;
-  color: var(--muted);
+  max-width: 62ch;
 }
 
 .gh__empty a {
-  color: var(--accent);
+  font-weight: 650;
   text-decoration: underline;
-  text-underline-offset: 3px;
-}
-
-/* Dots ripple in, week by week */
-@media (prefers-reduced-motion: no-preference) {
-  .gh__grid .gh__cell {
-    animation: cell-in 500ms var(--ease-out) backwards;
-    animation-delay: calc(var(--w, 0) * 12ms);
-  }
-}
-
-@keyframes cell-in {
-  from {
-    opacity: 0;
-    transform: scale(0.3);
-  }
+  text-decoration-color: var(--ink-faint);
+  text-underline-offset: 5px;
 }

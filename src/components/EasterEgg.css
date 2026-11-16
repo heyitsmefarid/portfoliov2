@@ -7,7 +7,9 @@
   pointer-events: none;
 }
 
+/* A note on a white slip, slid onto the form */
 .egg__toast {
+  --card-head: 0px;
   position: fixed;
   left: 50%;
   bottom: calc(24px + env(safe-area-inset-bottom));
@@ -17,59 +19,56 @@
   gap: 12px;
   width: max-content;
   max-width: calc(100vw - 32px);
-  padding: 10px 10px 10px 16px;
-  border: 1px solid var(--amber);
-  border-radius: var(--radius-m);
-  background: var(--elevated);
-  box-shadow:
-    var(--shadow-pop),
-    0 0 40px -10px rgba(255, 176, 0, 0.45);
-  font-size: 0.875rem;
-  color: var(--text-soft);
-  transform: translateX(-50%);
+  padding: 8px 8px 8px 16px;
+  font-size: 0.9375rem;
+  line-height: 1.5;
+  transform: translateX(-50%) rotate(-1deg);
   animation: egg-in 420ms var(--ease-out) both;
 }
 
 .egg__toast strong {
-  color: var(--text);
+  font-variation-settings: var(--casual);
+  font-weight: 800;
 }
 
 .egg__spark {
-  color: var(--accent);
-  font-size: 1.1rem;
+  flex: none;
+  color: var(--pen);
 }
 
 .egg__action {
   flex: none;
-  min-height: 36px;
-  padding: 0 14px;
-  border-radius: var(--radius-s);
-  background: var(--amber);
-  color: var(--amber-ink);
-  font-family: var(--font-mono);
-  font-size: 0.75rem;
-  font-weight: 800;
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
+  min-height: 40px;
+  padding: 0 16px;
+  border-radius: 3px;
+  background: var(--ink);
+  color: var(--on-ink);
+  font-variation-settings: var(--casual);
+  font-weight: 750;
+}
+
+.egg__action:hover {
+  background: var(--pen);
+  color: #fff;
 }
 
 .egg__close {
+  display: grid;
+  place-items: center;
   flex: none;
-  width: 32px;
-  height: 32px;
-  border-radius: var(--radius-s);
-  font-size: 1.2rem;
-  color: var(--muted);
+  width: 40px;
+  height: 40px;
+  color: var(--ink);
 }
 
 .egg__close:hover {
-  color: var(--text);
+  color: var(--pen);
 }
 
 @keyframes egg-in {
   from {
     opacity: 0;
-    transform: translate(-50%, 16px) scale(0.96);
+    transform: translate(-50%, 16px) rotate(2deg);
   }
 }
 

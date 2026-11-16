@@ -1,0 +1,116 @@
+/* The strip across the top of the form: name, section links, the Ctrl K menu
+   and the page switch. Sticks to the top while scrolling. */
+.binding {
+  position: sticky;
+  top: 0;
+  z-index: 30;
+  height: 52px;
+  background: var(--ink);
+  color: var(--on-ink);
+  box-shadow: 0 6px 14px -10px rgba(0, 0, 0, 0.5);
+}
+
+.binding__inner {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  height: 100%;
+  max-width: calc(var(--page) + var(--gutter) * 2);
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+}
+
+.binding__name {
+  font-family: var(--typed);
+  font-weight: 700;
+  font-size: 1.0625rem;
+  white-space: nowrap;
+}
+
+.binding__nav {
+  margin-left: auto;
+}
+
+.binding__nav ul {
+  display: flex;
+}
+
+.binding__link {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  padding: 0 11px;
+  font-weight: 600;
+  font-size: 0.875rem;
+  opacity: 0.8;
+  transition: opacity 150ms ease;
+}
+
+.binding__link::after {
+  content: '';
+  position: absolute;
+  left: 11px;
+  right: 11px;
+  bottom: 9px;
+  height: 2px;
+  background: currentColor;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 260ms var(--ease-out);
+}
+
+.binding__link:hover,
+.binding__link[aria-current] {
+  opacity: 1;
+}
+
+.binding__link[aria-current]::after,
+.binding__link:hover::after {
+  transform: scaleX(1);
+}
+
+.binding__tools {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.binding__menu {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 36px;
+  padding: 0 6px 0 12px;
+  border: 1.5px solid color-mix(in srgb, var(--on-ink) 45%, transparent);
+  border-radius: 2px;
+  font-weight: 600;
+  font-size: 0.875rem;
+  transition: border-color 150ms ease;
+}
+
+.binding__menu:hover {
+  border-color: var(--on-ink);
+}
+
+.binding :focus-visible {
+  outline-color: var(--on-ink);
+}
+
+@media (max-width: 860px) {
+  .binding__nav {
+    display: none;
+  }
+
+  .binding__tools {
+    margin-left: auto;
+  }
+
+  .binding__menu kbd {
+    display: none;
+  }
+
+  .binding__menu {
+    padding-right: 12px;
+  }
+}

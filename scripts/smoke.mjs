@@ -60,9 +60,9 @@ try {
 
     // Client-side navigation and back.
     await page.goto(BASE + '/')
-    await page.locator('.panel-link[href="/projects"]').click()
+    await page.locator('#projects a[href="/projects"]').click()
     await page.waitForURL('**/projects')
-    await page.locator(`.project-row__name a[href="/projects/${projects[0].id}"]`).click()
+    await page.locator(`.ptable__name[href="/projects/${projects[0].id}"]`).click()
     await page.waitForURL(`**/projects/${projects[0].id}`)
     // Sections fade in as they enter the viewport. After jumping to the bottom,
     // what's on screen must be visible, and scrolling back up must reveal the
@@ -75,10 +75,10 @@ try {
           return onScreen && Number(getComputedStyle(el).opacity) < 0.9
         }),
       )
-    await page.locator('.project-page__section').last().scrollIntoViewIfNeeded()
+    await page.locator('.project-page .cell').last().scrollIntoViewIfNeeded()
     await page.waitForTimeout(900)
     let hidden = await hiddenOnScreen()
-    for (const section of await page.locator('.project-page__section').all()) {
+    for (const section of await page.locator('.project-page .cell').all()) {
       await section.scrollIntoViewIfNeeded()
       await page.waitForTimeout(900)
       hidden ||= await hiddenOnScreen()
@@ -90,7 +90,7 @@ try {
 
     // Section link from a project page lands on that home section.
     await page.goto(BASE + `/projects/${projects[1].id}`)
-    await page.locator('.side-index__link[href="/#projects"]').evaluate((link) => link.click())
+    await page.locator('.binding__link[href="/#projects"]').evaluate((link) => link.click())
     await page.waitForTimeout(900)
     const inView = await page.evaluate(() => {
       const section = document.getElementById('projects')
@@ -117,7 +117,7 @@ try {
     for (const route of ['/', '/projects', `/projects/${projects[0].id}`]) {
       await responsivePage.goto(BASE + route, { waitUntil: 'networkidle' })
       const bounds = await responsivePage.evaluate(() => {
-        const selectors = ['main .container', '.page-body', '.projects-page', '.project-page', '.footer__inner']
+        const selectors = ['main .form', '.cell', '.footer__inner', '.binding__inner']
         const clipped = selectors.flatMap((selector) =>
           [...document.querySelectorAll(selector)].flatMap((element) => {
             const rect = element.getBoundingClientRect()
@@ -136,42 +136,14 @@ try {
       if (bounds.clipped.length) failures.push(`${label} ${route}: clipped wrappers ${bounds.clipped.join(', ')}`)
     }
 
-    await responsivePage.goto(BASE + '/projects', { waitUntil: 'networkidle' })
-    const projectRowColumns = await responsivePage.locator('.project-row').first().evaluate((row) => getComputedStyle(row).gridTemplateColumns)
-    const rowIsStacked = projectRowColumns.trim().split(/\s+/).length === 1
-    if (rowIsStacked !== (width <= 820)) {
-      failures.push(`${label} /projects: expected ${width <= 820 ? 'stacked' : 'two-column'} rows, got ${projectRowColumns}`)
-    }
-
+    // On a project page the demo and the description share a row above 900px.
     await responsivePage.goto(BASE + `/projects/${projects[0].id}`, { waitUntil: 'networkidle' })
-    const projectLayout = await responsivePage.evaluate(() => ({
-      heroColumns: getComputedStyle(document.querySelector('.project-page__hero')).gridTemplateColumns,
-      pagerColumns: getComputedStyle(document.querySelector('.project-page__pager')).gridTemplateColumns,
-    }))
-    const heroIsStacked = projectLayout.heroColumns.trim().split(/\s+/).length === 1
-    const pagerIsStacked = projectLayout.pagerColumns.trim().split(/\s+/).length === 1
-    if (heroIsStacked !== (width <= 1024)) {
-      failures.push(`${label} project page: expected ${width <= 1024 ? 'stacked' : 'two-column'} hero, got ${projectLayout.heroColumns}`)
-    }
-    if (pagerIsStacked !== (width <= 560)) {
-      failures.push(`${label} project page: expected ${width <= 560 ? 'stacked' : 'two-column'} pager, got ${projectLayout.pagerColumns}`)
-    }
-  }
-
-  for (const { width, route, selector, breakpoint, layoutName } of [
-    { width: 560, route: `/projects/${projects[0].id}`, selector: '.project-page__pager', breakpoint: 560, layoutName: 'pager' },
-    { width: 561, route: `/projects/${projects[0].id}`, selector: '.project-page__pager', breakpoint: 560, layoutName: 'pager' },
-    { width: 820, route: '/projects', selector: '.project-row', breakpoint: 820, layoutName: 'project rows' },
-    { width: 821, route: '/projects', selector: '.project-row', breakpoint: 820, layoutName: 'project rows' },
-    { width: 1024, route: `/projects/${projects[0].id}`, selector: '.project-page__hero', breakpoint: 1024, layoutName: 'project hero' },
-    { width: 1025, route: `/projects/${projects[0].id}`, selector: '.project-page__hero', breakpoint: 1024, layoutName: 'project hero' },
-  ]) {
-    await responsivePage.setViewportSize({ width, height: 900 })
-    await responsivePage.goto(BASE + route, { waitUntil: 'networkidle' })
-    const columns = await responsivePage.locator(selector).first().evaluate((element) => getComputedStyle(element).gridTemplateColumns)
-    const isStacked = columns.trim().split(/\s+/).length === 1
-    if (isStacked !== (width <= breakpoint)) {
-      failures.push(`${width}px ${layoutName}: expected ${width <= breakpoint ? 'stacked' : 'two-column'} layout, got ${columns}`)
+    const sideBySide = await responsivePage.evaluate(() => {
+      const top = (selector) => Math.round(document.querySelector(selector).getBoundingClientRect().top)
+      return top('.project-page__demo') === top('.project-page__about')
+    })
+    if (sideBySide !== width > 900) {
+      failures.push(`${label} project page: expected demo and description ${width > 900 ? 'side by side' : 'stacked'}`)
     }
   }
 

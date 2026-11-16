@@ -162,7 +162,7 @@ export default function Chatbot({ ref }) {
     <div className="chat">
       <div
         id="chat-panel"
-        className="chat__panel"
+        className="chat__panel slip"
         role="dialog"
         aria-labelledby="chat-title"
         data-open={open}
@@ -175,7 +175,7 @@ export default function Chatbot({ ref }) {
             </h2>
             <p className="chat__mode">
               <span className={`chat__mode-dot chat__mode-dot--${mode}`} aria-hidden="true" />
-              {mode === 'local' ? 'Offline mode: answers from portfolio data' : 'AI answers · English or Tagalog'}
+              {mode === 'local' ? 'Offline mode: answers from portfolio data' : 'AI answers in English or Tagalog'}
             </p>
           </div>
           <div className="chat__actions">
@@ -259,7 +259,6 @@ export default function Chatbot({ ref }) {
         type="button"
         className="chat__launcher"
         data-open={open}
-        data-magnetic
         data-cursor={open ? '' : 'Ask'}
         aria-expanded={open}
         aria-controls="chat-panel"

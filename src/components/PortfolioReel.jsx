@@ -1,8 +1,9 @@
-import './PortfolioReel.css'
+import Panel from './Panel.jsx'
 
+// The two-minute walkthrough of this portfolio, attached to the form.
 export default function PortfolioReel() {
   return (
-    <figure className="portfolio-reel" data-reveal>
+    <Panel id="walkthrough" area="reel" title="Walkthrough video, 2:02" flush className="portfolio-reel">
       <video
         className="portfolio-reel__video"
         controls
@@ -16,10 +17,6 @@ export default function PortfolioReel() {
         <source src="/profile/portfolio-walkthrough.mp4" type="video/mp4" />
         Your browser cannot play this video.
       </video>
-      <figcaption className="portfolio-reel__caption">
-        <span>Portfolio walkthrough</span>
-        <span aria-label="Duration: 2 minutes 2 seconds">02:02</span>
-      </figcaption>
-    </figure>
+    </Panel>
   )
 }

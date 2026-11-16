@@ -1,0 +1,71 @@
+/* A yellow sticky note. It keeps its paper colours in both themes: it's a
+   real object stuck on the form. */
+.sticky {
+  position: relative;
+  z-index: 5;
+  width: 190px;
+  margin: 14px auto 16px;
+  padding: 22px 14px 12px;
+  background: linear-gradient(to bottom, #f2d94e 0 16px, #ffe866 16px);
+  color: #3a3000;
+  font-family: var(--typed);
+  font-size: 0.875rem;
+  line-height: 1.35;
+  box-shadow:
+    0 1px 1px rgba(40, 34, 0, 0.2),
+    0 10px 18px -8px rgba(40, 34, 0, 0.5);
+  rotate: -3deg;
+  cursor: grab;
+  touch-action: none;
+  user-select: none;
+  transition:
+    rotate 200ms var(--ease-out),
+    box-shadow 200ms var(--ease-out);
+}
+
+.sticky[data-dragging='true'] {
+  rotate: 2deg;
+  cursor: grabbing;
+  box-shadow:
+    0 2px 2px rgba(40, 34, 0, 0.2),
+    0 26px 34px -12px rgba(40, 34, 0, 0.55);
+}
+
+.sticky kbd {
+  display: inline;
+  height: auto;
+  margin: 0;
+  padding: 0 4px;
+  border: 1px solid currentColor;
+  border-radius: 2px;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.sticky__sub {
+  margin-top: 6px;
+  font-size: 0.75rem;
+  opacity: 0.75;
+}
+
+.sticky__peel {
+  position: absolute;
+  top: -2px;
+  right: 0;
+  display: grid;
+  place-items: center;
+  width: 28px;
+  height: 22px;
+  color: #3a3000;
+  opacity: 0.6;
+}
+
+.sticky__peel:hover {
+  opacity: 1;
+}
+
+@media (max-width: 640px) {
+  .sticky {
+    display: none;
+  }
+}

@@ -47,16 +47,18 @@ export default function Gallery({ items, title }) {
             <img key={item.src} src={item.src} alt={item.alt} />
             <footer className="gallery-viewer__bar">
               <button type="button" onClick={() => step(-1)}>
-                <span aria-hidden="true">←</span> Prev
+                Previous
               </button>
               <span aria-live="polite">
-                {item.caption} · {active + 1} / {items.length}
+                {item.caption} ({active + 1} of {items.length})
               </span>
               <button type="button" onClick={() => step(1)}>
-                Next <span aria-hidden="true">→</span>
+                Next
               </button>
               <button type="button" onClick={close} aria-label="Close">
-                ✕
+                <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true">
+                  <path d="M6 6l12 12M18 6 6 18" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+                </svg>
               </button>
             </footer>
           </>

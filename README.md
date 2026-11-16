@@ -21,11 +21,16 @@ All text lives in `src/data/`, so you don't need to touch the components:
 | `experience.js` | timeline entries (replace the OJT entry once you have a placement) |
 | `education.js` | schools; add `years` if you want dates shown |
 | `certifications.js` | certificates; add `issuer`, `year`, `url` when you have them |
-| `sections.js` | section order and nav labels |
+| `sections.js` | section order and header labels |
+| `systems.js` | the simplified data sketch drawn on each project page |
 
 The chat assistant reads the same files, so anything you add here is something it can answer about.
 
-**Adding a project:** copy an entry in `projects.js`. For a screenshot, put a `.webp` (about 1400px wide) in `public/projects/` and set `image: { src, alt, width, height }`. With `image: null` the card shows cover art (`cover: 'board' | 'gear' | 'paw' | 'halftone' | 'grid'`). Empty `liveUrl` / `codeUrl` hide those links.
+**Adding a project:** copy an entry in `projects.js`. For a screenshot, put a `.webp` (about 1400px wide) in `public/projects/` and set `image: { src, alt, width, height }`. Lists show the project's first gallery shot. Empty `liveUrl` / `codeUrl` hide those links. To give it a data sketch (the small entity diagram on its page), add an entry to `src/data/systems.js`.
+
+## Design
+
+The site is designed as one printed registration form. `DESIGN.md` describes the system; `.claude/skills/portfolio-form` is the working method for changing it. `npm run check:home` guards the compact multi-column layout, and `node scripts/shots.mjs <prefix>` screenshots every page and state for review.
 
 ## API routes (`api/`)
 

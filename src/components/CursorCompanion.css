@@ -1,3 +1,5 @@
+/* A ballpen-blue ring that trails the mouse; over a labelled element it
+   becomes a small ink tag. */
 .cursor {
   position: fixed;
   left: 0;
@@ -22,10 +24,10 @@
   top: 0;
   display: grid;
   place-items: center;
-  min-width: 34px;
-  height: 34px;
+  min-width: 30px;
+  height: 30px;
   padding: 0;
-  border: 1.5px solid var(--amber);
+  border: 1.5px solid var(--ink);
   border-radius: 999px;
   transform: translate(-50%, -50%);
   transition:
@@ -34,22 +36,24 @@
     padding 260ms var(--ease-out),
     background-color 200ms ease,
     border-color 200ms ease,
+    border-radius 200ms ease,
     scale 200ms var(--ease-out);
 }
 
 .cursor[data-mode='hover'] .cursor__ring {
-  min-width: 54px;
-  height: 54px;
-  background: rgba(255, 176, 0, 0.12);
+  min-width: 48px;
+  height: 48px;
+  border-color: var(--pen);
 }
 
 .cursor[data-mode='label'] .cursor__ring {
-  min-width: 64px;
-  height: 64px;
+  min-width: 56px;
+  height: 32px;
   padding: 0 12px;
-  border-color: var(--amber);
-  background: var(--amber);
-  box-shadow: 0 10px 30px -8px rgba(255, 176, 0, 0.55);
+  border-radius: 3px;
+  border-color: var(--ink);
+  background: var(--ink);
+  box-shadow: var(--shadow-paper);
 }
 
 .cursor[data-pressed='true'] .cursor__ring {
@@ -57,12 +61,10 @@
 }
 
 .cursor__label {
-  font-family: var(--font-mono);
-  font-size: 0.625rem;
-  font-weight: 800;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: var(--amber-ink);
+  font-variation-settings: var(--casual);
+  font-size: 0.8125rem;
+  font-weight: 750;
+  color: var(--on-ink);
   white-space: nowrap;
   opacity: 0;
   transition: opacity 150ms ease;

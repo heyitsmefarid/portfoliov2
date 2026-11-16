@@ -1,34 +1,22 @@
 import { skillGroups } from '../data/skills.js'
 import './StackMarquee.css'
 
-// Two tilted ribbons of Fred's stack crossing each other and scrolling in
-// opposite directions. Decorative — the stack is listed in its own panel.
-const MAIN = skillGroups.filter((g) => g.tier === 'primary').flatMap((g) => g.items.map((i) => i.name))
-const REST = skillGroups.filter((g) => g.tier !== 'primary').flatMap((g) => g.items.map((i) => i.name))
-
-function Track({ words }) {
-  // Two identical halves so the loop is seamless at -50%; each half repeats
-  // the list so it is always wider than the screen.
-  const half = [...words, ...words].flatMap((word) => [word, '✦'])
-  return (
-    <div className="marquee__track">
-      {[...half, ...half].map((text, index) => (
-        <span key={index} className={text === '✦' ? 'marquee__star' : 'marquee__word'}>
-          {text}
-        </span>
-      ))}
-    </div>
-  )
-}
+// A ticker strip across the form: the whole stack, scrolling slowly, like the
+// repeated microprint line on security paper. Decorative; the stack has its
+// own cell. Hovering pauses it.
+const WORDS = skillGroups.flatMap((group) => group.items.map((item) => item.name))
 
 export default function StackMarquee() {
+  // Two identical halves so the loop is seamless at -50%.
+  const half = [...WORDS, ...WORDS]
   return (
-    <div className="marquee" aria-hidden="true" data-cursor="Paused">
-      <div className="marquee__band marquee__band--back">
-        <Track words={REST} />
-      </div>
-      <div className="marquee__band marquee__band--front">
-        <Track words={MAIN} />
+    <div className="cell cell--ticker marquee" aria-hidden="true" data-cursor="Paused">
+      <div className="marquee__track">
+        {[...half, ...half].map((word, index) => (
+          <span key={index} className="marquee__word">
+            {word}
+          </span>
+        ))}
       </div>
     </div>
   )

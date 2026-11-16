@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
-import { sections, sectionNumber } from '../data/sections.js'
+import { sections } from '../data/sections.js'
 import { projects } from '../data/projects.js'
 import { profile } from '../data/profile.js'
 import { useAskAssistant } from '../lib/assistantContext.js'
@@ -15,7 +15,7 @@ const STATIC_ITEMS = [
     id: `go-${section.id}`,
     group: 'Go to',
     label: section.label,
-    hint: sectionNumber(section.id),
+    hint: 'on this page',
     run: () => navigate(`/#${section.id}`),
   })),
   {
@@ -43,14 +43,14 @@ const STATIC_ITEMS = [
     id: 'top',
     group: 'Links',
     label: 'Back to top',
-    hint: '↑',
+    hint: 'top',
     run: () => window.scrollTo({ top: 0 }),
   },
   {
     id: 'theme',
     group: 'Settings',
     get label() {
-      return getTheme() === 'light' ? 'Switch to dark mode' : 'Switch to light mode'
+      return getTheme() === 'dark' ? 'Switch to the light form' : 'Switch to the carbon copy'
     },
     hint: 'theme',
     run: () => toggleTheme(),
@@ -85,7 +85,7 @@ export default function CommandPalette({ open, onOpenChange }) {
       id: 'ask',
       group: 'Assistant',
       label: trimmed ? `Ask: “${trimmed}”` : 'Ask the portfolio assistant',
-      hint: '↵',
+      hint: 'Enter',
       run: () => ask(trimmed || undefined),
     }
     return [...found, askItem]
@@ -168,11 +168,11 @@ export default function CommandPalette({ open, onOpenChange }) {
 
   return (
     <div className="palette" onMouseDown={(event) => event.target === event.currentTarget && close()}>
-      <div className="palette__panel" role="dialog" aria-modal="true" aria-label="Command menu">
+      <div className="palette__panel slip" role="dialog" aria-modal="true" aria-label="Command menu">
         <div className="palette__search">
-          <span className="palette__prompt" aria-hidden="true">
-            &gt;
-          </span>
+          <svg className="palette__prompt" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true">
+            <path d="M10.5 18a7.5 7.5 0 1 0 0-15 7.5 7.5 0 0 0 0 15Zm5.3-2.2L21 21" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+          </svg>
           <input
             ref={inputRef}
             className="palette__input"

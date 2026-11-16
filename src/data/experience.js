@@ -1,17 +1,17 @@
 // Timeline entries, newest / most forward-looking first.
 // status: 'seeking' | 'current' | 'done'
-// When you land an internship, replace the first entry with the real company,
-// role and dates.
+// When you land an OJT, a client or a job, replace the first entry with the
+// real company or client, role and dates.
 
 export const experience = [
   {
     id: 'ojt',
-    title: 'Internship / OJT',
+    title: 'OJT, freelance or remote work',
     org: '',
     period: 'Actively seeking',
     status: 'seeking',
     description:
-      'Looking for an internship or OJT placement in web, mobile, or full-stack development.',
+      'Looking for an OJT placement, freelance clients, or a remote role in web, mobile, or full-stack development.',
   },
   {
     id: 'capstone',

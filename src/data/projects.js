@@ -1,15 +1,14 @@
-// Projects, in display order. They appear on the home page (featured ones, as a
-// fanned deck), on /projects, and each on its own page at /projects/<id>.
+// Projects, in display order. They appear on the home page (featured ones
+// written out in full, the rest as a list), on /projects, and each on its own
+// page at /projects/<id>.
 //
 // To add a project, copy one object and edit it:
-//   image     – the main screenshot in /public/projects (.webp, ~1280px wide), or
-//               null to show a generated cover. Always write a real `alt`.
-//   cover     – cover art used when there is no image: 'board' | 'gear' | 'paw' |
-//               'halftone' | 'grid'
+//   image     – the main screenshot in /public/projects (.webp, ~1280px wide).
+//               Always write a real `alt`. Lists show the first gallery shot.
 //   liveUrl   – a public demo link, or '' to hide "View project"
 //   codeUrl   – a repository link, or '' to hide "View code"
 //   note      – short text shown instead of missing links (optional)
-//   featured  – true for the three projects in the home deck
+//   featured  – true for the three projects written out on the home page
 //   badges    – 1–3 short, TRUE labels in capitals (no invented awards)
 //   pitch     – one line (≤ 110 characters) for cards and the list
 //   role      – your part, when it isn't the whole project (optional)
@@ -36,7 +35,6 @@ export const projects = [
       width: 1254,
       height: 784,
     },
-    cover: 'grid',
     liveUrl: 'https://iskonnect-scholar.web.app',
     codeUrl: '',
     note: 'Private repository',
@@ -117,7 +115,6 @@ export const projects = [
       width: 1280,
       height: 800,
     },
-    cover: 'grid',
     liveUrl: '',
     codeUrl: '',
     note: 'Private repository',
@@ -199,7 +196,6 @@ export const projects = [
       width: 1280,
       height: 800,
     },
-    cover: 'grid',
     liveUrl: 'https://studyspace-murex.vercel.app',
     codeUrl: 'https://github.com/heyitsmefarid/studyspace',
     note: '',
@@ -280,7 +276,6 @@ export const projects = [
       width: 1280,
       height: 800,
     },
-    cover: 'grid',
     liveUrl: '',
     codeUrl: 'https://github.com/heyitsmefarid/applypilot',
     note: '',
@@ -361,7 +356,6 @@ export const projects = [
       width: 1280,
       height: 800,
     },
-    cover: 'paw',
     liveUrl: 'https://tailfinder-mu.vercel.app',
     codeUrl: 'https://github.com/heyitsmefarid/tailfinder',
     note: '',
@@ -442,7 +436,6 @@ export const projects = [
       width: 1280,
       height: 800,
     },
-    cover: 'gear',
     liveUrl: 'https://meugearup.vercel.app',
     codeUrl: 'https://github.com/heyitsmefarid/meu_gearup',
     note: '',
@@ -523,7 +516,6 @@ export const projects = [
       width: 1280,
       height: 800,
     },
-    cover: 'grid',
     liveUrl: 'http://library-management.gamer.free/login.php',
     codeUrl: 'https://github.com/heyitsmefarid/library-management-system',
     note: '',
@@ -609,7 +601,6 @@ export const projects = [
       width: 1280,
       height: 800,
     },
-    cover: 'board',
     liveUrl: 'https://checkers-theta-lemon.vercel.app',
     codeUrl: 'https://github.com/heyitsmefarid/checkers',
     note: '',
@@ -683,7 +674,6 @@ export const projects = [
       width: 1280,
       height: 800,
     },
-    cover: 'halftone',
     liveUrl: 'https://guhit-arts.vercel.app',
     codeUrl: 'https://github.com/heyitsmefarid/guhit-arts',
     note: '',

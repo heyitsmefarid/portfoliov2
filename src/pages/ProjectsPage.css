@@ -1,108 +1,74 @@
-.projects-page {
-  padding-top: 48px;
-}
-
 .projects-page__head {
-  display: grid;
-  gap: 10px;
-  justify-items: start;
-}
-
-.projects-page__title {
-  font-family: var(--font-mono);
-  font-size: clamp(2rem, 5vw, 3rem);
-  color: var(--text);
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 16px 40px;
+  padding: var(--pad);
 }
 
 .projects-page__lede {
-  max-width: 60ch;
-  line-height: 1.65;
-  color: var(--muted);
-}
-
-.projects-page__filters {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
+  max-width: 56ch;
   margin-top: 6px;
 }
 
-.projects-page__filters .chip {
-  cursor: pointer;
+/* Filters are tick boxes, as on any form */
+.ticks {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2px 18px;
 }
 
-.projects-page__filters .chip[aria-pressed='true'] {
-  border-color: var(--accent);
-  color: var(--accent);
-}
-
-.project-rows {
-  display: grid;
-  gap: 14px;
-  margin-top: 18px;
-}
-
-.project-row {
-  display: grid;
-  grid-template-columns: minmax(0, 280px) minmax(0, 1fr);
-  gap: 24px;
+.tick {
+  display: inline-flex;
   align-items: center;
-  padding: 18px;
-  border: 1px solid var(--panel-line);
-  border-radius: 16px;
-  background: var(--panel);
-  transition:
-    border-color 200ms ease,
-    transform 200ms var(--ease-out);
+  gap: 7px;
+  min-height: 36px;
+  font-weight: 650;
 }
 
-.project-row:hover,
-.project-row:focus-within {
-  border-color: rgba(255, 176, 0, 0.36);
-  transform: translateY(-2px);
+.tick__box {
+  width: 18px;
+  height: 18px;
 }
 
-.project-row__shot {
-  display: block;
-  padding-inline: 8%;
+.tick__box rect {
+  fill: var(--field);
+  stroke: var(--ink);
+  stroke-width: 1.5;
 }
 
-.project-row__badges {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 6px;
+.tick__box path {
+  fill: none;
+  stroke: var(--pen);
+  stroke-width: 2.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-dasharray: 20;
+  stroke-dashoffset: 20;
+  transition: stroke-dashoffset 240ms var(--ease-out);
 }
 
-.project-row__name {
-  margin-top: 10px;
-  font-family: var(--font-mono);
-  font-size: 1.25rem;
+.tick[aria-pressed='true'] .tick__box path {
+  stroke-dashoffset: 0;
 }
 
-.project-row__name a {
-  color: var(--text);
+.tick:hover .tick__box rect {
+  stroke: var(--pen);
 }
 
-.project-row__name a::after {
-  content: ' →';
-  color: var(--accent);
+.projects-page__count {
+  font-weight: 700;
+  color: var(--ink-soft);
 }
 
-.project-row__pitch {
-  margin-top: 6px;
-  line-height: 1.6;
-  color: var(--text-soft);
+/* The full list has room for bigger screenshots */
+.projects-page .ptable__shot {
+  width: 148px;
 }
 
-.project-row__tech {
-  margin-top: 10px;
-  font-family: var(--font-mono);
-  font-size: 0.6875rem;
-  color: var(--muted);
-}
-
-@media (max-width: 820px) {
-  .project-row {
-    grid-template-columns: 1fr;
+@container (max-width: 560px) {
+  .projects-page .ptable__shot {
+    width: 92px;
   }
 }

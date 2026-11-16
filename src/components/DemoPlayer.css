@@ -3,29 +3,38 @@
   margin: 0;
 }
 
+/* Sits on the printout's top corner, like a sticky tab */
 .demo__toggle {
   position: absolute;
-  right: 12px;
-  bottom: 22px;
+  top: 16px;
+  right: 16px;
+  z-index: 1;
   min-height: 36px;
   padding: 0 14px;
-  border: 1px solid var(--chip-line);
-  border-radius: 999px;
-  background: var(--glass);
-  font-family: var(--font-mono);
-  font-size: 0.6875rem;
-  color: var(--accent);
-  cursor: pointer;
+  border-radius: 3px;
+  background: var(--ink);
+  color: var(--on-ink);
+  font-variation-settings: var(--casual);
+  font-weight: 700;
+  font-size: 0.875rem;
+  line-height: 1;
+  box-shadow: var(--shadow-paper);
 }
 
 .demo__toggle:hover {
-  border-color: var(--accent);
+  background: var(--pen);
+  color: #fff;
 }
 
 /* The clip sits on top of the poster and fades in once it has loaded */
 .demo__screen {
   position: relative;
   display: block;
+}
+
+.demo__screen img {
+  width: 100%;
+  height: auto;
 }
 
 .demo__clip {

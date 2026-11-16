@@ -33,10 +33,10 @@ try {
   await page.addInitScript(() => sessionStorage.setItem('intro-seen', '1'))
   await page.goto(BASE, { waitUntil: 'networkidle' })
 
-  const reel = page.locator('.bento__column--primary > .portfolio-reel > video')
-  if ((await reel.count()) !== 1) throw new Error('The left column must contain one standalone portfolio reel')
-  if (!(await reel.isVisible())) throw new Error('Portfolio reel is not visible')
-  if ((await page.locator('#experience video').count()) !== 0) throw new Error('Portfolio reel must not be inside Experience')
+  // The walkthrough video has its own cell on the form.
+  const reel = page.locator('.portfolio-reel video')
+  if ((await reel.count()) !== 1) throw new Error('The form must contain one portfolio walkthrough video')
+  if (!(await reel.isVisible())) throw new Error('Portfolio walkthrough is not visible')
 
   const reelContract = await reel.evaluate((video) => ({
     controls: video.controls,
@@ -44,101 +44,66 @@ try {
     preload: video.preload,
     src: new URL(video.currentSrc || video.src).pathname,
     poster: new URL(video.poster, window.location.href).pathname,
-    aboveExperience: video.closest('.portfolio-reel')?.nextElementSibling?.id === 'experience',
     hasFallbackLink: Boolean(video.querySelector('a[href]')),
   }))
-  if (!reelContract.controls) throw new Error('Experience reel must expose playback controls')
-  if (!reelContract.downloadDisabled) throw new Error('Portfolio reel must hide the native download control')
-  if (reelContract.hasFallbackLink) throw new Error('Portfolio reel must not expose a fallback download link')
-  if (reelContract.preload !== 'metadata') throw new Error('Experience reel must preload metadata only')
+  if (!reelContract.controls) throw new Error('Walkthrough must expose playback controls')
+  if (!reelContract.downloadDisabled) throw new Error('Walkthrough must hide the native download control')
+  if (reelContract.hasFallbackLink) throw new Error('Walkthrough must not expose a fallback download link')
+  if (reelContract.preload !== 'metadata') throw new Error('Walkthrough must preload metadata only')
   if (reelContract.src !== '/profile/portfolio-walkthrough.mp4') throw new Error(`Unexpected video source: ${reelContract.src}`)
   if (reelContract.poster !== '/profile/portfolio-walkthrough-poster.png') {
     throw new Error(`Unexpected poster source: ${reelContract.poster}`)
   }
-  if (!reelContract.aboveExperience) throw new Error('Portfolio reel must appear directly above Experience')
 
   const contextMenuBlocked = await reel.evaluate((video) => {
     const event = new MouseEvent('contextmenu', { bubbles: true, cancelable: true })
     video.dispatchEvent(event)
     return event.defaultPrevented
   })
-  if (!contextMenuBlocked) throw new Error('Portfolio reel must block its context menu')
+  if (!contextMenuBlocked) throw new Error('Walkthrough must block its context menu')
 
   const mediaResponses = await Promise.all([
     page.request.get(`${BASE}${reelContract.src}`),
     page.request.get(`${BASE}${reelContract.poster}`),
   ])
-  if (mediaResponses.some((response) => !response.ok())) throw new Error('Experience reel media is missing')
+  if (mediaResponses.some((response) => !response.ok())) throw new Error('Walkthrough media is missing')
 
-  const boxes = await page.evaluate(() => {
-    const box = (selector) => {
-      const rect = document.querySelector(selector).getBoundingClientRect()
-      return { top: rect.top, right: rect.right, bottom: rect.bottom, left: rect.left }
-    }
-    return {
-      reel: box('.portfolio-reel'),
-      experience: box('#experience'),
-      education: box('#education'),
-      about: box('#about'),
-      stack: box('#stack'),
-    }
-  })
-  const near = (a, b, tolerance = 2) => Math.abs(a - b) <= tolerance
-  if (!near(boxes.experience.left, boxes.education.left) || !near(boxes.about.left, boxes.stack.left)) {
-    throw new Error('Desktop panels are not grouped into stable left and right columns')
-  }
-  if (!near(boxes.experience.right - boxes.experience.left, boxes.about.right - boxes.about.left)) {
-    throw new Error('Desktop panel columns must have equal widths')
-  }
-  if (!near(boxes.reel.right - boxes.reel.left, boxes.experience.right - boxes.experience.left)) {
-    throw new Error('Portfolio reel must match the left column width')
-  }
-  if (!near(boxes.education.top - boxes.experience.bottom, 14) || !near(boxes.stack.top - boxes.about.bottom, 14)) {
-    throw new Error(
-      `Desktop columns must pack panels with a 14px gap (left ${boxes.education.top - boxes.experience.bottom}, right ${boxes.stack.top - boxes.about.bottom})`,
-    )
-  }
-  if (!near(boxes.education.bottom, boxes.stack.bottom)) {
-    throw new Error(`Education and Tech Stack must share a bottom edge (${boxes.education.bottom} vs ${boxes.stack.bottom})`)
-  }
-
-  const responsiveViewports = [
-    { label: 'small phone', width: 320, height: 568, stackedHero: true, stackedPanels: true },
-    { label: 'phone', width: 375, height: 812, stackedHero: true, stackedPanels: true },
-    { label: 'tablet portrait', width: 768, height: 1024, stackedHero: true, stackedPanels: true },
-    { label: 'hero breakpoint', width: 820, height: 1180, stackedHero: true, stackedPanels: true },
-    { label: 'above hero breakpoint', width: 821, height: 1180, stackedHero: false, stackedPanels: true },
-    { label: 'large tablet portrait', width: 960, height: 1280, stackedHero: false, stackedPanels: true },
-    { label: 'panel breakpoint', width: 1024, height: 1366, stackedHero: false, stackedPanels: true },
-    { label: 'above panel breakpoint', width: 1025, height: 900, stackedHero: false, stackedPanels: false },
-    { label: 'small laptop', width: 1280, height: 800, stackedHero: false, stackedPanels: false },
-    { label: 'wide desktop', width: 1920, height: 1080, stackedHero: false, stackedPanels: false },
-    { label: 'ultrawide desktop', width: 3440, height: 1440, stackedHero: false, stackedPanels: false },
+  const viewports = [
+    { label: 'small phone', width: 320, height: 568 },
+    { label: 'phone', width: 375, height: 812 },
+    { label: 'phone breakpoint', width: 640, height: 900 },
+    { label: 'above phone breakpoint', width: 641, height: 900 },
+    { label: 'tablet portrait', width: 768, height: 1024 },
+    { label: 'tablet breakpoint', width: 1080, height: 900 },
+    { label: 'above tablet breakpoint', width: 1081, height: 900, desktop: true },
+    { label: 'small laptop', width: 1280, height: 800, desktop: true },
+    { label: 'laptop', width: 1440, height: 900, desktop: true, maxScreens: 2.8 },
+    { label: 'wide desktop', width: 1920, height: 1080, desktop: true, maxScreens: 2.4 },
+    { label: 'ultrawide desktop', width: 3440, height: 1440, desktop: true },
   ]
 
-  for (const viewport of responsiveViewports) {
+  for (const viewport of viewports) {
     await page.setViewportSize({ width: viewport.width, height: viewport.height })
+    await page.waitForTimeout(150)
 
     const layout = await page.evaluate(() => {
-      const rect = (selector) => {
-        const box = document.querySelector(selector)?.getBoundingClientRect()
-        return box ? { top: box.top, right: box.right, bottom: box.bottom, left: box.left, width: box.width } : null
-      }
-      const checkedSelectors = ['.hero__inner', '.page-body', '.bento', '#projects', '#github', '.duo', '.footer__inner']
-      const outsideViewport = checkedSelectors.flatMap((selector) => {
-        const box = rect(selector)
-        return box && (box.left < -1 || box.right > window.innerWidth + 1) ? [`${selector} (${box.left}, ${box.right})`] : []
+      const box = (selector) => document.querySelector(selector).getBoundingClientRect()
+      const outsideViewport = [...document.querySelectorAll('.binding__inner, .form, .cell, .footer__inner')].flatMap((element) => {
+        const rect = element.getBoundingClientRect()
+        return rect.width && (rect.left < -1 || rect.right > window.innerWidth + 1) ? [`${element.className} (${rect.left}, ${rect.right})`] : []
       })
-
       return {
         scrollWidth: document.documentElement.scrollWidth,
         viewportWidth: window.innerWidth,
+        pageHeight: document.documentElement.scrollHeight,
         outsideViewport,
-        heroDirection: getComputedStyle(document.querySelector('.hero__inner')).flexDirection,
-        reel: rect('.portfolio-reel'),
-        about: rect('#about'),
-        certs: rect('.duo > :first-child'),
-        connect: rect('.duo > :last-child'),
+        // Cells that must sit beside each other on a desktop form
+        beside: {
+          'photo / details / status': box('.cell--photo').top === box('.cell--info').top && box('.cell--info').top === box('.cell--status').top,
+          'projects / about': box('.cell--projects').top === box('.cell--about').top,
+          'experience / education / certifications / contact':
+            new Set(['experience', 'education', 'certifications', 'contact'].map((name) => Math.round(box(`.cell--${name}`).top))).size === 1,
+        },
       }
     })
 
@@ -148,24 +113,18 @@ try {
     if (layout.outsideViewport.length) {
       throw new Error(`${viewport.label}: content is clipped outside the viewport: ${layout.outsideViewport.join(', ')}`)
     }
-
-    const heroIsStacked = layout.heroDirection === 'column'
-    if (heroIsStacked !== viewport.stackedHero) {
-      throw new Error(`${viewport.label}: expected hero flex-direction ${viewport.stackedHero ? 'column' : 'row'}, got ${layout.heroDirection}`)
+    if (viewport.desktop) {
+      const stacked = Object.entries(layout.beside).filter(([, ok]) => !ok).map(([name]) => name)
+      if (stacked.length) throw new Error(`${viewport.label}: these cells should sit side by side: ${stacked.join('; ')}`)
     }
-
-    const bentoIsStacked = layout.about.top > layout.reel.bottom + 10
-    const duoIsStacked = layout.connect.top > layout.certs.top + 20
-    if (bentoIsStacked !== viewport.stackedPanels || duoIsStacked !== viewport.stackedPanels) {
-      throw new Error(
-        `${viewport.label}: expected ${viewport.stackedPanels ? 'stacked' : 'two-column'} content panels ` +
-          `(bento stacked: ${bentoIsStacked}, closing pair stacked: ${duoIsStacked})`,
-      )
+    // The point of the form: the whole portfolio in a few screens, not a long scroll.
+    if (viewport.maxScreens && layout.pageHeight > viewport.height * viewport.maxScreens) {
+      throw new Error(`${viewport.label}: home page is ${layout.pageHeight}px tall, more than ${viewport.maxScreens} screens`)
     }
   }
 
   await browser.close()
-  console.log('home layout: media, packed columns, and responsive breakpoints ok')
+  console.log('home layout: walkthrough video, responsive widths, side-by-side cells and compact height ok')
 } finally {
   server.kill()
 }

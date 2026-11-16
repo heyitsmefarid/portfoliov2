@@ -9,19 +9,21 @@
       content="Portfolio of Fred Anthony Gallano, a BS Information Systems student focused on web, mobile, and full-stack development."
     />
     <meta name="author" content="Fred Anthony Gallano" />
-    <meta name="theme-color" content="#080808" />
-    <meta name="color-scheme" content="dark light" />
+    <meta name="theme-color" content="#c3dfcb" />
+    <meta name="color-scheme" content="light dark" />
     <script>
-      // Apply the saved theme before the first paint (default: dark).
+      // Apply the theme before the first paint: the saved choice, else the
+      // system setting, else the mint form (light).
       (function () {
-        var theme = 'dark'
+        var theme = 'light'
         try {
           var saved = localStorage.getItem('theme')
           if (saved === 'light' || saved === 'dark') theme = saved
+          else if (window.matchMedia('(prefers-color-scheme: dark)').matches) theme = 'dark'
         } catch (e) {}
         document.documentElement.dataset.theme = theme
-        if (theme === 'light') {
-          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#f5f4f1')
+        if (theme === 'dark') {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#08211a')
         }
 
         // Play the start-up intro once per visit (never with reduced motion).
@@ -71,9 +73,9 @@
   </head>
   <body>
     <noscript>
-      <p style="padding: 24px; font-family: system-ui, sans-serif; color: #f2f2f2; background: #080808">
+      <p style="padding: 24px; font-family: system-ui, sans-serif; color: #0e3a2d; background: #c3dfcb">
         Fred Anthony Gallano — Aspiring Full-Stack Developer. This portfolio needs JavaScript. You can also find
-        Fred's work at <a style="color: #ffb000" href="https://github.com/heyitsmefarid">github.com/heyitsmefarid</a>.
+        Fred's work at <a style="color: #b3221a" href="https://github.com/heyitsmefarid">github.com/heyitsmefarid</a>.
       </p>
     </noscript>
     <div id="root"></div>

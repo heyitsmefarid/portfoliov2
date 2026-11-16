@@ -1,133 +1,117 @@
-import { Fragment } from 'react'
 import { profile } from '../data/profile.js'
-import { dividers } from '../data/sections.js'
-import { prefersReducedMotion } from '../hooks/useReducedMotion.js'
-import Divider from './Divider.jsx'
-import ThemeToggle from './ThemeToggle.jsx'
-import Portrait from './Portrait.jsx'
+import { education } from '../data/education.js'
 import LocalTime from './LocalTime.jsx'
 import ViewCount from './ViewCount.jsx'
+import Portrait from './Portrait.jsx'
 import './Hero.css'
 
-const WIPE = [
-  { transform: 'scaleX(0)', transformOrigin: 'left' },
-  { transform: 'scaleX(1)', transformOrigin: 'left', offset: 0.45 },
-  { transform: 'scaleX(1)', transformOrigin: 'right', offset: 0.55 },
-  { transform: 'scaleX(0)', transformOrigin: 'right' },
-]
-
-// Hovering a word of the name runs the amber cursor block across it again.
-function replayWipe(event) {
-  const word = event.currentTarget
-  if (prefersReducedMotion() || word.dataset.wiping || typeof word.animate !== 'function') return
-  word.dataset.wiping = 'true'
-  const animation = word.animate(WIPE, {
-    duration: 420,
-    easing: 'cubic-bezier(0.22, 1, 0.36, 1)',
-    pseudoElement: '::after',
-  })
-  animation.onfinish = animation.oncancel = () => delete word.dataset.wiping
-}
-
-function PinIcon() {
+function Blank({ label, wide = false, children }) {
   return (
-    <svg viewBox="0 0 24 24" width="13" height="13" aria-hidden="true">
-      <path
-        d="M12 21s-6.5-6.1-6.5-11A6.5 6.5 0 0 1 18.5 10c0 4.9-6.5 11-6.5 11z"
-        fill="none"
-        stroke="currentColor"
-        strokeWidth="1.8"
-        strokeLinejoin="round"
-      />
-      <circle cx="12" cy="10" r="2.3" fill="currentColor" />
-    </svg>
+    <div className={`blank${wide ? ' blank--wide' : ''}`}>
+      <dt className="blank__label">{label}</dt>
+      <dd className="blank__value">{children}</dd>
+    </div>
   )
 }
 
-function ClockIcon() {
-  return (
-    <svg viewBox="0 0 24 24" width="13" height="13" aria-hidden="true">
-      <circle cx="12" cy="12" r="8.5" fill="none" stroke="currentColor" strokeWidth="1.8" />
-      <path d="M12 7.5V12l3 2" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" />
-    </svg>
-  )
-}
-
+// The top of the form: masthead with the control number, the ID photo box,
+// the applicant's details typed into blanks, and the status box that gets
+// the rubber stamp.
 export default function Hero({ onContact }) {
-  const { photo } = profile
-  const words = profile.name.split(' ')
+  const { photo, availability, contact } = profile
+  const school = education.find((item) => item.current) ?? education[0]
 
   return (
-    <section id="top" className="hero" aria-labelledby="hero-title">
-      <Divider label={dividers.top} />
+    <>
+      <header id="top" className="cell cell--mast">
+        <div className="mast">
+          <p className="mast__title">Portfolio registration form</p>
+          <p className="mast__sub">Web, mobile and full-stack development. Typed entries are mine; the rest is the form.</p>
+        </div>
+        <ViewCount />
+      </header>
 
-      <div className="container hero__inner">
-        {photo && (
-          <div className="hero__visual">
-            <Portrait photo={photo} video={photo.video} />
+      {photo && (
+        <div className="cell cell--photo">
+          <Portrait photo={photo} />
+          <svg className="paperclip" viewBox="0 0 30 76" aria-hidden="true">
+            <path d="M9 22v34a6.5 6.5 0 0 0 13 0V14a10 10 0 0 0-20 0v44" />
+          </svg>
+        </div>
+      )}
+
+      <section className="cell cell--info" aria-labelledby="hero-title">
+        <dl className="info">
+          <div className="blank blank--name">
+            <dt className="blank__label">Name</dt>
+            <dd>
+              <h1 id="hero-title" className="info__name" aria-label={profile.name}>
+                {/* Typed in, one key at a time */}
+                {[...profile.name].map((char, index) => (
+                  <span key={index} aria-hidden="true" style={{ '--i': index }}>
+                    {char}
+                  </span>
+                ))}
+                <span className="info__caret" aria-hidden="true" style={{ '--i': profile.name.length }} />
+              </h1>
+            </dd>
           </div>
-        )}
-
-        <div className="hero__copy">
-          <h1 id="hero-title" className="hero__name">
-            {words.map((word, index) => (
-              <Fragment key={index}>
-                <span className="hero__word" style={{ '--i': index }} onPointerEnter={replayWipe}>
-                  <span className="hero__word-text">{word}</span>
-                </span>{' '}
-              </Fragment>
-            ))}
-          </h1>
-
-          <p className="hero__role">{profile.role}</p>
-
-          <ul className="hero__meta">
-            {profile.location && (
-              <li>
-                <PinIcon />
-                {profile.location}
-              </li>
-            )}
-            {profile.timeZone && (
-              <li>
-                <ClockIcon />
-                <LocalTime timeZone={profile.timeZone} place={profile.location.split(',')[0]} />
-              </li>
-            )}
-            {profile.availability.open && (
-              <li>
-                <span className="status-dot" aria-hidden="true" />
-                {profile.availability.label} — {profile.availability.detail}
-              </li>
-            )}
-            <ViewCount />
-          </ul>
-
-          <p className="hero__headline">{profile.headline}</p>
-
-          <div className="hero__actions">
-            {profile.resumeUrl ? (
-              <a className="hero-btn hero-btn--solid" href={profile.resumeUrl} target="_blank" rel="noopener noreferrer" data-magnetic>
-                Get resume
+          <Blank label="Applying as">{profile.role}</Blank>
+          <Blank label="Course and year">{profile.status.replace(/ Student$/, '')}</Blank>
+          {school && <Blank label="School">{school.school}</Blank>}
+          <Blank label="Address">{profile.location}</Blank>
+          {profile.timeZone && (
+            <Blank label="Local time">
+              <LocalTime timeZone={profile.timeZone} place={profile.location.split(',')[0]} />
+            </Blank>
+          )}
+          <Blank label="GitHub">
+            <a className="link" href={contact.github} target="_blank" rel="noopener noreferrer">
+              @{contact.githubUsername}
+              <span className="visually-hidden"> (opens in a new tab)</span>
+            </a>
+          </Blank>
+          {contact.email && (
+            <Blank label="Email">
+              <a className="link" href={`mailto:${contact.email}`}>
+                {contact.email}
               </a>
-            ) : (
-              <a className="hero-btn hero-btn--solid" href="#projects" data-magnetic>
-                View projects
+            </Blank>
+          )}
+          <Blank label="In my own words" wide>
+            <span className="info__lede">{profile.lede}</span>
+          </Blank>
+        </dl>
+      </section>
+
+      <section className="cell cell--status" aria-labelledby="status-title">
+        <div className="cell__title">
+          <h2 id="status-title">Status</h2>
+        </div>
+        <div className="status">
+          {availability.open && (
+            <p className="stamp">
+              <span className="stamp__small">Available for</span>
+              <span className="stamp__big">Work</span>
+              <span className="stamp__small">{availability.detail}</span>
+            </p>
+          )}
+          <p className="status__note">{availability.open ? availability.label : 'Not currently looking'}</p>
+          <div className="status__actions">
+            <a className="btn btn--ink" href="#projects">
+              See my projects
+            </a>
+            {profile.resumeUrl && (
+              <a className="btn" href={profile.resumeUrl} target="_blank" rel="noopener noreferrer">
+                Résumé (PDF)
               </a>
             )}
-            {/* The form sends from any device; email links need a desktop mail app. */}
-            <button type="button" className="hero-btn" onClick={onContact} data-magnetic>
-              Contact me
+            <button type="button" className="btn" onClick={onContact}>
+              Send me a message
             </button>
           </div>
-
-          <div className="hero__theme">
-            <ThemeToggle />
-          </div>
         </div>
-      </div>
-
-      <Divider label={dividers.afterHero} />
-    </section>
+      </section>
+    </>
   )
 }

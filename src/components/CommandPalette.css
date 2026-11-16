@@ -1,3 +1,4 @@
+/* The Ctrl K menu: a white slip laid over the form. */
 .palette {
   position: fixed;
   inset: 0;
@@ -7,8 +8,6 @@
   align-items: flex-start;
   padding: max(12vh, 16px) 16px 16px;
   background: var(--overlay);
-  backdrop-filter: blur(6px);
-  -webkit-backdrop-filter: blur(6px);
 }
 
 @media (prefers-reduced-motion: no-preference) {
@@ -17,7 +16,7 @@
   }
 
   .palette__panel {
-    animation: palette-in 220ms var(--ease-out);
+    animation: palette-in 260ms var(--ease-out);
   }
 }
 
@@ -30,7 +29,7 @@
 @keyframes palette-in {
   from {
     opacity: 0;
-    transform: translateY(-10px) scale(0.985);
+    transform: translateY(-12px) rotate(-0.8deg);
   }
 }
 
@@ -39,12 +38,6 @@
   flex-direction: column;
   width: min(580px, 100%);
   max-height: min(560px, 76dvh);
-  border-radius: var(--radius-l);
-  background: var(--elevated);
-  box-shadow:
-    0 0 0 1px var(--hairline),
-    var(--shadow-pop),
-    0 0 80px -40px rgba(255, 176, 0, 0.35);
   overflow: hidden;
 }
 
@@ -52,94 +45,86 @@
   display: flex;
   align-items: center;
   gap: 12px;
+  height: 56px;
   padding: 0 12px 0 18px;
-  background: var(--elevated-2);
 }
 
 .palette__prompt {
-  font-family: var(--font-mono);
-  color: var(--accent);
-  text-shadow: 0 0 10px rgba(255, 176, 0, 0.5);
+  flex: none;
+  color: var(--pen);
 }
 
 .palette__input {
   flex: 1;
   min-width: 0;
-  height: 58px;
+  height: 54px;
   border: 0;
   outline: none;
   background: transparent;
-  font-size: 1rem;
-  caret-color: var(--amber);
+  font-variation-settings: var(--casual);
+  font-size: 1.125rem;
+  font-weight: 650;
 }
 
 .palette__input::placeholder {
-  color: var(--placeholder);
+  color: var(--ink-faint);
 }
 
 .palette__esc {
-  min-height: 30px;
-  padding: 0 8px;
-  border-radius: var(--radius-s);
-  background: var(--kbd-bg);
-  font-family: var(--font-mono);
-  font-size: 0.6875rem;
-  color: var(--muted);
+  min-height: 32px;
+  padding: 0 10px;
+  font-size: 0.8125rem;
+  font-weight: 650;
+  color: var(--ink-soft);
 }
 
 .palette__esc:hover {
-  color: var(--text);
+  color: var(--pen);
 }
 
 .palette__list {
   flex: 1;
   overflow-y: auto;
   overscroll-behavior: contain;
-  padding: 6px 8px 10px;
+  padding: 0 8px 8px;
   scrollbar-width: thin;
-  scrollbar-color: var(--scrollbar-neutral) transparent;
 }
 
 .palette__group {
-  padding: 12px 10px 6px;
-  font-family: var(--font-mono);
-  font-size: 0.6875rem;
-  color: var(--muted);
+  padding: 0 10px;
+  line-height: 28px;
+  margin-top: 28px;
+  font-variation-settings: var(--casual);
+  font-size: 0.875rem;
+  color: var(--pen);
+}
+
+.palette__group:first-child {
+  margin-top: 0;
 }
 
 .palette__option {
-  position: relative;
   display: flex;
   align-items: baseline;
   justify-content: space-between;
   gap: 16px;
-  min-height: 42px;
-  padding: 10px 12px;
-  border-radius: var(--radius-s);
+  min-height: 28px;
+  padding: 0 10px;
+  line-height: 28px;
+  border-radius: 2px;
   cursor: pointer;
-  color: var(--text-soft);
 }
 
 .palette__option[aria-selected='true'] {
-  background: var(--option-active);
-  color: var(--text);
-}
-
-.palette__option[aria-selected='true']::before {
-  content: '';
-  position: absolute;
-  left: 0;
-  top: 10px;
-  bottom: 10px;
-  width: 2px;
-  border-radius: 2px;
-  background: var(--amber);
+  background: var(--ink);
+  color: var(--on-ink);
 }
 
 .palette__label {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+  font-weight: 600;
 }
 
 .palette__hint {
@@ -148,22 +133,20 @@
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
-  font-family: var(--font-mono);
-  font-size: 0.6875rem;
-  color: var(--muted);
+  font-size: 0.8125rem;
+  opacity: 0.75;
 }
 
 .palette__footer {
   display: flex;
   gap: 18px;
-  padding: 10px 18px;
-  background: var(--elevated-2);
-  font-family: var(--font-mono);
-  font-size: 0.6875rem;
-  color: var(--muted);
+  padding: 6px 18px;
+  background: var(--card);
+  border-top: 1px solid var(--card-edge);
+  font-size: 0.8125rem;
+  color: var(--ink-soft);
 }
 
-.palette__footer kbd,
 kbd {
   display: inline-grid;
   place-items: center;
@@ -171,12 +154,11 @@ kbd {
   height: 20px;
   margin-right: 3px;
   padding: 0 5px;
-  border-radius: 4px;
-  background: var(--kbd-bg);
-  box-shadow: inset 0 -1px 0 var(--kbd-edge);
-  font-family: var(--font-mono);
-  font-size: 0.6875rem;
-  color: var(--text-soft);
+  border: 1px solid currentColor;
+  border-radius: 3px;
+  font-size: 0.75rem;
+  line-height: 1;
+  color: inherit;
 }
 
 @media (max-width: 640px) {

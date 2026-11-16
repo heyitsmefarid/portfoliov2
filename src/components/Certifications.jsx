@@ -6,16 +6,7 @@ import './Certifications.css'
 // Certificates with an image open in a viewer on the page (no new tab).
 const viewable = certifications.filter((cert) => cert.url)
 
-const detailsOf = (cert) => [cert.kind, cert.issuer, cert.year].filter(Boolean).join(' · ')
-
-function Seal() {
-  return (
-    <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true">
-      <circle cx="12" cy="9" r="6" fill="none" stroke="currentColor" strokeWidth="1.6" />
-      <path d="M8.5 13.8 7 21l5-2.6 5 2.6-1.5-7.2" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinejoin="round" />
-    </svg>
-  )
-}
+const detailsOf = (cert) => [cert.kind, cert.issuer, cert.year].filter(Boolean).join(', ')
 
 function ExpandIcon() {
   return (
@@ -48,7 +39,7 @@ function CertificateViewer({ active, onClose, onStep }) {
   return (
     <dialog
       ref={dialogRef}
-      className="cert-viewer"
+      className="cert-viewer slip"
       aria-labelledby="cert-viewer-title"
       onClose={onClose}
       onClick={(event) => event.target === dialogRef.current && close()}
@@ -80,13 +71,13 @@ function CertificateViewer({ active, onClose, onStep }) {
           {viewable.length > 1 && (
             <footer className="cert-viewer__nav">
               <button type="button" className="cert-viewer__step" onClick={() => onStep(-1)}>
-                <span aria-hidden="true">←</span> Prev
+                Previous
               </button>
               <span aria-live="polite">
                 {active + 1} / {viewable.length}
               </span>
               <button type="button" className="cert-viewer__step" onClick={() => onStep(1)}>
-                Next <span aria-hidden="true">→</span>
+                Next
               </button>
             </footer>
           )}
@@ -101,36 +92,22 @@ export default function Certifications() {
   const step = (delta) => setActive((index) => (index + delta + viewable.length) % viewable.length)
 
   return (
-    <Panel id="certifications" title="Certifications">
+    <Panel id="certifications" title="Certifications" flush>
       <ul className="certs">
-        {certifications.map((cert, index) => {
-          const body = (
-            <>
-              <span className="cert__seal">
-                <Seal />
-              </span>
-              <span className="cert__body">
-                <span className="cert__name">{cert.name}</span>
-                <span className="cert__kind">{detailsOf(cert)}</span>
-              </span>
-            </>
-          )
-          return (
-            <li key={cert.id} className="stagger" style={{ '--i': index * 2 }}>
-              {cert.url ? (
-                <button type="button" className="cert cert--link" onClick={() => setActive(viewable.indexOf(cert))}>
-                  {body}
-                  <span className="cert__open">
-                    <ExpandIcon />
-                  </span>
-                  <span className="visually-hidden"> — view certificate</span>
-                </button>
-              ) : (
-                <div className="cert">{body}</div>
-              )}
-            </li>
-          )
-        })}
+        {certifications.map((cert) => (
+          <li key={cert.id} className="cert">
+            {cert.url ? (
+              <button type="button" className="cert__name cert__name--link" onClick={() => setActive(viewable.indexOf(cert))}>
+                {cert.name}
+                <ExpandIcon />
+                <span className="visually-hidden"> (view certificate)</span>
+              </button>
+            ) : (
+              <p className="cert__name">{cert.name}</p>
+            )}
+            <p className="cert__kind">{[cert.issuer, cert.kind, cert.year].filter(Boolean).join(', ')}</p>
+          </li>
+        ))}
       </ul>
 
       <CertificateViewer active={active} onClose={() => setActive(null)} onStep={step} />

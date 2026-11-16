@@ -1,0 +1,49 @@
+/* A small entity diagram, ruled straight in the form's ink. */
+.sketch {
+  max-width: 400px;
+}
+
+.sketch svg {
+  width: 100%;
+  height: auto;
+  overflow: visible;
+}
+
+.sketch__link path {
+  fill: none;
+  stroke: var(--ink);
+  stroke-width: 1.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.sketch__entity rect {
+  fill: var(--paper);
+  stroke: var(--ink);
+  stroke-width: 1.5;
+}
+
+.sketch__entity text {
+  fill: var(--ink);
+  font-family: var(--font);
+  font-variation-settings: var(--casual);
+  font-weight: 650;
+  font-size: 15px;
+  text-anchor: middle;
+  dominant-baseline: central;
+}
+
+.sketch__entity--main rect {
+  fill: var(--ink);
+}
+
+.sketch__entity--main text {
+  fill: var(--on-ink);
+  font-weight: 800;
+}
+
+.sketch__caption {
+  font-variation-settings: var(--casual);
+  font-size: 0.875rem;
+  color: var(--pen);
+}

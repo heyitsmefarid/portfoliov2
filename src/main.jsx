@@ -1,7 +1,8 @@
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
-import '@fontsource-variable/geist'
-import '@fontsource-variable/jetbrains-mono'
+import '@fontsource-variable/archivo/wdth.css'
+import '@fontsource/courier-prime/latin-400.css'
+import '@fontsource/courier-prime/latin-700.css'
 import './styles/global.css'
 import App from './App.jsx'
 

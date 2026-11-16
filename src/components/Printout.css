@@ -1,0 +1,24 @@
+.printout {
+  margin: 0;
+}
+
+.printout__sheet {
+  position: relative;
+  padding: 5px;
+  background: #fbfdf9;
+  border: 1px solid var(--card-edge);
+  box-shadow: var(--shadow-paper);
+}
+
+.printout__sheet img,
+.printout__sheet video {
+  width: 100%;
+  height: auto;
+  background: #dfe9e1;
+}
+
+.printout__caption {
+  padding-top: 6px;
+  font-size: 0.8125rem;
+  color: var(--ink-soft);
+}

@@ -2,15 +2,16 @@ import { useSyncExternalStore } from 'react'
 import { flushSync } from 'react-dom'
 import { prefersReducedMotion } from '../hooks/useReducedMotion.js'
 
-// The theme lives on <html data-theme="dark|light">. index.html sets it from
+// The theme lives on <html data-theme="light|dark"> (light = the mint form,
+// dark = its carbon copy). index.html sets it from
 // localStorage before the first paint, so there is no flash of the wrong theme.
 
 const STORAGE_KEY = 'theme'
-const THEME_COLORS = { dark: '#080808', light: '#f5f4f1' }
+const THEME_COLORS = { dark: '#08211a', light: '#c3dfcb' }
 const listeners = new Set()
 
 export function getTheme() {
-  return document.documentElement.dataset.theme === 'light' ? 'light' : 'dark'
+  return document.documentElement.dataset.theme === 'dark' ? 'dark' : 'light'
 }
 
 function applyTheme(theme) {
@@ -59,5 +60,5 @@ function subscribe(listener) {
 }
 
 export function useTheme() {
-  return useSyncExternalStore(subscribe, getTheme, () => 'dark')
+  return useSyncExternalStore(subscribe, getTheme, () => 'light')
 }

@@ -116,7 +116,7 @@ function describeExperience() {
   const lines = experience.map(
     (item) => `- **${item.title}**${item.org ? ` — ${item.org}` : ''} (${item.period})`,
   )
-  return `${lines.join('\n')}\n\nThe portfolio doesn't list any company internship or job yet — Fred is actively looking for an internship / OJT.`
+  return `${lines.join('\n')}\n\nThe portfolio doesn't list any company internship or job yet — Fred is open to an OJT placement, freelance clients, and remote jobs.`
 }
 
 function describeCertifications() {

@@ -1,14 +1,10 @@
 import { useCallback, useRef, useState } from 'react'
 import { AssistantContext } from './lib/assistantContext.js'
-import { useRevealOnScroll } from './hooks/useRevealOnScroll.js'
-import { usePointerEffects } from './hooks/usePointerEffects.js'
-import { useMotionFx } from './hooks/useMotionFx.js'
 import { usePathname, useRoute } from './lib/router.js'
-import Backdrop from './components/Backdrop.jsx'
 import Intro from './components/Intro.jsx'
+import Binding from './components/Binding.jsx'
 import CursorCompanion from './components/CursorCompanion.jsx'
 import EasterEgg from './components/EasterEgg.jsx'
-import SideIndex from './components/SideIndex.jsx'
 import CommandPalette from './components/CommandPalette.jsx'
 import ContactDialog from './components/ContactDialog.jsx'
 import Footer from './components/Footer.jsx'
@@ -30,19 +26,13 @@ export default function App() {
   const route = useRoute()
   const pathname = usePathname()
 
-  // Re-run per page: they scan the DOM for their targets.
-  useRevealOnScroll(pathname)
-  usePointerEffects(pathname)
-  useMotionFx(pathname)
-
   return (
     <AssistantContext.Provider value={askAssistant}>
       <a className="skip-link" href="#main">
         Skip to content
       </a>
       <Intro />
-      <Backdrop />
-      <SideIndex onOpenMenu={() => setMenuOpen(true)} />
+      <Binding onOpenMenu={() => setMenuOpen(true)} />
 
       <div className="page">
         <main id="main" key={pathname}>
@@ -51,8 +41,8 @@ export default function App() {
           {route.name === 'project' && <ProjectPage id={route.id} />}
           {route.name === 'notFound' && <NotFoundPage />}
         </main>
-        <Footer />
       </div>
+      <Footer />
 
       <Chatbot ref={chatRef} />
       <CommandPalette open={menuOpen} onOpenChange={setMenuOpen} />

@@ -1,97 +1,419 @@
-/* Page structure below the hero: a two-column grid of panels, full-width
-   projects and GitHub panels, then a closing pair. */
-.page-body {
-  display: grid;
-  gap: 18px;
-  max-width: calc(1140px + var(--gutter) * 2);
-  padding-bottom: 64px;
+/* Where each cell sits on the form's 12-column grid, plus the small styles of
+   the home cells. The form itself (.form, .cell, .blank) is in global.css. */
+
+#main {
+  position: relative;
 }
 
-.page-body > .divider {
-  margin-block: 26px 8px;
+.cell__title h2 {
+  font: inherit;
+  font-variation-settings: inherit;
 }
 
-.bento {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 14px;
-  align-items: stretch;
+/* ── Home: desktop placement ──────────────────────────────────────────── */
+@media (min-width: 1081px) {
+  .form--home {
+    grid-template-areas:
+      'mast mast mast mast mast mast mast mast mast mast mast mast'
+      'photo photo info info info info info info info status status status'
+      'ticker ticker ticker ticker ticker ticker ticker ticker ticker ticker ticker ticker'
+      'projects projects projects projects projects projects projects projects about about about about'
+      'projects projects projects projects projects projects projects projects stack stack stack stack'
+      'projects projects projects projects projects projects projects projects reel reel reel reel'
+      'experience experience experience education education education certs certs certs contact contact contact'
+      'github github github github github github github github github github github github'
+      'sign sign sign sign sign sign sign sign sign sign sign sign';
+    grid-template-rows: auto auto auto auto auto 1fr auto auto auto;
+  }
+
+  .form--home .cell--mast { grid-area: mast; }
+  .form--home .cell--photo { grid-area: photo; }
+  .form--home .cell--info { grid-area: info; }
+  .form--home .cell--status { grid-area: status; }
+  .form--home .cell--ticker { grid-area: ticker; }
+  .form--home .cell--projects { grid-area: projects; }
+  .form--home .cell--about { grid-area: about; }
+  .form--home .cell--stack { grid-area: stack; }
+  .form--home .cell--experience { grid-area: experience; }
+  .form--home .cell--education { grid-area: education; }
+  .form--home .cell--certifications { grid-area: certs; }
+  .form--home .cell--contact { grid-area: contact; }
+  .form--home .cell--github { grid-area: github; }
+  .form--home .cell--reel { grid-area: reel; }
+  .form--home .cell--sign { grid-area: sign; }
+}
+
+/* ── Home: tablets and small laptops ──────────────────────────────────── */
+@media (min-width: 641px) and (max-width: 1080px) {
+  .form--home .cell--photo { grid-column: span 3; }
+  .form--home .cell--info { grid-column: span 9; }
+  .form--home .cell--status { grid-column: span 12; }
+  .form--home .cell--about,
+  .form--home .cell--stack,
+  .form--home .cell--experience,
+  .form--home .cell--education,
+  .form--home .cell--certifications,
+  .form--home .cell--contact { grid-column: span 6; }
+
+  .form--home .status {
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 12px 28px;
+  }
+
+  .form--home .status__actions {
+    display: flex;
+    flex-wrap: wrap;
+    width: auto;
+  }
+}
+
+/* Phones: one cell per row, but the cells stay compact inside */
+@media (max-width: 640px) {
+  .form--home .cell--photo {
+    grid-column: span 4;
+  }
+
+  .form--home .cell--status {
+    grid-column: span 8;
+  }
+
+  .form--home .cell--info {
+    order: -1;
+  }
+
+  .form--home .cell--mast {
+    order: -2;
+  }
+
+  .stamp__big {
+    white-space: normal;
+  }
+}
+
+.cell--projects {
+  display: flex;
+  flex-direction: column;
+}
+
+.cell--projects .cell__flush {
+  flex: 1;
+  container-type: inline-size;
+}
+
+/* ── About ────────────────────────────────────────────────────────────── */
+.about__text p + p {
   margin-top: 8px;
 }
 
-.bento__column {
+.about__facts {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+  margin-top: 12px;
+  padding-top: 10px;
+  border-top: 1px solid var(--card-edge);
+}
+
+/* ── Tech stack ───────────────────────────────────────────────────────── */
+.stack__key {
+  font-variation-settings: var(--narrow);
+  font-size: 0.75rem;
+  font-weight: 500;
+  opacity: 0.85;
+}
+
+.stack__group {
+  padding: 8px var(--pad) 9px;
+}
+
+.stack__group + .stack__group {
+  border-top: 1px solid var(--card-edge);
+}
+
+.stack__list {
   display: flex;
-  flex-direction: column;
-  min-width: 0;
-  gap: 14px;
+  flex-wrap: wrap;
+  gap: 3px 16px;
+  margin-top: 3px;
 }
 
-.bento__column > :last-child {
-  flex: 1;
-}
-
-/* Lean slightly with scroll speed (--skew from useMotionFx) */
-.bento,
-.duo {
-  transform: skewY(var(--skew, 0deg));
-  transform-origin: 50% 50%;
-}
-
-.duo {
+.stack__group--primary .stack__list {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 14px;
 }
 
-@media (max-width: 1024px) {
-  .bento {
-    grid-template-columns: minmax(0, 1fr);
-  }
-
-  .bento__column {
-    display: contents;
-  }
-
-  #about {
-    order: 1;
-  }
-
-  #experience {
-    order: 2;
-  }
-
-  #education {
-    order: 3;
-  }
-
-  #stack {
-    order: 4;
-  }
-
-  .duo {
-    grid-template-columns: minmax(0, 1fr);
-  }
+.stack__item {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  font-family: var(--typed);
+  font-weight: 700;
 }
 
-/* ── Not found ──────────────────────────────────────────────────────────── */
+.stack__group:not(.stack__group--primary) .stack__item {
+  font-weight: 400;
+}
+
+.tech-icon {
+  flex: none;
+  color: var(--ink);
+}
+
+.tech-icon--mono {
+  display: inline-grid;
+  place-items: center;
+  font-size: 0.5625rem;
+  font-weight: 700;
+  line-height: 1;
+  border: 1px solid currentColor;
+}
+
+
+/* ── Experience and education ─────────────────────────────────────────── */
+.record__item {
+  padding: 9px var(--pad) 10px;
+}
+
+.record__item + .record__item {
+  border-top: 1px solid var(--card-edge);
+}
+
+.record__when {
+  font-family: var(--typed);
+  font-size: 0.8125rem;
+  font-weight: 700;
+  color: var(--ink-soft);
+}
+
+.record__item--seeking .record__when {
+  color: var(--pen);
+}
+
+.record__title {
+  font-size: 0.9375rem;
+  font-weight: 750;
+  line-height: 1.3;
+}
+
+.record__org,
+.record__desc {
+  font-size: 0.875rem;
+  color: var(--ink-soft);
+}
+
+/* ── Certifications ───────────────────────────────────────────────────── */
+.cert {
+  padding: 9px var(--pad) 10px;
+}
+
+.cert + .cert {
+  border-top: 1px solid var(--card-edge);
+}
+
+.cert__name {
+  display: inline;
+  font-weight: 750;
+  line-height: 1.3;
+  text-align: left;
+}
+
+.cert__name--link {
+  text-decoration: underline;
+  text-decoration-color: var(--ink-faint);
+  text-decoration-thickness: 1.5px;
+  text-underline-offset: 3px;
+}
+
+.cert__name--link:hover {
+  color: var(--pen);
+  text-decoration-color: var(--pen);
+}
+
+.cert__name--link svg {
+  display: inline-block;
+  margin-left: 6px;
+  vertical-align: -2px;
+}
+
+.cert__kind {
+  font-size: 0.8125rem;
+  color: var(--ink-soft);
+}
+
+/* ── Contact ──────────────────────────────────────────────────────────── */
+.connect__line {
+  padding: 7px var(--pad) 8px;
+}
+
+.connect__line + .connect__line {
+  border-top: 1px solid var(--card-edge);
+}
+
+.connect .blank__value {
+  font-size: 0.875rem;
+}
+
+.connect__copy {
+  margin-left: 10px;
+  font-family: var(--font);
+  font-size: 0.8125rem;
+  font-weight: 700;
+  color: var(--pen);
+}
+
+.connect__copy:hover {
+  text-decoration: underline;
+}
+
+.connect__actions {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+  padding: var(--pad);
+  border-top: 1px solid var(--card-edge);
+}
+
+.connect__actions .btn {
+  padding-inline: 8px;
+}
+
+/* ── Walkthrough ──────────────────────────────────────────────────────── */
+.portfolio-reel {
+  display: flex;
+  flex-direction: column;
+}
+
+.portfolio-reel .cell__flush {
+  flex: 1;
+  display: grid;
+  background: #08211a;
+}
+
+.portfolio-reel__video {
+  width: 100%;
+  height: 100%;
+  aspect-ratio: 16 / 9;
+  object-fit: contain;
+}
+
+/* ── Signature line ───────────────────────────────────────────────────── */
+.sign {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 10px 40px;
+  padding: 14px var(--pad) 10px;
+}
+
+.sign .blank {
+  min-width: min(280px, 100%);
+}
+
+.sign .blank__value {
+  padding-bottom: 2px;
+  border-bottom: 1px solid var(--ink);
+}
+
+.sign__name {
+  font-size: 1.125rem;
+}
+
+/* ── Inner pages ──────────────────────────────────────────────────────── */
+.backlink {
+  font-size: 0.875rem;
+  font-weight: 650;
+  color: var(--ink-soft);
+  text-decoration: underline;
+  text-decoration-color: var(--ink-faint);
+  text-underline-offset: 3px;
+}
+
+.backlink:hover {
+  color: var(--pen);
+  text-decoration-color: var(--pen);
+}
+
+.page-title {
+  font-family: var(--typed);
+  font-weight: 700;
+  font-size: clamp(2rem, 1.2rem + 3.4vw, 3.75rem);
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+  overflow-wrap: anywhere;
+}
+
+/* ── Not found: a voided form ─────────────────────────────────────────── */
 .not-found {
-  padding-block: 120px;
-  text-align: center;
+  display: grid;
+  gap: 10px;
+  justify-items: start;
+  padding: clamp(24px, 6vw, 72px) var(--pad);
 }
 
-.not-found__title {
-  font-family: var(--font-mono);
-  font-size: 4rem;
-  color: var(--accent);
-}
-
-.not-found__text {
-  margin-block: 8px 20px;
-  color: var(--muted);
+.not-found__stamp {
+  padding: 6px 18px;
+  border: 3px double var(--pen);
+  border-radius: 6px;
+  color: var(--pen);
+  font-variation-settings: 'wdth' 118;
+  font-size: clamp(2rem, 1.4rem + 3vw, 3.5rem);
+  font-weight: 900;
+  line-height: 1;
+  text-transform: uppercase;
+  rotate: -5deg;
 }
 
 .not-found__links {
   display: flex;
-  justify-content: center;
+  flex-wrap: wrap;
   gap: 20px;
+}
+
+/* ── Contact is a tear-off stub ───────────────────────────────────────── */
+.stub {
+  /* the perforation down its left edge */
+  background-image:
+    repeating-linear-gradient(to bottom, var(--ink) 0 7px, transparent 7px 13px),
+    repeating-radial-gradient(circle at 0 120%, transparent 0 9px, var(--wave) 9px 10px);
+  background-size:
+    2px 100%,
+    auto;
+  background-repeat: no-repeat, repeat;
+  background-position:
+    3px 0,
+    0 0;
+}
+
+.stub .cell__title {
+  margin-left: 8px;
+}
+
+.stub .cell__flush {
+  padding-left: 8px;
+}
+
+.stub__scissors {
+  position: absolute;
+  top: 34px;
+  left: -5px;
+  z-index: 1;
+  rotate: 90deg;
+  color: var(--ink);
+  background: var(--paper);
+  border-radius: 50%;
+}
+
+.stub__save {
+  grid-column: 1 / -1;
+  min-height: 40px;
+  border-style: dashed;
+  font-size: 0.8125rem;
+  line-height: 1.2;
+  text-align: center;
+}
+
+.sign {
+  align-items: flex-end;
 }

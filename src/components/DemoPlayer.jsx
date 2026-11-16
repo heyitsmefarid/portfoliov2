@@ -1,9 +1,9 @@
 import { useEffect, useRef, useState } from 'react'
 import { prefersReducedMotion } from '../hooks/useReducedMotion.js'
-import LaptopShot from './LaptopShot.jsx'
+import Printout from './Printout.jsx'
 import './DemoPlayer.css'
 
-// An animated WebP clip in the laptop frame. The poster still is always there
+// An animated WebP clip as a printout. The poster still is always there
 // underneath; the clip fades in over it once it has loaded and plays while on
 // screen (never on its own with reduced motion). If the clip can't load, the
 // poster stays. Without a clip at all, shows the project's screenshot.
@@ -24,7 +24,7 @@ export default function DemoPlayer({ demo, fallback, label }) {
   }, [demo, failed, userPaused])
 
   if (!demo) {
-    return fallback ? <LaptopShot {...fallback} eager /> : null
+    return fallback ? <Printout {...fallback} eager /> : null
   }
 
   const toggle = () => {
@@ -34,7 +34,7 @@ export default function DemoPlayer({ demo, fallback, label }) {
 
   return (
     <figure className="demo" ref={ref}>
-      <LaptopShot>
+      <Printout>
         <span className="demo__screen">
           <img src={demo.poster} alt={`${label} demo`} width={demo.width} height={demo.height} />
           {playing && !failed && (
@@ -53,7 +53,7 @@ export default function DemoPlayer({ demo, fallback, label }) {
             />
           )}
         </span>
-      </LaptopShot>
+      </Printout>
       {!failed && (
         <button type="button" className="demo__toggle" onClick={toggle}>
           {playing ? 'Pause demo' : 'Play demo'}

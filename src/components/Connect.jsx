@@ -2,71 +2,52 @@ import { useState } from 'react'
 import { profile } from '../data/profile.js'
 import { useAskAssistant } from '../lib/assistantContext.js'
 import Panel from './Panel.jsx'
-import './Connect.css'
 
-const ICONS = {
-  github: 'M12 2a10 10 0 0 0-3.2 19.5c.5.1.7-.2.7-.5v-1.7c-2.8.6-3.4-1.3-3.4-1.3-.5-1.1-1.1-1.4-1.1-1.4-.9-.6.1-.6.1-.6 1 .1 1.5 1 1.5 1 .9 1.5 2.4 1.1 2.9.8.1-.6.4-1.1.6-1.3-2.2-.3-4.6-1.1-4.6-5 0-1.1.4-2 1-2.7-.1-.3-.4-1.3.1-2.7 0 0 .8-.3 2.8 1a9.6 9.6 0 0 1 5 0c1.9-1.3 2.8-1 2.8-1 .5 1.4.2 2.4.1 2.7.6.7 1 1.6 1 2.7 0 3.9-2.3 4.7-4.6 5 .4.3.7.9.7 1.9V21c0 .3.2.6.7.5A10 10 0 0 0 12 2z',
-  linkedin: 'M4.98 3.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5zM3 9.75h4v11H3zM9.5 9.75h3.8v1.5h.1c.5-1 1.8-1.8 3.7-1.8 4 0 4.9 2.6 4.9 6v6.1h-4v-5.4c0-1.3 0-3-1.8-3s-2.1 1.4-2.1 2.9v5.5h-4z',
-  facebook: 'M14 8.5V6.8c0-.8.2-1.3 1.4-1.3H17V2.3A22 22 0 0 0 14.6 2C12.2 2 10.5 3.5 10.5 6.2v2.3H8v3.3h2.5V22h3.5V11.8h2.7l.4-3.3z',
-  mail: 'M3.5 5.5h17v13h-17zM3.5 6l8.5 7 8.5-7',
-  phone: 'M8 3.5h8A1.5 1.5 0 0 1 17.5 5v14a1.5 1.5 0 0 1-1.5 1.5H8A1.5 1.5 0 0 1 6.5 19V5A1.5 1.5 0 0 1 8 3.5zM10.5 17.5h3',
-  message: 'M4 5.5A1.5 1.5 0 0 1 5.5 4h13A1.5 1.5 0 0 1 20 5.5v9a1.5 1.5 0 0 1-1.5 1.5H10l-4.5 4v-4A1.5 1.5 0 0 1 4 14.5z',
-  spark: 'M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8zM18.5 15.5l.8 2.2 2.2.8-2.2.8-.8 2.2-.8-2.2-2.2-.8 2.2-.8z',
-  copy: 'M9 9h10.5v10.5H9zM15 9V4.5H4.5V15H9',
-  check: 'M5 12.5l4.5 4.5L19 7.5',
+// A vCard built from the profile, so the stub can be saved straight to a
+// phone's contacts.
+function saveContact() {
+  const { contact } = profile
+  const parts = profile.name.split(' ')
+  const family = parts.pop()
+  // vCard address order: city; region; postal code; country
+  const [city = '', region = '', country = ''] = profile.location.split(',').map((part) => part.trim())
+  const lines = [
+    'BEGIN:VCARD',
+    'VERSION:3.0',
+    `N:${family};${parts.join(' ')};;;`,
+    `FN:${profile.name}`,
+    `TITLE:${profile.role}`,
+    contact.email && `EMAIL;TYPE=INTERNET:${contact.email}`,
+    contact.phone && `TEL;TYPE=CELL:${contact.phoneIntl || contact.phone}`,
+    contact.github && `URL:${contact.github}`,
+    profile.location && `ADR;TYPE=HOME:;;;${city};${region};;${country}`,
+    'END:VCARD',
+  ].filter(Boolean)
+  const url = URL.createObjectURL(new Blob([lines.join('\r\n')], { type: 'text/vcard' }))
+  const link = Object.assign(document.createElement('a'), { href: url, download: `${profile.name.replace(/\s+/g, '-')}.vcf` })
+  link.click()
+  setTimeout(() => URL.revokeObjectURL(url), 1000)
 }
 
-function Icon({ name, filled = false }) {
+function Scissors() {
   return (
-    <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true">
+    <svg className="stub__scissors" viewBox="0 0 24 24" width="16" height="16" aria-hidden="true">
       <path
-        d={ICONS[name]}
-        fill={filled ? 'currentColor' : 'none'}
-        stroke={filled ? 'none' : 'currentColor'}
-        strokeWidth="1.6"
-        strokeLinejoin="round"
+        d="M6 9a3 3 0 1 0 0-6 3 3 0 0 0 0 6Zm0 12a3 3 0 1 0 0-6 3 3 0 0 0 0 6ZM8.1 7.9 20 18M8.1 16.1 20 6"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="1.8"
         strokeLinecap="round"
       />
     </svg>
   )
 }
 
-function Tile({ icon, filled, label, detail, href, onClick, external, trailing }) {
-  const content = (
-    <>
-      <span className="tile__icon">
-        <Icon name={icon} filled={filled} />
-      </span>
-      <span className="tile__text">
-        <span className="tile__label">{label}</span>
-        {detail && <span className="tile__detail">{detail}</span>}
-      </span>
-      <span className="tile__arrow" aria-hidden="true">
-        {trailing ?? '↗'}
-      </span>
-    </>
-  )
-
-  if (href) {
-    return (
-      <a className="tile" href={href} {...(external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}>
-        {content}
-        {external && <span className="visually-hidden"> (opens in a new tab)</span>}
-      </a>
-    )
-  }
-  return (
-    <button type="button" className="tile" onClick={onClick}>
-      {content}
-    </button>
-  )
-}
-
 const strip = (url) => url.replace(/^https?:\/\/(www\.)?/, '').replace(/\/$/, '')
 
-// Copies the address instead of opening a mailto: link, which does nothing on
-// devices without a mail app set up (most people use webmail).
-function EmailTile({ email }) {
+// Copies the address instead of relying on a mailto: link, which does nothing
+// on devices without a mail app set up (most people use webmail).
+function Email({ email }) {
   const [copied, setCopied] = useState(false)
 
   const copy = async () => {
@@ -80,13 +61,32 @@ function EmailTile({ email }) {
   }
 
   return (
-    <Tile
-      icon="mail"
-      label={copied ? 'Copied to clipboard' : 'Email · click to copy'}
-      detail={email}
-      onClick={copy}
-      trailing={<Icon name={copied ? 'check' : 'copy'} />}
-    />
+    <>
+      <a className="link" href={`mailto:${email}`}>
+        {email}
+      </a>
+      <button type="button" className="connect__copy" onClick={copy} aria-live="polite">
+        {copied ? 'Copied' : 'Copy'}
+      </button>
+    </>
+  )
+}
+
+function Line({ label, children }) {
+  return (
+    <div className="blank connect__line">
+      <dt className="blank__label">{label}</dt>
+      <dd className="blank__value">{children}</dd>
+    </div>
+  )
+}
+
+function External({ href }) {
+  return (
+    <a className="link" href={href} target="_blank" rel="noopener noreferrer">
+      {strip(href)}
+      <span className="visually-hidden"> (opens in a new tab)</span>
+    </a>
   )
 }
 
@@ -95,50 +95,45 @@ export default function Connect({ onContact }) {
   const { contact } = profile
 
   return (
-    <Panel id="contact" title="Let's build something" className="connect">
-      <p className="connect__lead">Have a project, opportunity, or just want to talk?</p>
-
-      <div className="connect__columns">
-        <div>
-          <h3 className="connect__heading">Find me on</h3>
-          <ul className="connect__list">
-            <li className="stagger" style={{ '--i': 0 }}>
-              <Tile icon="github" filled label="GitHub" detail={`@${contact.githubUsername}`} href={contact.github} external />
-            </li>
-            {contact.linkedin && (
-              <li className="stagger" style={{ '--i': 1 }}>
-                <Tile icon="linkedin" filled label="LinkedIn" detail={strip(contact.linkedin)} href={contact.linkedin} external />
-              </li>
-            )}
-            {contact.facebook && (
-              <li className="stagger" style={{ '--i': 2 }}>
-                <Tile icon="facebook" filled label="Facebook" detail={strip(contact.facebook)} href={contact.facebook} external />
-              </li>
-            )}
-          </ul>
-        </div>
-
-        <div>
-          <h3 className="connect__heading">Get in touch</h3>
-          <ul className="connect__list">
-            {contact.email && (
-              <li className="stagger" style={{ '--i': 3 }}>
-                <EmailTile email={contact.email} />
-              </li>
-            )}
-            {contact.phone && (
-              <li className="stagger" style={{ '--i': 4 }}>
-                <Tile icon="phone" label="Phone" detail={contact.phone} href={`tel:${contact.phoneIntl || contact.phone}`} />
-              </li>
-            )}
-            <li className="stagger" style={{ '--i': 5 }}>
-              <Tile icon="message" label="Send a message" detail="Opens a short form" onClick={onContact} />
-            </li>
-            <li className="stagger" style={{ '--i': 6 }}>
-              <Tile icon="spark" label="Ask my assistant" detail="Questions about my work" onClick={() => ask()} />
-            </li>
-          </ul>
-        </div>
+    <Panel id="contact" title="Contact stub" flush className="stub" aside={<span className="stack__key">detach and keep</span>}>
+      <Scissors />
+      <dl className="connect">
+        {contact.email && (
+          <Line label="Email">
+            <Email email={contact.email} />
+          </Line>
+        )}
+        {contact.phone && (
+          <Line label="Mobile">
+            <a className="link" href={`tel:${contact.phoneIntl || contact.phone}`}>
+              {contact.phone}
+            </a>
+          </Line>
+        )}
+        <Line label="GitHub">
+          <External href={contact.github} />
+        </Line>
+        {contact.linkedin && (
+          <Line label="LinkedIn">
+            <External href={contact.linkedin} />
+          </Line>
+        )}
+        {contact.facebook && (
+          <Line label="Facebook">
+            <External href={contact.facebook} />
+          </Line>
+        )}
+      </dl>
+      <div className="connect__actions">
+        <button type="button" className="btn btn--ink" onClick={onContact}>
+          Write me a note
+        </button>
+        <button type="button" className="btn" onClick={() => ask()}>
+          Ask the assistant
+        </button>
+        <button type="button" className="btn stub__save" onClick={saveContact}>
+          Tear off: save me to your contacts
+        </button>
       </div>
     </Panel>
   )

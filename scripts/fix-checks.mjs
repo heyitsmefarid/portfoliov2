@@ -1,8 +1,7 @@
 // Checks for the final-review fixes. Usage: node scripts/fix-checks.mjs [base]
 //  1. a new page starts at the top immediately (no smooth scroll from the old position)
 //  2. on a phone, following a project link in the chat closes the chat
-//  3. deck arrow keys keep keyboard focus on the front card's link
-//  4. the demo poster stays visible while the clip loads, and a failed clip falls back to the poster
+//  3. the demo poster stays visible while the clip loads, and a failed clip falls back to the poster
 import { chromium } from 'playwright'
 
 const BASE = process.argv[2] ?? 'http://localhost:5191'
@@ -19,8 +18,8 @@ async function open(path, viewport = { width: 1280, height: 800 }) {
 // 1
 {
   const page = await open('/projects')
-  await page.locator('.project-row__name a').last().scrollIntoViewIfNeeded()
-  await page.locator('.project-row__name a').last().click()
+  await page.locator('.ptable__name').last().scrollIntoViewIfNeeded()
+  await page.locator('.ptable__name').last().click()
   await page.waitForTimeout(80)
   const y = await page.evaluate(() => window.scrollY)
   if (y > 50) fail.push(`1: new page started at scrollY=${y}, expected the top`)
@@ -39,18 +38,6 @@ async function open(path, viewport = { width: 1280, height: 800 }) {
   await page.waitForTimeout(600)
   const chatVisible = await page.locator('.chat__panel').isVisible().catch(() => false)
   if (chatVisible) fail.push('2: chat panel still covers the page after following a project link on a phone')
-  await page.close()
-}
-
-// 3
-{
-  const page = await open('/')
-  await page.locator('#projects').scrollIntoViewIfNeeded()
-  await page.locator('.deck__card[data-offset="0"] .deck__name a').focus()
-  await page.keyboard.press('ArrowRight')
-  await page.waitForTimeout(300)
-  const focused = await page.evaluate(() => document.activeElement?.closest('.deck__card')?.dataset.offset ?? 'none')
-  if (focused !== '0') fail.push(`3: after ArrowRight focus is on ${focused === 'none' ? 'nothing in the deck' : `a card at offset ${focused}`}`)
   await page.close()
 }
 

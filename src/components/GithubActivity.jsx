@@ -111,9 +111,9 @@ export default function GithubActivity() {
       id="github"
       title="GitHub contributions"
       aside={
-        <a className="panel-link" href={github} target="_blank" rel="noopener noreferrer">
-          View GitHub profile <span aria-hidden="true">↗</span>
-          <span className="visually-hidden"> (opens in a new tab)</span>
+        <a href={github} target="_blank" rel="noopener noreferrer">
+          @{githubUsername}
+          <span className="visually-hidden"> on GitHub (opens in a new tab)</span>
         </a>
       }
     >
@@ -122,9 +122,9 @@ export default function GithubActivity() {
           <Calendar data={state.data} />
         ) : state.status === 'error' ? (
           <p className="gh__empty">
-            Contribution data couldn't be loaded right now — the graph is on{' '}
+            Contribution data couldn't be loaded right now. The graph is on{' '}
             <a href={github} target="_blank" rel="noopener noreferrer">
-              @{githubUsername}'s GitHub profile
+              @{githubUsername} on GitHub
             </a>
             .
           </p>
@@ -136,8 +136,7 @@ export default function GithubActivity() {
           <p className="gh__total" aria-live="polite">
             {state.status === 'ready' ? (
               <>
-                <strong>{state.data.total.toLocaleString('en-US')}</strong> contributions in the last year{' '}
-                <span className="gh__user">· @{githubUsername}</span>
+                <strong>{state.data.total.toLocaleString('en-US')}</strong> contributions in the last year
               </>
             ) : state.status === 'idle' ? (
               'Loading contributions…'

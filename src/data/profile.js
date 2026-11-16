@@ -13,25 +13,26 @@ export const profile = {
   // Used for the live local-time line in the hero. Set to '' to hide it.
   timeZone: '',
 
-  // Portrait in the hero (currently your GitHub avatar). Replace the file in
-  // /public/profile or set photo to null to hide it.
+  // The ID photo stapled to the hero (currently your GitHub avatar). Replace
+  // the file in /public/profile or set photo to null to hide it.
   photo: {
     src: '/profile/fred.webp',
     alt: 'Portrait of Fred Anthony Gallano',
     width: 368,
     height: 460,
-    // Plays behind the photo when it's hovered (the "curtain"). Set to null
-    // to turn the effect off. Keep it short, muted-friendly and small (< 2 MB).
-    video: null,
   },
 
   availability: {
     open: true,
-    label: 'Open to opportunities',
-    detail: 'Internship / OJT',
+    // The status box: `label` under the stamp, `detail` printed along the stamp.
+    label: 'Open to OJT, freelance clients and remote jobs',
+    detail: 'OJT / Freelance / Remote',
   },
 
   headline: 'Building digital experiences that actually solve problems.',
+  // The opening paragraph on the home page, under the name.
+  lede:
+    "I'm a fourth-year Information Systems student in Calapan City. I build web and mobile systems: scholarship records, flood maps, shop inventories, library lending.",
   intro:
     '4th Year BS Information Systems student focused on full-stack web and mobile development.',
   tagline: 'I build useful digital experiences through code.',
