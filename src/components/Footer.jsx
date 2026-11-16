@@ -1,6 +1,7 @@
 import { profile } from '../data/profile.js'
 import { prefersReducedMotion } from '../hooks/useReducedMotion.js'
 import ThemeToggle from './ThemeToggle.jsx'
+import ViewCount from './ViewCount.jsx'
 import './Footer.css'
 
 // The fine print under the form.
@@ -11,7 +12,10 @@ export default function Footer() {
         <p>
           © {new Date().getFullYear()} {profile.name}
         </p>
-        <p className="footer__built">Built with React and Vite. Psst: type “fred” anywhere.</p>
+        {/* Always rendered, so the footer keeps its three columns while the count loads */}
+        <div className="footer__count">
+          <ViewCount />
+        </div>
         <div className="footer__end">
           <ThemeToggle />
           <a

@@ -37,7 +37,7 @@ Written as Vercel functions (`export function GET/POST(request)`), deployed auto
 
 | Route | Needs | Without it |
 | --- | --- | --- |
-| `/api/views` | `UPSTASH_REDIS_REST_URL`, `UPSTASH_REDIS_REST_TOKEN` (added by Vercel → Storage → Upstash for Redis) | the hero leaves out the visit count |
+| `/api/views` | `UPSTASH_REDIS_REST_URL`, `UPSTASH_REDIS_REST_TOKEN` (added by Vercel → Storage → Upstash for Redis) | the footer leaves out the visitor counter |
 | `/api/github` | optional `GITHUB_TOKEN` for GitHub's official API | uses a public no-key contributions API |
 | `/api/contact` | `RESEND_API_KEY` (optional `CONTACT_TO_EMAIL`, `CONTACT_FROM_EMAIL`) | the form says it isn't connected yet and shows your email address |
 

@@ -22,26 +22,6 @@
 }
 
 /* The red control number */
-.control {
-  display: flex;
-  align-items: baseline;
-  gap: 8px;
-  color: var(--pen);
-}
-
-.control__label {
-  font-variation-settings: var(--narrow);
-  font-size: 0.75rem;
-  font-weight: 600;
-}
-
-.control__no {
-  font-family: var(--typed);
-  font-weight: 700;
-  font-size: 1.375rem;
-  letter-spacing: 0.06em;
-}
-
 /* ── ID photo box ─────────────────────────────────────────────────────── */
 .cell--photo {
   display: grid;

@@ -22,7 +22,7 @@ values).
 | `--field` | `#eaf5ec` | `#11382c` | the part of a cell that gets filled in; row hover |
 | `--ink` | `#0e3a2d` | `#cfeedb` | print, borders, title bars |
 | `--ink-soft` | `#33614f` | `#9ccab2` | secondary print (tinted ink, never grey) |
-| `--pen` | `#b3221a` | `#ff8a7d` | stamp ink: stamp, control number, hover, focus |
+| `--pen` | `#b3221a` | `#ff8a7d` | stamp ink: stamp, hover, focus |
 | `--card` | `#fbfdf9` | `#133d30` | white slips (overlays) |
 
 Cells carry a faint wave pattern (`--wave`), the guilloche of security paper.
@@ -67,7 +67,7 @@ strip turns mint in dark mode. It draws itself on load and replays on hover.
 ## Objects on the form
 
 - **Header strip**: ink bar with the logo, section links, Ctrl K menu, switch.
-- **Control number**: the visit count, red, zero-padded.
+- **Control number**: the visit count in the footer, ink, zero-padded.
 - **Photo box**, **blanks**, and the **status box** with the stamp.
 - **Ticker**: one ink strip of the stack, like a repeated microprint line.
 - **Projects table**: number, screenshot, name, pitch, type, built with, live.

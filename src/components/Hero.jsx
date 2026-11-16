@@ -1,7 +1,6 @@
 import { profile } from '../data/profile.js'
 import { education } from '../data/education.js'
 import LocalTime from './LocalTime.jsx'
-import ViewCount from './ViewCount.jsx'
 import Portrait from './Portrait.jsx'
 import './Hero.css'
 
@@ -28,7 +27,6 @@ export default function Hero({ onContact }) {
           <p className="mast__title">Portfolio registration form</p>
           <p className="mast__sub">Full-stack web and mobile developer from Calapan City, Philippines.</p>
         </div>
-        <ViewCount />
       </header>
 
       {photo && (

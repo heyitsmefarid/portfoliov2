@@ -1,4 +1,4 @@
-// /api/views — the portfolio visit counter shown in the hero.
+// /api/views — the portfolio visit counter shown in the footer.
 //   GET  returns the total: { count }
 //   POST counts one visit and returns the new total (the page posts at most
 //        once per browser per day; bots and bursts only read the total)
@@ -8,7 +8,7 @@
 //   UPSTASH_REDIS_REST_URL / UPSTASH_REDIS_REST_TOKEN
 //   (or the older KV_REST_API_URL / KV_REST_API_TOKEN names)
 //
-// Without them the route answers 503 { error: "not_configured" } and the hero
+// Without them the route answers 503 { error: "not_configured" } and the footer
 // leaves the count out.
 
 import { json, rateLimit } from './_lib/http.js'

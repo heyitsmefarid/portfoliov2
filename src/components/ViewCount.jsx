@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 
-// The form's control number: the portfolio's visit count, from /api/views.
+// The portfolio's visit count in the footer, from /api/views.
 // Each browser counts once a day; after that the page only reads the total.
 // Renders nothing until the count arrives, or at all when the counter isn't
 // set up.
@@ -36,7 +36,7 @@ export default function ViewCount() {
 
   if (!count) return null
 
-  // Printed like a control number: red, zero-padded.
+  // Printed like a control number: zero-padded.
   return (
     <p className="control" title={`${count.toLocaleString('en-US')} portfolio ${count === 1 ? 'visit' : 'visits'}`}>
       <span className="control__label">Visitor no.</span>
