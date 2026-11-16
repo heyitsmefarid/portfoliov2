@@ -3,7 +3,7 @@ import Link from './Link.jsx'
 import Panel from './Panel.jsx'
 
 const STATUS_TEXT = {
-  seeking: 'Open position',
+  seeking: 'Looking for',
   current: 'In progress',
   done: 'Completed',
 }

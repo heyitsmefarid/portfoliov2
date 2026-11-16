@@ -19,9 +19,9 @@
       'ticker ticker ticker ticker ticker ticker ticker ticker ticker ticker ticker ticker'
       'projects projects projects projects projects projects projects projects about about about about'
       'projects projects projects projects projects projects projects projects stack stack stack stack'
-      'experience experience experience education education education certs certs certs contact contact contact'
+      'experience experience experience experience education education education education certs certs certs certs'
       'github github github github github github github github github github github github'
-      'sign sign sign sign sign sign sign sign sign sign sign sign';
+      'contact contact contact contact contact contact contact contact contact contact contact contact';
     grid-template-rows: auto auto auto auto 1fr auto auto auto;
   }
 
@@ -38,7 +38,6 @@
   .form--home .cell--certifications { grid-area: certs; }
   .form--home .cell--contact { grid-area: contact; }
   .form--home .cell--github { grid-area: github; }
-  .form--home .cell--sign { grid-area: sign; }
 }
 
 /* ── Home: tablets and small laptops ──────────────────────────────────── */
@@ -47,11 +46,10 @@
   .form--home .cell--info { grid-column: span 9; }
   .form--home .cell--status { grid-column: span 12; }
   .form--home .cell--about,
-  .form--home .cell--stack,
+  .form--home .cell--stack { grid-column: span 6; }
   .form--home .cell--experience,
   .form--home .cell--education,
-  .form--home .cell--certifications,
-  .form--home .cell--contact { grid-column: span 6; }
+  .form--home .cell--certifications { grid-column: span 4; }
 
   .form--home .status {
     flex-direction: row;
@@ -104,6 +102,17 @@
 /* ── About ────────────────────────────────────────────────────────────── */
 .about__text p + p {
   margin-top: 8px;
+}
+
+.about__facts .blank {
+  display: flex;
+  flex-direction: column-reverse;
+  justify-content: flex-end;
+}
+
+.about__count {
+  font-size: 1.5rem;
+  line-height: 1.1;
 }
 
 .about__facts {
@@ -279,28 +288,6 @@
 }
 
 
-/* ── Signature line ───────────────────────────────────────────────────── */
-.sign {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  gap: 10px 40px;
-  padding: 14px var(--pad) 10px;
-}
-
-.sign .blank {
-  min-width: min(280px, 100%);
-}
-
-.sign .blank__value {
-  padding-bottom: 2px;
-  border-bottom: 1px solid var(--ink);
-}
-
-.sign__name {
-  font-size: 1.125rem;
-}
-
 /* ── Inner pages ──────────────────────────────────────────────────────── */
 .backlink {
   font-size: 0.875rem;
@@ -353,6 +340,44 @@
 }
 
 /* ── Contact is a tear-off stub ───────────────────────────────────────── */
+/* As the last row of the form it runs full width: the lines side by side,
+   the buttons at the end. */
+@media (min-width: 641px) {
+  .cell--contact .cell__flush {
+    display: flex;
+    flex-wrap: wrap;
+  }
+
+  /* each line as wide as its value; whole lines wrap, never mid-address */
+  .cell--contact .connect {
+    flex: 1 1 560px;
+    display: flex;
+    flex-wrap: wrap;
+    align-content: center;
+  }
+
+  .cell--contact .connect__line {
+    flex: 1 1 auto;
+  }
+
+  .cell--contact .connect .blank__value {
+    overflow-wrap: normal;
+    white-space: nowrap;
+  }
+
+  .cell--contact .connect__line + .connect__line {
+    border-top: 0;
+    box-shadow: inset 1px 0 0 var(--card-edge);
+  }
+
+  .cell--contact .connect__actions {
+    flex: 0 1 300px;
+    align-content: center;
+    border-top: 0;
+    box-shadow: inset 1px 0 0 var(--card-edge);
+  }
+}
+
 .stub {
   /* the perforation down its left edge */
   background-image:
@@ -395,6 +420,3 @@
   text-align: center;
 }
 
-.sign {
-  align-items: flex-end;
-}

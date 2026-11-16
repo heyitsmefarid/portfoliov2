@@ -15,7 +15,7 @@ All text lives in `src/data/`, so you don't need to touch the components:
 
 | File | What it holds |
 | --- | --- |
-| `profile.js` | name, headline, about text, facts, **email / LinkedIn / Facebook** (empty = hidden) |
+| `profile.js` | name, role, about text, availability, **email / LinkedIn / Facebook** (empty = hidden) |
 | `projects.js` | projects in display order (the first one is featured) |
 | `skills.js` | tech stack groups; `tier` controls prominence |
 | `experience.js` | timeline entries (replace the OJT entry once you have a placement) |
@@ -39,8 +39,8 @@ Written as Vercel functions (`export function GET/POST(request)`), deployed auto
 | --- | --- | --- |
 | `/api/views` | `UPSTASH_REDIS_REST_URL`, `UPSTASH_REDIS_REST_TOKEN` (added by Vercel → Storage → Upstash for Redis) | the hero leaves out the visit count |
 | `/api/github` | optional `GITHUB_TOKEN` for GitHub's official API | uses a public no-key contributions API |
-| `/api/contact` | `RESEND_API_KEY`, `CONTACT_TO_EMAIL`, `CONTACT_FROM_EMAIL` | opens the visitor's email app if `profile.contact.email` is set, otherwise shows a notice |
+| `/api/contact` | `RESEND_API_KEY` (optional `CONTACT_TO_EMAIL`, `CONTACT_FROM_EMAIL`) | the form says it isn't connected yet and shows your email address |
 
 Local development: copy `.env.example` to `.env.local` and fill it in. On this machine Avast intercepts HTTPS, so Node may reject outside APIs. If the API routes fail locally, start dev with `NODE_EXTRA_CA_CERTS=C:/Users/galla/avast-root.pem npm run dev`.
 
-On static hosting (e.g. GitHub Pages) the API routes don't exist. The site still works: GitHub loads from the public API and the contact form uses email.
+On static hosting (e.g. GitHub Pages) the API routes don't exist. The site still works: GitHub loads from the public API; the contact form shows your email address instead of sending.

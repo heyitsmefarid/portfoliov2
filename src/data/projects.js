@@ -27,8 +27,8 @@ export const projects = [
     subtitle: 'Mobile-Based Scholarship Management System',
     kind: 'Capstone project',
     description:
-      'A scholarship management platform designed to help manage applicants, scholars, requirements, academic records, attendance, announcements, and scholarship monitoring.',
-    tech: ['Flutter', 'React.js', 'NestJS', 'PostgreSQL', 'Prisma'],
+      'A scholarship management platform for the people who run a scholarship program: applicants, scholars, requirements, academic records, attendance, announcements and program monitoring, in one place.',
+    tech: ['Flutter', 'React', 'NestJS', 'PostgreSQL', 'Prisma'],
     image: {
       src: '/projects/iskonnect-logo.webp',
       alt: 'The ISKONNECT logo in green, blue, purple and orange, with circuit-line accents and a signal icon above the O.',

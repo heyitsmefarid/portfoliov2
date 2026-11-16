@@ -157,7 +157,7 @@
   white-space: nowrap;
 }
 
-/* The one authored moment: the stamp comes down once the envelope is gone */
+/* The stamp comes down once the logo intro has landed and the name is typed */
 @media (prefers-reduced-motion: no-preference) {
   .stamp {
     animation: stamp-down 520ms cubic-bezier(0.2, 1.4, 0.4, 1) 450ms backwards;

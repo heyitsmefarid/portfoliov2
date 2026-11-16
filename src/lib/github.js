@@ -75,3 +75,8 @@ export function formatDay(date) {
     timeZone: 'UTC',
   })
 }
+
+// The most recent date in the calendar, i.e. how current the data is.
+export function latestDay(days) {
+  return days.reduce((latest, day) => (day.date > latest ? day.date : latest), days[0].date)
+}

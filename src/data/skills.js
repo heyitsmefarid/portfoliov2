@@ -9,7 +9,7 @@ export const skillGroups = [
     tier: 'primary',
     items: [
       { name: 'Flutter', icon: 'flutter' },
-      { name: 'React.js', icon: 'react' },
+      { name: 'React', icon: 'react' },
       { name: 'Node.js', icon: 'node' },
       { name: 'NestJS', icon: 'nest' },
       { name: 'PHP', icon: 'php' },

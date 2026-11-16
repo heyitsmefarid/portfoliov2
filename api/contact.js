@@ -2,16 +2,21 @@
 // (https://resend.com, free tier).
 //
 // Environment (server-side only):
-//   RESEND_API_KEY      your Resend API key
-//   CONTACT_TO_EMAIL    where messages should arrive (your inbox)
-//   CONTACT_FROM_EMAIL  a sender on a domain verified in Resend,
-//                       e.g. "Portfolio <portfolio@yourdomain.com>"
+//   RESEND_API_KEY      required: your Resend API key
+//   CONTACT_TO_EMAIL    optional: where messages arrive. Defaults to the email
+//                       in src/data/profile.js.
+//   CONTACT_FROM_EMAIL  optional: a sender on a domain you verified in Resend.
+//                       Defaults to Resend's shared test sender, which can only
+//                       deliver to the address you signed up to Resend with, so
+//                       sign up with the same email as CONTACT_TO_EMAIL.
 //
-// Without them the route answers 503 { error: "not_configured" } and the form
-// offers to open the visitor's email app instead (when an email is set in
-// src/data/profile.js).
+// Without the key the route answers 503 { error: "not_configured" } and the
+// form says it isn't connected yet.
 
+import { profile } from '../src/data/profile.js'
 import { json, readJson, rateLimit, RequestError } from './_lib/http.js'
+
+const DEFAULT_FROM = 'Portfolio contact form <onboarding@resend.dev>'
 
 const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
 
@@ -19,9 +24,18 @@ function clean(value, max) {
   return typeof value === 'string' ? value.trim().slice(0, max) : ''
 }
 
-function isConfigured() {
+function settings() {
   const { RESEND_API_KEY, CONTACT_TO_EMAIL, CONTACT_FROM_EMAIL } = process.env
-  return Boolean(RESEND_API_KEY && CONTACT_TO_EMAIL && CONTACT_FROM_EMAIL)
+  return {
+    key: RESEND_API_KEY,
+    to: CONTACT_TO_EMAIL || profile.contact.email,
+    from: CONTACT_FROM_EMAIL || DEFAULT_FROM,
+  }
+}
+
+function isConfigured() {
+  const { key, to } = settings()
+  return Boolean(key && to)
 }
 
 // Lets the form know up front whether it can send (without revealing any settings).
@@ -30,7 +44,6 @@ export function GET() {
 }
 
 export async function POST(request) {
-  const { RESEND_API_KEY, CONTACT_TO_EMAIL, CONTACT_FROM_EMAIL } = process.env
   if (!isConfigured()) {
     return json({ error: 'not_configured' }, 503)
   }
@@ -53,16 +66,18 @@ export async function POST(request) {
       throw new RequestError('Add your name, a valid email, and a message of at least 10 characters.')
     }
 
+    const { key, to, from } = settings()
     const response = await fetch('https://api.resend.com/emails', {
       method: 'POST',
-      headers: { Authorization: `Bearer ${RESEND_API_KEY}`, 'Content-Type': 'application/json' },
+      headers: { Authorization: `Bearer ${key}`, 'Content-Type': 'application/json' },
       body: JSON.stringify({
-        from: CONTACT_FROM_EMAIL,
-        to: [CONTACT_TO_EMAIL],
+        from,
+        to: [to],
         reply_to: email,
         subject: `Portfolio message from ${name}`,
-        text: `${message}\n\n— ${name} <${email}>`,
+        text: `${message}\n\n— ${name} <${email}>\n\nSent from your portfolio's contact form. Reply to this email to answer ${name}.`,
       }),
+      signal: AbortSignal.timeout(10_000),
     })
 
     if (!response.ok) {

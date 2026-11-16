@@ -24,7 +24,7 @@ export default function ProjectsPage() {
       <header className="cell projects-page__head">
         <div>
           <Link className="backlink" href="/#projects">
-            Back to the form
+            Back to home
           </Link>
           <h1 className="page-title">Projects</h1>
           <p className="projects-page__lede">
@@ -53,7 +53,10 @@ export default function ProjectsPage() {
         </div>
       </header>
 
-      <section className="cell cell--projects" aria-label="Projects">
+      <section className="cell cell--projects" aria-labelledby="list-title">
+        <h2 id="list-title" className="visually-hidden">
+          Project list
+        </h2>
         <div className="cell__flush">
           <ProjectsTable projects={shown} numbers={projectNumbers} />
         </div>

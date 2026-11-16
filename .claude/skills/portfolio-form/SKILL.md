@@ -30,8 +30,8 @@ the objects on the form. This skill is the working method.
 6. **One authored sequence**: the name is typed, then the stamp lands. Add motion only as a response to the
    visitor (hover, tick, open). No scroll reveals.
 7. **Playful means physical.** New fun details must be things a paper form
-   really has or does (paperclip, highlighter, stamps, tear-off stub, a line
-   to sign, a sticky note). If it couldn't happen on a desk, it doesn't belong.
+   really has or does (paperclip, highlighter, stamps, tear-off stub, a sticky
+   note). If it couldn't happen on a desk, it doesn't belong.
 8. **Content is data.** Text lives in `src/data/`. Don't write claims about
    Fred's work that the data doesn't support.
 

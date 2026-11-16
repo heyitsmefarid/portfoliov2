@@ -1,5 +1,15 @@
 import { profile } from '../data/profile.js'
+import { projects } from '../data/projects.js'
+import { certifications } from '../data/certifications.js'
 import Panel from './Panel.jsx'
+
+// Counted from the data, so they stay true as projects and certificates are added.
+const platforms = new Set(projects.flatMap((project) => project.platform.filter((p) => p !== 'ai')))
+const FACTS = [
+  { value: projects.length, label: 'projects built' },
+  { value: certifications.length, label: 'certifications' },
+  { value: platforms.size, label: `platforms (${[...platforms].join(', ')})` },
+]
 
 export default function About() {
   return (
@@ -10,10 +20,10 @@ export default function About() {
         ))}
       </div>
       <dl className="about__facts">
-        {profile.facts.map((fact) => (
-          <div key={fact.title} className="blank">
-            <dt className="blank__value">{fact.title}</dt>
-            <dd className="blank__label">{fact.detail}</dd>
+        {FACTS.map((fact) => (
+          <div key={fact.label} className="blank">
+            <dt className="blank__label">{fact.label}</dt>
+            <dd className="blank__value about__count">{fact.value}</dd>
           </div>
         ))}
       </dl>

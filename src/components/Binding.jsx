@@ -4,6 +4,7 @@ import { useScrollSpy } from '../hooks/useScrollSpy.js'
 import { usePathname } from '../lib/router.js'
 import Link from './Link.jsx'
 import ThemeToggle from './ThemeToggle.jsx'
+import FredLogo from './FredLogo.jsx'
 import './Binding.css'
 
 const NAV = sections.filter((section) => section.nav)
@@ -22,7 +23,7 @@ export default function Binding({ onOpenMenu }) {
     <header className="binding">
       <div className="binding__inner">
         <Link className="binding__name" href="/" aria-label={`${profile.name}, home`}>
-          {profile.firstName} Gallano
+          <FredLogo height={30} decorative />
         </Link>
 
         <nav className="binding__nav" aria-label="Sections">

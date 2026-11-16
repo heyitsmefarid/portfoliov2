@@ -120,8 +120,11 @@
 }
 
 .ptable__none {
-  color: var(--ink-faint);
+  display: inline-block;
+  white-space: normal;
+  color: var(--ink-soft);
   font-family: var(--typed);
+  line-height: 1.25;
 }
 
 /* Narrow cells: drop the type column, then the stack */
@@ -182,3 +185,25 @@
   rotate: -9deg;
 }
 
+
+/* Smallest phones: smaller thumbnails and tighter cells so the table fits */
+@container (max-width: 360px) {
+  .ptable td,
+  .ptable tbody th,
+  .ptable thead th {
+    padding-inline: 7px;
+  }
+
+  .ptable__shot,
+  .projects-page .ptable__shot {
+    width: 64px;
+  }
+
+  .ptable__project {
+    gap: 9px;
+  }
+
+  .ptable__live {
+    width: auto;
+  }
+}

@@ -1,83 +1,102 @@
-/* While the envelope is on screen, the page underneath doesn't scroll. */
+/* While the intro is on screen, the page underneath doesn't scroll. */
 html.intro-playing body {
   overflow: hidden;
 }
 
+/* The screen is the header bar's own colour, so rolling up into the bar is
+   seamless (forest on the light form, mint on the carbon copy). */
 .intro {
+  --fred-accent: #8fb8a8;
+  --land: 800ms;
+  --land-ease: cubic-bezier(0.7, 0, 0.2, 1);
   position: fixed;
   inset: 0;
   z-index: 200;
-  overflow: hidden;
+  background: var(--ink);
+  color: var(--on-ink);
+  cursor: pointer;
+  clip-path: inset(0 0 0 0);
 }
 
-.intro--flip {
-  pointer-events: none;
+:root[data-theme='dark'] .intro {
+  --fred-accent: #4f7a66;
 }
 
-/* The long brown envelope */
-.intro__cover {
+.intro__stage {
   position: absolute;
   inset: 0;
   display: grid;
-  place-items: center;
-  align-content: center;
-  gap: 28px;
+  place-content: center;
+  justify-items: center;
+  gap: 22px;
   padding: 24px;
-  background-color: #c9a36a;
-  background-image:
-    linear-gradient(to bottom, rgba(90, 60, 20, 0.28), transparent 14%),
-    repeating-linear-gradient(92deg, rgba(120, 84, 36, 0.07) 0 2px, transparent 2px 7px);
-  color: #3d2a12;
-  cursor: pointer;
-  box-shadow: 0 30px 80px rgba(40, 26, 8, 0.5);
 }
 
-/* The envelope's flap line */
-.intro__cover::before {
-  content: '';
-  position: absolute;
-  inset: 0 0 auto;
-  height: 12vh;
-  border-bottom: 1px solid rgba(90, 60, 20, 0.45);
-  background: rgba(90, 60, 20, 0.08);
+.intro__logo {
+  width: min(78vw, 480px);
 }
 
-.intro--flip .intro__cover {
-  transform: translateY(104%) rotate(2deg);
-  transition: transform 900ms cubic-bezier(0.6, 0, 0.3, 1);
+.intro__logo svg {
+  width: 100%;
+  height: auto;
+  transform-origin: 0 0;
 }
 
-/* Written on the envelope in marker */
-.intro__label {
-  width: min(480px, 100%);
-  rotate: -1.5deg;
-}
-
-.intro__label p {
-  display: flex;
-  align-items: baseline;
-  gap: 12px;
-  padding: 8px 0 3px;
-  border-bottom: 1.5px solid rgba(61, 42, 18, 0.55);
-}
-
-.intro__label span {
-  flex: none;
-  font-variation-settings: var(--narrow);
-  font-size: 0.8125rem;
-  font-weight: 600;
-}
-
-.intro__label strong {
+/* The full name, typed in once "fred." is done */
+.intro__name {
   font-family: var(--typed);
   font-weight: 700;
-  font-size: clamp(1.125rem, 0.9rem + 1.2vw, 1.75rem);
-  line-height: 1.25;
+  font-size: clamp(0.875rem, 0.75rem + 0.6vw, 1.125rem);
+  letter-spacing: 0.04em;
+  opacity: 0;
+  animation: intro-name 400ms var(--ease-out) 1.85s forwards;
+}
+
+@keyframes intro-name {
+  from {
+    opacity: 0;
+    translate: 0 6px;
+  }
+
+  to {
+    opacity: 0.8;
+    translate: 0 0;
+  }
 }
 
 .intro__skip {
+  position: absolute;
+  bottom: max(20px, env(safe-area-inset-bottom));
+  left: 0;
+  right: 0;
   font-size: 0.8125rem;
-  opacity: 0.75;
+  text-align: center;
+  opacity: 0.55;
+}
+
+/* ── Landing ──────────────────────────────────────────────────────────── */
+.intro--land {
+  pointer-events: none;
+  /* roll up into the header bar */
+  clip-path: inset(0 0 calc(100% - 52px) 0);
+  transition: clip-path var(--land) var(--land-ease);
+}
+
+.intro--land .intro__logo svg {
+  transition: transform var(--land) var(--land-ease);
+}
+
+/* A skip mid-draw lands the finished logo, not a half-drawn one */
+.intro--land .fgl * {
+  animation: none !important;
+  stroke-dasharray: none !important;
+}
+
+.intro--land .intro__name,
+.intro--land .intro__skip {
+  opacity: 0;
+  animation: none;
+  transition: opacity 200ms ease;
 }
 
 @media (prefers-reduced-motion: reduce) {

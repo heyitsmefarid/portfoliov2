@@ -121,3 +121,9 @@
   text-decoration-color: var(--ink-faint);
   text-underline-offset: 5px;
 }
+
+.gh__updated {
+  margin-left: 12px;
+  font-size: 0.8125rem;
+  color: var(--ink-soft);
+}

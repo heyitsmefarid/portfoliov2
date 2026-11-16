@@ -411,3 +411,28 @@ abbr[title] {
 dialog::backdrop {
   background: var(--overlay);
 }
+
+/* ── Touch targets ───────────────────────────────────────────────────────
+   On touch screens, small links and controls get a larger invisible hit
+   area (at least ~40px tall) without changing the layout. */
+@media (pointer: coarse) {
+  a,
+  .connect__copy,
+  .cert__name--link {
+    position: relative;
+  }
+
+  /* the header links already use ::after for their underline */
+  a:not(.binding__link)::after,
+  .connect__copy::after,
+  .cert__name--link::after,
+  .theme-toggle::after {
+    content: '';
+    position: absolute;
+    inset: -12px -4px;
+  }
+
+  .theme-toggle::after {
+    inset: -10px -4px;
+  }
+}

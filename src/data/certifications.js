@@ -8,7 +8,7 @@ export const certifications = [
     name: 'Computer Systems Servicing (CSS NC II)',
     kind: 'National Certificate II',
     issuer: 'TESDA',
-    year: 'Issued Dec 2024 · valid until Dec 2029',
+    year: 'Dec 2024, valid until Dec 2029',
     url: '/certificates/css-nc2.webp',
   },
   {

@@ -1,4 +1,4 @@
-import { projectShot } from '../lib/projectShot.js'
+import { extraBadges, projectShot } from '../lib/projectShot.js'
 import { useSeen } from '../lib/seen.js'
 import Badge from './Badge.jsx'
 import Link from './Link.jsx'
@@ -42,7 +42,7 @@ export default function ProjectsTable({ projects, numbers }) {
         <tbody>
           {projects.map((project) => {
             const shot = projectShot(project)
-            const badges = project.badges.filter((badge) => badge.toLowerCase() !== project.kind.toLowerCase())
+            const badges = extraBadges(project)
             return (
               <tr key={project.id} id={`project-${project.id}`}>
                 <td className="ptable__no">{String(numbers[project.id]).padStart(2, '0')}</td>
@@ -72,14 +72,12 @@ export default function ProjectsTable({ projects, numbers }) {
                 <td className="ptable__live">
                   {project.liveUrl ? (
                     <a className="link" href={project.liveUrl} target="_blank" rel="noopener noreferrer">
-                      Open
+                      Visit
                       <ExternalIcon />
                       <span className="visually-hidden"> {project.name} live site (opens in a new tab)</span>
                     </a>
                   ) : (
-                    <span className="ptable__none" aria-label="No live site">
-                      n/a
-                    </span>
+                    <span className="ptable__none">Not public</span>
                   )}
                 </td>
               </tr>

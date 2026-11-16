@@ -9,7 +9,7 @@
 
 /* A note on a white slip, slid onto the form */
 .egg__toast {
-  --card-head: 0px;
+  --slip-head: 0px;
   position: fixed;
   left: 50%;
   bottom: calc(24px + env(safe-area-inset-bottom));

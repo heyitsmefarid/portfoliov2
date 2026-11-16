@@ -1,7 +1,7 @@
 import { useEffect } from 'react'
 import { projects } from '../data/projects.js'
 import { usePageTitle } from '../lib/pageTitle.js'
-import { projectNumbers } from '../lib/projectShot.js'
+import { extraBadges, projectNumbers } from '../lib/projectShot.js'
 import { markSeen } from '../lib/seen.js'
 import Badge from '../components/Badge.jsx'
 import DemoPlayer from '../components/DemoPlayer.jsx'
@@ -56,7 +56,7 @@ export default function ProjectPage({ id }) {
 
   const previous = projects[(index - 1 + projects.length) % projects.length]
   const next = projects[(index + 1) % projects.length]
-  const badges = project.badges.filter((badge) => badge.toLowerCase() !== project.kind.toLowerCase())
+  const badges = extraBadges(project)
 
   return (
     <article className="form project-page" aria-labelledby="project-title">

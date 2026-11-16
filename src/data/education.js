@@ -13,7 +13,7 @@ export const education = [
   {
     id: 'shs',
     program: 'Senior High School',
-    school: 'MANAGPI NATIONAL HIGH SCHOOL',
+    school: 'Managpi National High School',
     detail: 'GAS',
     detailTitle: 'General Academic Strand',
     years: '',

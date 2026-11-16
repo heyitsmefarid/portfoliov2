@@ -12,7 +12,7 @@ single column again, it has left the design.
 ## Colour
 
 Tokens live in `src/styles/global.css`; components never hard-code colours
-(photos, printouts and the intro envelope are physical objects and keep fixed
+(photos, printouts and the sticky note are physical objects and keep fixed
 values).
 
 | Token | Form (light) | Carbon copy (dark) | Use |
@@ -48,16 +48,25 @@ the rubber stamps.
 - `.blank` is a labelled blank: `.blank__label` over `.blank__value`.
 - `src/styles/layout.css` places the home cells with `grid-template-areas`:
   photo, details and status across the top; the projects table beside About
-  and Tech stack; Experience, Education, Certifications and
-  Contact in four columns; GitHub full width; a signature line.
-- 641–1080px: cells pair up two per row. ≤640px: one cell per row, cells stay
+  and Tech stack; Experience, Education and Certifications in three columns;
+  GitHub full width; the Contact stub as the full-width last row.
+- 641–1080px: About and Tech stack pair up; Experience, Education and
+  Certifications sit three across. ≤640px: one cell per row, cells stay
   dense inside (two-column blanks, table drops columns via container queries).
 - `npm run check:home` enforces no overflow at 11 widths, the side-by-side
   cells on desktop, and a height budget (2.8 screens at 1440×900).
 
+## Logo
+
+The "FG fred." lockup (`src/components/FredLogo.jsx`) sits in the header
+strip; the FG mark alone is the favicon and home-screen icon
+(`public/favicon.svg`). Strokes follow the text colour; the accent square uses
+`--fred-accent`: sage `#8FB8A8` on the forest strip, moss `#4F7A66` when the
+strip turns mint in dark mode. It draws itself on load and replays on hover.
+
 ## Objects on the form
 
-- **Header strip**: ink bar with the name, section links, Ctrl K menu, switch.
+- **Header strip**: ink bar with the logo, section links, Ctrl K menu, switch.
 - **Control number**: the visit count, red, zero-padded.
 - **Photo box**, **blanks**, and the **status box** with the stamp.
 - **Ticker**: one ink strip of the stack, like a repeated microprint line.
@@ -73,15 +82,17 @@ the rubber stamps.
 - **"Seen" stamps**: rows the visitor has already opened get stamped
   (`src/lib/seen.js`, their browser only).
 - **Tear-off stub**: the Contact cell has a perforated edge and saves a vCard.
-- **"Received by" line** (`SignPad`): visitors can sign it; nothing is stored.
 - **Sticky note** (`StickyNote`): one draggable yellow note with a tip. It is
   a real object, so it keeps its yellow in both themes.
-- **Brown envelope**: the once-per-visit intro.
+- **Logo intro**: once per visit, the logo draws itself large on a screen the
+  colour of the header strip, then flies into the header while the screen
+  rolls up into the strip.
 - **Void stamp**: the 404 page.
 
 ## Motion
 
-One authored sequence on load: the envelope slides away, the name is typed in
-key by key, then the rubber stamp comes down on the status box. Everything else answers the visitor (row hover, ticks,
+One authored sequence on load: the logo draws itself and lands in the header,
+the name is typed in key by key, then the rubber stamp comes down on the status
+box. Everything else answers the visitor (row hover, ticks,
 slips sliding in). No scroll reveals. Reduced motion skips the intro and shows
 the stamp already down.

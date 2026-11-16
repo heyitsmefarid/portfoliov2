@@ -26,7 +26,7 @@ export default function Hero({ onContact }) {
       <header id="top" className="cell cell--mast">
         <div className="mast">
           <p className="mast__title">Portfolio registration form</p>
-          <p className="mast__sub">Web, mobile and full-stack development. Typed entries are mine; the rest is the form.</p>
+          <p className="mast__sub">Full-stack web and mobile developer from Calapan City, Philippines.</p>
         </div>
         <ViewCount />
       </header>
@@ -53,8 +53,8 @@ export default function Hero({ onContact }) {
               </h1>
             </dd>
           </div>
-          <Blank label="Applying as">{profile.role}</Blank>
-          <Blank label="Course and year">{profile.status.replace(/ Student$/, '')}</Blank>
+          <Blank label="Role">{profile.role}</Blank>
+          <Blank label="Course">{profile.status}</Blank>
           {school && <Blank label="School">{school.school}</Blank>}
           <Blank label="Address">{profile.location}</Blank>
           {profile.timeZone && (
@@ -75,7 +75,7 @@ export default function Hero({ onContact }) {
               </a>
             </Blank>
           )}
-          <Blank label="In my own words" wide>
+          <Blank label="Summary" wide>
             <span className="info__lede">{profile.lede}</span>
           </Blank>
         </dl>
@@ -93,7 +93,7 @@ export default function Hero({ onContact }) {
               <span className="stamp__small">{availability.detail}</span>
             </p>
           )}
-          <p className="status__note">{availability.open ? availability.label : 'Not currently looking'}</p>
+          {!availability.open && <p className="status__note">Not currently looking</p>}
           <div className="status__actions">
             <a className="btn btn--ink" href="#projects">
               See my projects
@@ -104,7 +104,7 @@ export default function Hero({ onContact }) {
               </a>
             )}
             <button type="button" className="btn" onClick={onContact}>
-              Send me a message
+              Send a message
             </button>
           </div>
         </div>

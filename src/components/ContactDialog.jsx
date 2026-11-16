@@ -4,24 +4,18 @@ import './ContactDialog.css'
 
 const EMPTY = { name: '', email: '', message: '', website: '' }
 
-function mailtoLink({ name, email, message }) {
-  const subject = encodeURIComponent(`Portfolio message from ${name}`)
-  const body = encodeURIComponent(`${message}\n\n— ${name} <${email}>`)
-  return `mailto:${profile.contact.email}?subject=${subject}&body=${body}`
-}
-
-// How the form can deliver a message: through /api/contact, by opening the
-// visitor's email app (needs an email in profile.js), or not at all yet.
+// Whether /api/contact can send mail: 'checking', 'api', or 'none' (no key set,
+// or static hosting with no API). Messages are always sent from the site; the
+// visitor's email app is never opened.
 function useDelivery() {
   const [delivery, setDelivery] = useState('checking')
 
   useEffect(() => {
     let cancelled = false
-    const offline = profile.contact.email ? 'mailto' : 'none'
     fetch('/api/contact', { signal: AbortSignal.timeout(8_000) })
       .then((response) => (response.ok ? response.json() : null))
-      .then((data) => !cancelled && setDelivery(data?.configured ? 'api' : offline))
-      .catch(() => !cancelled && setDelivery(offline))
+      .then((data) => !cancelled && setDelivery(data?.configured ? 'api' : 'none'))
+      .catch(() => !cancelled && setDelivery('none'))
     return () => {
       cancelled = true
     }
@@ -48,21 +42,9 @@ export default function ContactDialog({ ref }) {
   const close = () => dialogRef.current?.close()
   const update = (field) => (event) => setForm((current) => ({ ...current, [field]: event.target.value }))
 
-  const openEmailApp = () => {
-    window.location.href = mailtoLink(form)
-    setStatus({
-      state: 'fallback',
-      message: `Your email app should open with the message ready. If it doesn't, email ${contact.email} directly.`,
-    })
-  }
-
   const onSubmit = async (event) => {
     event.preventDefault()
     if (status.state === 'sending' || delivery === 'none') return
-    if (delivery === 'mailto') {
-      openEmailApp()
-      return
-    }
     setStatus({ state: 'sending', message: 'Sending…' })
 
     try {
@@ -75,24 +57,25 @@ export default function ContactDialog({ ref }) {
       const data = await response.json().catch(() => null)
 
       if (response.ok && data?.ok) {
+        setStatus({ state: 'sent', message: `Message sent. Fred will reply to ${form.email}.` })
         setForm(EMPTY)
-        setStatus({ state: 'sent', message: 'Message sent. Fred will reply to you by email.' })
         return
       }
       if (response.status === 400 || response.status === 429) {
         setStatus({ state: 'error', message: data?.message ?? 'Check the form and try again.' })
         return
       }
-      // Not configured, missing (static hosting) or failing: fall through.
     } catch {
-      // Network error: fall through.
+      // Network error or timeout: handled below.
     }
 
-    if (contact.email) {
-      openEmailApp()
-    } else {
-      setStatus({ state: 'error', message: "The form couldn't send your message. Try again later, or reach Fred on GitHub." })
-    }
+    // The message stays in the form, so trying again doesn't mean retyping it.
+    setStatus({
+      state: 'error',
+      message: contact.email
+        ? `Your message didn't send. Try again in a minute, or write to ${contact.email}.`
+        : "Your message didn't send. Try again in a minute.",
+    })
   }
 
   const unavailable = delivery === 'none'
@@ -121,12 +104,19 @@ export default function ContactDialog({ ref }) {
 
         {unavailable && (
           <p className="contact-dialog__notice">
-            The contact form isn't connected yet. Until it is, the quickest way to reach Fred is on{' '}
-            <a href={contact.github} target="_blank" rel="noopener noreferrer">
-              GitHub
-              <span className="visually-hidden"> (opens in a new tab)</span>
-            </a>
-            .
+            The contact form isn&apos;t connected yet.{' '}
+            {contact.email ? (
+              <>Until it is, write to Fred at {contact.email}.</>
+            ) : (
+              <>
+                Until it is, reach Fred on{' '}
+                <a href={contact.github} target="_blank" rel="noopener noreferrer">
+                  GitHub
+                  <span className="visually-hidden"> (opens in a new tab)</span>
+                </a>
+                .
+              </>
+            )}
           </p>
         )}
 
@@ -135,7 +125,7 @@ export default function ContactDialog({ ref }) {
           <input id="contact-name" name="name" autoComplete="name" required maxLength={100} value={form.name} onChange={update('name')} />
         </div>
         <div className="field">
-          <label htmlFor="contact-email">Email</label>
+          <label htmlFor="contact-email">Your email</label>
           <input id="contact-email" name="email" type="email" autoComplete="email" required maxLength={200} value={form.email} onChange={update('email')} />
         </div>
         <div className="field">
@@ -151,7 +141,7 @@ export default function ContactDialog({ ref }) {
 
         <div className="contact-dialog__submit">
           <button className="btn btn--ink" type="submit" disabled={status.state === 'sending' || unavailable}>
-            {status.state === 'sending' ? 'Sending…' : delivery === 'mailto' ? 'Send via email app' : 'Send message'}
+            {status.state === 'sending' ? 'Sending…' : 'Send message'}
           </button>
           <p className={`contact-dialog__status contact-dialog__status--${status.state}`} role="status">
             {status.state !== 'sending' && status.message}

@@ -1,32 +1,7 @@
 import { useState } from 'react'
 import { profile } from '../data/profile.js'
+import { saveContact } from '../lib/vcard.js'
 import Panel from './Panel.jsx'
-
-// A vCard built from the profile, so the stub can be saved straight to a
-// phone's contacts.
-function saveContact() {
-  const { contact } = profile
-  const parts = profile.name.split(' ')
-  const family = parts.pop()
-  // vCard address order: city; region; postal code; country
-  const [city = '', region = '', country = ''] = profile.location.split(',').map((part) => part.trim())
-  const lines = [
-    'BEGIN:VCARD',
-    'VERSION:3.0',
-    `N:${family};${parts.join(' ')};;;`,
-    `FN:${profile.name}`,
-    `TITLE:${profile.role}`,
-    contact.email && `EMAIL;TYPE=INTERNET:${contact.email}`,
-    contact.phone && `TEL;TYPE=CELL:${contact.phoneIntl || contact.phone}`,
-    contact.github && `URL:${contact.github}`,
-    profile.location && `ADR;TYPE=HOME:;;;${city};${region};;${country}`,
-    'END:VCARD',
-  ].filter(Boolean)
-  const url = URL.createObjectURL(new Blob([lines.join('\r\n')], { type: 'text/vcard' }))
-  const link = Object.assign(document.createElement('a'), { href: url, download: `${profile.name.replace(/\s+/g, '-')}.vcf` })
-  link.click()
-  setTimeout(() => URL.revokeObjectURL(url), 1000)
-}
 
 function Scissors() {
   return (
@@ -124,10 +99,10 @@ export default function Connect({ onContact }) {
       </dl>
       <div className="connect__actions">
         <button type="button" className="btn btn--ink" onClick={onContact}>
-          Write me a note
+          Send a message
         </button>
         <button type="button" className="btn stub__save" onClick={saveContact}>
-          Tear off: save me to your contacts
+          Save to contacts
         </button>
       </div>
     </Panel>

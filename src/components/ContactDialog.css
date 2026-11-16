@@ -1,7 +1,7 @@
 /* The message form: an index card with the heading above its red line and
    the fields written on its ruling. */
 .contact-dialog {
-  --card-head: 84px;
+  --slip-head: 84px;
   width: min(540px, calc(100vw - 32px));
   max-height: calc(100dvh - 32px);
   padding: 0;

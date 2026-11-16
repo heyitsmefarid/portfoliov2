@@ -5,9 +5,9 @@
 export const profile = {
   name: 'Fred Anthony Gallano',
   firstName: 'Fred',
-  role: 'Aspiring Full-Stack Developer',
+  role: 'Full-Stack Developer',
   focus: ['Full-Stack Developer', 'Web Developer', 'Mobile App Developer'],
-  status: '4th Year BS Information Systems Student',
+  status: 'BS Information Systems, 4th year',
   // From the location on your public GitHub profile. Set to '' to hide it.
   location: 'Calapan City, Oriental Mindoro, Philippines',
   // Used for the live local-time line in the hero. Set to '' to hide it.
@@ -32,21 +32,16 @@ export const profile = {
   headline: 'Building digital experiences that actually solve problems.',
   // The opening paragraph on the home page, under the name.
   lede:
-    "I'm a fourth-year Information Systems student in Calapan City. I build web and mobile systems: scholarship records, flood maps, shop inventories, library lending.",
+    "I'm a fourth-year Information Systems student in Calapan City. I build web and mobile systems for real work: scholarship records, flood maps, shop inventory and library lending.",
   intro:
     '4th Year BS Information Systems student focused on full-stack web and mobile development.',
   tagline: 'I build useful digital experiences through code.',
 
   about: [
-    "I'm an Information Systems student who enjoys turning ideas into working applications. I work across web, mobile, and backend development, and I learn best by building real projects.",
-    "I'm interested in creating software that isn't just functional, but actually useful to the people who use it.",
+    "I turn ideas into working apps across web, mobile and backend, and I learn fastest by shipping real projects.",
+    'What I care about most is whether the people using an app can get their work done with it.',
   ],
 
-  facts: [
-    { title: '4th Year', detail: 'BS Information Systems' },
-    { title: 'Full-Stack', detail: 'Web + Mobile' },
-    { title: 'Project-Based', detail: 'Learning' },
-  ],
 
   contact: {
     email: 'gallanofredanthony15@gmail.com',

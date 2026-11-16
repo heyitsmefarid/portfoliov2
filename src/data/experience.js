@@ -23,12 +23,4 @@ export const experience = [
       'Scholarship management platform covering applicants, scholars, requirements, academic records, attendance, and announcements.',
     projectId: 'iskonnect',
   },
-  {
-    id: 'bsis',
-    title: 'BS Information Systems — 4th Year',
-    org: 'City College of Calapan',
-    period: 'Current',
-    status: 'current',
-    description: '',
-  },
 ]

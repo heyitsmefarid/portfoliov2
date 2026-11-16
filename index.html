@@ -3,10 +3,10 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-    <title>Fred Anthony Gallano — Aspiring Full-Stack Developer</title>
+    <title>Fred Anthony Gallano — Full-Stack Developer</title>
     <meta
       name="description"
-      content="Portfolio of Fred Anthony Gallano, a BS Information Systems student focused on web, mobile, and full-stack development."
+      content="Fred Anthony Gallano is a full-stack web and mobile developer and BS Information Systems student in Calapan City, Philippines. Open to OJT, freelance and remote work."
     />
     <meta name="author" content="Fred Anthony Gallano" />
     <meta name="theme-color" content="#c3dfcb" />
@@ -36,45 +36,61 @@
       })()
     </script>
 
+    <style>
+      /* Before the app loads, the screen is already the intro's colour, so the
+         logo animation never opens on a flash of the page. */
+      html.intro-playing,
+      html.intro-playing body {
+        background: #0e3a2d;
+      }
+      html.intro-playing[data-theme='dark'],
+      html.intro-playing[data-theme='dark'] body {
+        background: #cfeedb;
+      }
+    </style>
+
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <link rel="icon" href="/favicon-32.png" sizes="32x32" type="image/png" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
 
-    <!-- Open Graph / social previews. After deploying, you can make og:image an
-         absolute URL (https://your-domain/og-image.png) for the widest support. -->
+    <!-- Open Graph / social previews. Image and URLs are absolute so every app
+         (Facebook, LinkedIn, Messenger) can load them. -->
     <meta property="og:type" content="website" />
-    <meta property="og:title" content="Fred Anthony Gallano — Aspiring Full-Stack Developer" />
+    <meta property="og:url" content="https://fredanthonygallano.vercel.app/" />
+    <link rel="canonical" href="https://fredanthonygallano.vercel.app/" />
+    <meta property="og:title" content="Fred Anthony Gallano — Full-Stack Developer" />
     <meta
       property="og:description"
-      content="Portfolio of Fred Anthony Gallano, a BS Information Systems student focused on web, mobile, and full-stack development."
+      content="Fred Anthony Gallano is a full-stack web and mobile developer and BS Information Systems student in Calapan City, Philippines. Open to OJT, freelance and remote work."
     />
-    <meta property="og:image" content="/og-image.png" />
+    <meta property="og:image" content="https://fredanthonygallano.vercel.app/og-image.png" />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
-    <meta property="og:image:alt" content="Fred Anthony Gallano — Aspiring Full-Stack Developer" />
+    <meta property="og:image:alt" content="Fred Anthony Gallano — Full-Stack Developer" />
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="Fred Anthony Gallano — Aspiring Full-Stack Developer" />
+    <meta name="twitter:title" content="Fred Anthony Gallano — Full-Stack Developer" />
     <meta
       name="twitter:description"
-      content="Portfolio of Fred Anthony Gallano, a BS Information Systems student focused on web, mobile, and full-stack development."
+      content="Fred Anthony Gallano is a full-stack web and mobile developer and BS Information Systems student in Calapan City, Philippines. Open to OJT, freelance and remote work."
     />
-    <meta name="twitter:image" content="/og-image.png" />
+    <meta name="twitter:image" content="https://fredanthonygallano.vercel.app/og-image.png" />
 
     <script type="application/ld+json">
       {
         "@context": "https://schema.org",
         "@type": "Person",
         "name": "Fred Anthony Gallano",
-        "jobTitle": "Aspiring Full-Stack Developer",
+        "jobTitle": "Full-Stack Developer",
         "alumniOf": "City College of Calapan",
-        "sameAs": ["https://github.com/heyitsmefarid"]
+        "url": "https://fredanthonygallano.vercel.app/",
+        "sameAs": ["https://github.com/heyitsmefarid", "https://www.facebook.com/gallanofredanthony.27/"]
       }
     </script>
   </head>
   <body>
     <noscript>
       <p style="padding: 24px; font-family: system-ui, sans-serif; color: #0e3a2d; background: #c3dfcb">
-        Fred Anthony Gallano — Aspiring Full-Stack Developer. This portfolio needs JavaScript. You can also find
+        Fred Anthony Gallano — Full-Stack Developer. This portfolio needs JavaScript. You can also find
         Fred's work at <a style="color: #b3221a" href="https://github.com/heyitsmefarid">github.com/heyitsmefarid</a>.
       </p>
     </noscript>

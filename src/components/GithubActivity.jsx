@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
 import { profile } from '../data/profile.js'
-import { fetchContributions, formatDay, monthLabels, toWeeks } from '../lib/github.js'
+import { fetchContributions, formatDay, latestDay, monthLabels, toWeeks } from '../lib/github.js'
 import Panel from './Panel.jsx'
 import './GithubActivity.css'
 
@@ -137,6 +137,7 @@ export default function GithubActivity() {
             {state.status === 'ready' ? (
               <>
                 <strong>{state.data.total.toLocaleString('en-US')}</strong> contributions in the last year
+                <span className="gh__updated">Updated {formatDay(latestDay(state.data.days))}</span>
               </>
             ) : state.status === 'idle' ? (
               'Loading contributions…'

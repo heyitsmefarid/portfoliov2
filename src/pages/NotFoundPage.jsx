@@ -13,7 +13,7 @@ export default function NotFoundPage({ message = 'This page does not exist.' }) 
         <p>{message}</p>
         <p className="not-found__links">
           <Link className="link" href="/">
-            Back to the form
+            Back to home
           </Link>
           <Link className="link" href="/projects">
             See all projects

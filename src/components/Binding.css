@@ -20,11 +20,24 @@
   padding-inline: var(--gutter);
 }
 
+.binding {
+  /* the logo's accent square: sage on the forest bar */
+  --fred-accent: #8fb8a8;
+}
+
+:root[data-theme='dark'] .binding {
+  /* moss once the bar turns mint */
+  --fred-accent: #4f7a66;
+}
+
 .binding__name {
-  font-family: var(--typed);
-  font-weight: 700;
-  font-size: 1.0625rem;
-  white-space: nowrap;
+  display: flex;
+  align-items: center;
+  min-height: 44px;
+}
+
+.binding__name svg {
+  display: block;
 }
 
 .binding__nav {
