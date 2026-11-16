@@ -1,6 +1,5 @@
 import { education } from '../data/education.js'
 import Panel from './Panel.jsx'
-import StickyNote from './StickyNote.jsx'
 
 export default function Education() {
   return (
@@ -16,7 +15,6 @@ export default function Education() {
           </li>
         ))}
       </ol>
-      <StickyNote />
     </Panel>
   )
 }

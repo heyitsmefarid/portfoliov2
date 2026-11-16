@@ -22,8 +22,8 @@
 }
 
 .demo__toggle:hover {
-  background: var(--pen);
-  color: #fff;
+  background: var(--ink-soft);
+  color: var(--on-ink);
 }
 
 /* The clip sits on top of the poster and fades in once it has loaded */

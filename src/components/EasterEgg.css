@@ -48,8 +48,8 @@
 }
 
 .egg__action:hover {
-  background: var(--pen);
-  color: #fff;
+  background: var(--ink-soft);
+  color: var(--on-ink);
 }
 
 .egg__close {

@@ -12,8 +12,11 @@ single column again, it has left the design.
 ## Colour
 
 Tokens live in `src/styles/global.css`; components never hard-code colours
-(photos, printouts and the sticky note are physical objects and keep fixed
-values).
+(photos and printouts are physical objects and keep fixed values).
+
+**Greens only.** The site is printed in one ink. There is no red, yellow or
+any other accent: the stamp, hovers, focus and the highlighter all use the
+green ink. Don't add a new colour.
 
 | Token | Form (light) | Carbon copy (dark) | Use |
 | --- | --- | --- | --- |
@@ -22,10 +25,11 @@ values).
 | `--field` | `#eaf5ec` | `#11382c` | the part of a cell that gets filled in; row hover |
 | `--ink` | `#0e3a2d` | `#cfeedb` | print, borders, title bars |
 | `--ink-soft` | `#33614f` | `#9ccab2` | secondary print (tinted ink, never grey) |
-| `--pen` | `#b3221a` | `#ff8a7d` | stamp ink: stamp, hover, focus |
+| `--pen` | `#0e3a2d` | `#cfeedb` | stamp ink, same as `--ink`: stamp, hover, focus |
+| `--marker` | ink at 16% | ink at 18% | the highlighter, a green tint |
 | `--card` | `#fbfdf9` | `#133d30` | white slips (overlays) |
 
-Cells carry a faint wave pattern (`--wave`), the guilloche of security paper.
+Cells are plain paper: one flat colour, no printed pattern.
 Dark mode is the same form as a carbon copy, not a different palette.
 
 ## Type
@@ -82,8 +86,6 @@ strip turns mint in dark mode. It draws itself on load and replays on hover.
 - **"Seen" stamps**: rows the visitor has already opened get stamped
   (`src/lib/seen.js`, their browser only).
 - **Tear-off stub**: the Contact cell has a perforated edge and saves a vCard.
-- **Sticky note** (`StickyNote`): one draggable yellow note with a tip. It is
-  a real object, so it keeps its yellow in both themes.
 - **Logo intro**: once per visit, the logo draws itself large on a screen the
   colour of the header strip, then flies into the header while the screen
   rolls up into the strip.

@@ -268,11 +268,14 @@
   font-family: var(--font);
   font-size: 0.8125rem;
   font-weight: 700;
-  color: var(--pen);
+  color: var(--ink);
+  text-decoration: underline;
+  text-decoration-style: dotted;
+  text-underline-offset: 3px;
 }
 
 .connect__copy:hover {
-  text-decoration: underline;
+  text-decoration-style: solid;
 }
 
 .connect__actions {
@@ -381,15 +384,10 @@
 .stub {
   /* the perforation down its left edge */
   background-image:
-    repeating-linear-gradient(to bottom, var(--ink) 0 7px, transparent 7px 13px),
-    repeating-radial-gradient(circle at 0 120%, transparent 0 9px, var(--wave) 9px 10px);
-  background-size:
-    2px 100%,
-    auto;
-  background-repeat: no-repeat, repeat;
-  background-position:
-    3px 0,
-    0 0;
+    repeating-linear-gradient(to bottom, var(--ink) 0 7px, transparent 7px 13px);
+  background-size: 2px 100%;
+  background-repeat: no-repeat;
+  background-position: 3px 0;
 }
 
 .stub .cell__title {

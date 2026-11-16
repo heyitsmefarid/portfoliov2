@@ -24,8 +24,9 @@ the objects on the form. This skill is the working method.
    Prime: use `.blank__value` or `.typed`. Labels are sentence case
    (`.blank__label`), never tracked capitals. The only capitals are the rubber
    stamps.
-4. **Red is the stamp ink.** `--pen` is for the stamp,
-   hover and focus. Not for decoration.
+4. **Greens only.** The owner asked for no red, yellow or other accent colours.
+   `--pen` and `--marker` are green ink; the paper is plain, with no pattern.
+   Never add a new colour.
 5. **Overlays are slips.** Dialogs, menus and toasts use `.slip`.
 6. **One authored sequence**: the name is typed, then the stamp lands. Add motion only as a response to the
    visitor (hover, tick, open). No scroll reveals.
